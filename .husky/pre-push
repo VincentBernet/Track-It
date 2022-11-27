@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# goes to the backend directory, to run tests
+cd back-end
+npm run test
+
+# go back to the root directory then go into the front-end directory, to run tests
+cd ../front-end
+npm run test
