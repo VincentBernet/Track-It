@@ -3,8 +3,8 @@
 
 # goes to the backend directory, to run the linter
 cd back-end
-npm run lint:fix
+npm run lint
 
 # go back to the root directory then go into the front-end directory, to run the linter
 cd ../front-end
-npm run lint:fix
+npm run lint
