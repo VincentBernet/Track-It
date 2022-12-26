@@ -103,8 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# TODO: find a way to not push secret variables to github but only for heroku
 # Track-It secret environment variables
-secret.env
+# secret.env
 
 # Forked branch from spotify-web-api-auth-examples
 spotify-web-api-auth-examples
