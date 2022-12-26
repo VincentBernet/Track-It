@@ -1,0 +1,19 @@
+name: Deploy to Heroku (Backend)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "back-end/**"
+      - ".github/workflows/back-end.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add backend remote origin
+        run: git remote add heroku-back-end https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_BACKEND_APP_NAME }}.git
+      - name: Deploy backend to Heroku
+        run: git push heroku-back-end `git subtree split --prefix back-end main`:refs/heads/main --force
