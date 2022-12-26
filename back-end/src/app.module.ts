@@ -3,12 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { PlaylistController } from './playlist/playlist.controller';
-import { PlaylistService } from './playlist/playlist.service';
+import { PlaylistModule } from './playlist/playlist.module';
 
 @Module({
-  imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [AppController, PlaylistController],
-  providers: [AppService, PlaylistService],
+  imports: [
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    PlaylistModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
