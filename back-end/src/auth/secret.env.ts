@@ -4,9 +4,9 @@ const redirect_uri = 'https://croissanterie.netlify.app/'; // Where to redirect 
 // Check https://developer.spotify.com/dashboard/applications
 
 const secretEnv = {
-    client_id,
-    client_secret,
-    redirect_uri
-}
+  client_id,
+  client_secret,
+  redirect_uri,
+};
 
 export default secretEnv;

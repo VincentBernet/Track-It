@@ -26,4 +26,4 @@ import secretEnv from './secret.env';
   providers: [AuthService, JwtStrategy, SpotifyOauthStrategy],
   controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

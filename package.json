@@ -3,6 +3,7 @@
     "husky": "^8.0.2"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:fix": "cd front-end && (npm run lint:fix && cd ../back-end && npm run lint:fix)"
   }
 }

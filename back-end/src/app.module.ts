@@ -11,4 +11,4 @@ import { PlaylistService } from './playlist/playlist.service';
   controllers: [AppController, PlaylistController],
   providers: [AppService, PlaylistService],
 })
-export class AppModule { }
+export class AppModule {}

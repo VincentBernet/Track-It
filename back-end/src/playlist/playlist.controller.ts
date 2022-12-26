@@ -3,10 +3,10 @@ import { PlaylistService } from './playlist.service';
 
 @Controller('playlist')
 export class PlaylistController {
-    constructor(private readonly playlistService: PlaylistService) { }
+  constructor(private readonly playlistService: PlaylistService) {}
 
-    @Get("accessAll")
-    getAllPlaylist() {
-        return this.playlistService.getAllPlaylist();
-    }
+  @Get('accessAll')
+  getAllPlaylist() {
+    return this.playlistService.getAllPlaylist();
+  }
 }

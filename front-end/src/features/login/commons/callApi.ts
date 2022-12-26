@@ -1,4 +1,4 @@
-import { playlistInfoType, playlistListType } from './interface';
+import { playlistListType } from './interface';
 
 export const getAllPlaylist = async (): Promise<playlistListType> => {
 	let json: playlistListType = [{name : 'Initialisation'}];
