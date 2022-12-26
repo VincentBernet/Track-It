@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { playlistListType } from './playlist.dto';
 
 @Injectable()
 export class PlaylistService {
-  getAllPlaylist(): string {
-    return 'This action returns all playlist';
+  getAllPlaylist(): playlistListType {
+    return [{ name: 'Relaxation' }, { name: 'Workout' }];
   }
 }
