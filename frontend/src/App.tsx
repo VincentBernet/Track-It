@@ -1,7 +1,6 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import { accessToken, getCurrentUserProfile } from "./commons/spotify";
-import { catchErrors } from "./commons/utils";
 import Profile from './commons/components/Profile';
 import Login from './commons/components/Login';
 import NotFound from './commons/components/NotFound';
@@ -22,13 +21,12 @@ const App = () => {
       setProfile(data);
     }
 
-    catchErrors(fetchData());
+    fetchData();
   }, [])
 
   if (!token) {
     return <Login />
   }
-
 
   if (token && profile) {
     return <Profile profile={profile} />
