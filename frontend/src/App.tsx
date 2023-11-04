@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { useEffect, useState } from "react";
+import { accessToken, getCurrentUserProfile } from "./commons/spotify";
+import { catchErrors } from "./commons/utils";
+import Profile from './commons/components/Profile';
+import Login from './commons/components/Login';
+import NotFound from './commons/components/NotFound';
+import { apiMeResponse } from './commons/interface';
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const App = () => {
+  const [token, setToken] = useState<string | null>(null);
+  const [profile, setProfile] = useState<apiMeResponse | null>(null);
+
+  useEffect(() => {
+    setToken(accessToken);
+    if (!accessToken) return;
+
+    const fetchData = async () => {
+      const { data } = await getCurrentUserProfile();
+      console.log("Calling https://api.spotify.com/v1/me endpoint, getting following response :", data);
+      setProfile(data);
+    }
+
+    catchErrors(fetchData());
+  }, [])
+
+  if (!token) {
+    return <Login />
+  }
+
+
+  if (token && profile) {
+    return <Profile profile={profile} />
+  }
+
+  if (!token && !profile) {
+    console.log("No token and no profile, token:", token, "profile:", profile, "returning NotFound component");
+    return (<NotFound />);
+  }
 }
 
-export default App
+export default App;
