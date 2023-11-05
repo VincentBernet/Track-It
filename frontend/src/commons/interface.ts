@@ -1,10 +1,3 @@
-export interface apiMeResponse {
-    display_name: string;
-    images: {
-        url: string;
-    }[];
-}
-
 export interface localStorageKeys {
     [key: string]: string,
     accessToken: string,
