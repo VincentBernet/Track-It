@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Login, Profile } from './features/pages';
+import { Login, Playlist, Playlists, Profile, TopArtists, TopTracks } from './features/pages';
 import { NotFound, LogoutButton } from './commons/components';
 
 const App = () => {
@@ -26,10 +26,10 @@ const App = () => {
         <LogoutButton logout={logout} />
         <Routes>
           <Route path="/" element={<Profile />} />
-          <Route path="/playlists/:id" element={<h1>Playlist</h1>} />
-          <Route path="/playlists" element={<h1>Playlists</h1>} />
-          <Route path="/top-artists" element={<h1>Top Artists</h1>} />
-          <Route path="/top-tracks" element={<h1>Top Tracks</h1>} />
+          <Route path="/playlists/:id" element={<Playlist />} />
+          <Route path="/playlists" element={<Playlists />} />
+          <Route path="/top-artists" element={<TopArtists />} />
+          <Route path="/top-tracks" element={<TopTracks />} />
         </Routes>
       </BrowserRouter>
     );

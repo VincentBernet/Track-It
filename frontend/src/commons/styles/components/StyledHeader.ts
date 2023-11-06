@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledHeaderProps {
-    type: 'user' | 'playlist';
+  type?: 'user';
 }
 
 const StyledHeader = styled.header<StyledHeaderProps>`

@@ -4,7 +4,7 @@ import { StyledSection } from '../styles';
 interface SectionWrapperProps {
     children: React.ReactNode,
     title: string,
-    seeAllLink: string,
+    seeAllLink?: string,
     breadcrumb?: boolean
 }
 

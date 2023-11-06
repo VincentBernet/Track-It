@@ -23,6 +23,12 @@ export interface playlist {
     name: string;
     artists: artist[];
     duration_ms: number;
+    followers: {
+        total: number;
+    };
+    tracks: {
+        total: number;
+    };
 }
 
 export interface profileData {
@@ -42,7 +48,18 @@ export interface topTracksData {
     items: track[];
 }
 
+export interface tracksData {
+    items: track[];
+    total: number;
+    offset: number;
+    next: string;
+    limit: number;
+}
+
 export interface playlistsData {
     items: playlist[];
     total: number;
+    offset: number;
+    next: string;
+    limit: number;
 }

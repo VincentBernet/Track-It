@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCurrentUserProfile, getCurrentUserPlaylists, getCurrentUserTopArtists, getCurrentTopTracks } from '../../commons/spotify/requests';
+import { getCurrentUserProfile, getCurrentUserPlaylists, getCurrentUserTopArtists, getCurrentUserTopTracks } from '../../commons/spotify/requests';
 import { StyledHeader } from '../../commons/styles';
 import { profileData, playlistsData, topArtistsData, topTracksData } from '../../commons/spotify/responsesTypes';
 import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid } from '../../commons/components';
@@ -21,7 +21,7 @@ const Profile = () => {
             const userTopArtists = await getCurrentUserTopArtists();
             setTopArtists(userTopArtists.data);
 
-            const userTopTracks = await getCurrentTopTracks();
+            const userTopTracks = await getCurrentUserTopTracks();
             setTopTracks(userTopTracks.data);
         };
 

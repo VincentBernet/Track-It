@@ -3,3 +3,6 @@ export { default as StyledHeader } from './components/StyledHeader';
 export { default as StyledSection } from './components/StyledSection';
 export { default as StyledGrid } from './components/StyledGrid';
 export { default as StyledTrackList } from './components/StyledTrackList';
+export { default as StyledRangeButtons } from './components/StyledRangeButtons';
+export { default as StyledDropdown } from './components/StyledDropdown';
+
