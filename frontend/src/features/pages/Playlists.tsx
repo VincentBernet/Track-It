@@ -48,14 +48,15 @@ const Playlists = () => {
 
     }, [playlistsData]);
 
+    if (!playlists) {
+        return (<>Can't reach spotify API</>);
+    }
 
 
     return (
         <main>
             <SectionWrapper title="Public Playlists" breadcrumb>
-                {playlistsData && (
-                    <PlaylistsGrid playlists={playlists} />
-                )}
+                <PlaylistsGrid playlists={playlists} />
             </SectionWrapper>
         </main>
     );

@@ -48,8 +48,18 @@ export interface topTracksData {
     items: track[];
 }
 
+export interface complexeTrack {
+    track: track;
+    added_at: string;
+    is_local: boolean;
+    primary_color: string;
+    video_thumbnail: {
+        url: string;
+    };
+}
+
 export interface tracksData {
-    items: track[];
+    items: complexeTrack[];
     total: number;
     offset: number;
     next: string;
