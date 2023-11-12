@@ -30,7 +30,7 @@ const StyledRangeButtons = styled.ul`
       background-color: var(--grey);
     }
 
-    &.active {
+    &.activehehe {
       background-color: var(--green);
     }
   }

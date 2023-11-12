@@ -48,6 +48,7 @@ const Playlists = () => {
 
     }, [playlistsData]);
 
+    /* TODO: Plutôt mettre un loading ici, et gérer un composant d'erreur commun */
     if (!playlists) {
         return (<>Can't reach spotify API</>);
     }

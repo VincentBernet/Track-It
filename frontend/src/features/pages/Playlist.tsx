@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { catchErrors } from '../../commons/utils'
-import { getPlaylistById } from '../../commons/spotify/requests';
-import { StyledHeader } from '../../commons/styles';
-import { playlist, complexeTrack, tracksData } from '../../commons/spotify/responsesTypes';
+import { getPlaylistById, getAudioFeaturesForTracks } from '../../commons/spotify/requests';
+import { StyledDropdown, StyledHeader } from '../../commons/styles';
+import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../commons/spotify/responsesTypes';
 import axios from 'axios';
 import { SectionWrapper, TrackList } from '../../commons/components';
 
@@ -11,16 +11,56 @@ import { SectionWrapper, TrackList } from '../../commons/components';
 const Playlist = () => {
     const { id } = useParams();
     const [playlist, setPlaylist] = useState<playlist | null>(null);
-    const [tracksData, setTracksData] = useState<tracksData | null>(null);
-    const [tracks, setTracks] = useState<complexeTrack[] | null>(null);
+    const [tracksData, setTracksData] = useState<playlistTracksData | null>(null);
+    const [tracks, setTracks] = useState<playlistTrack[] | null>(null);
+    const [audioFeatures, setAudioFeatures] = useState<audioFeatures[] | null>(null);
+    const [sortValue, setSortValue] = useState<string>('');
 
-    const tracksForTrackList = useMemo(() => {
-        if (!tracks) {
-            return [];
+    type sortOptionsType = 'danceability' | 'tempo' | 'energy' | 'valence' | 'acousticness' | 'instrumentalness' | 'liveness' | 'speechiness' | 'duration_ms' | 'popularity';
+    const sortOptions: sortOptionsType[] = ['danceability', 'tempo', 'energy', 'valence', 'acousticness', 'instrumentalness', 'liveness', 'speechiness', 'duration_ms', 'popularity'];
+
+    // Map over tracks and add audio_features property to each track
+    const tracksWithAudioFeatures = useMemo(() => {
+        if (!tracks || !audioFeatures) {
+            return null;
         }
-        return tracks.map(({ track }) => track);
-    }, [tracks]);
 
+        return tracks.map(({ track }) => {
+            const trackToAdd = track;
+
+            if (!track.audio_features) {
+                const audioFeaturesObj = audioFeatures.find(item => {
+                    if (!item || !track) {
+                        return null;
+                    }
+                    return item.id === track.id;
+                });
+
+                trackToAdd['audio_features'] = audioFeaturesObj;
+            }
+
+            return trackToAdd;
+        });
+    }, [tracks, audioFeatures]);
+
+
+    // Sort tracks by audio feature to be used in template
+    const sortedTracks = useMemo(() => {
+        if (!tracksWithAudioFeatures) {
+            return null;
+        }
+
+        return [...tracksWithAudioFeatures].sort((a, b) => {
+            const aFeatures = a['audio_features'];
+            const bFeatures = b['audio_features'];
+
+            if (!aFeatures || !bFeatures) {
+                return 0;
+            }
+
+            return bFeatures[sortValue] - aFeatures[sortValue];
+        });
+    }, [sortValue, tracksWithAudioFeatures]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,6 +93,18 @@ const Playlist = () => {
         ]));
 
         catchErrors(fetchMoreData());
+
+        // Also update the audioFeatures state variable using the track IDs
+        const fetchAudioFeatures = async () => {
+            const ids = tracksData.items.map(({ track }) => track.id).join(',');
+            const { data } = await getAudioFeaturesForTracks(ids);
+            setAudioFeatures(audioFeatures => ([
+                ...audioFeatures ? audioFeatures : [],
+                ...data['audio_features']
+            ]));
+        };
+        catchErrors(fetchAudioFeatures());
+
     }, [tracksData]);
 
     if (!playlist) {
@@ -81,8 +133,23 @@ const Playlist = () => {
 
             <main>
                 <SectionWrapper title="Playlist" breadcrumb>
-                    {tracks && (
-                        <TrackList tracks={tracksForTrackList} />
+                    <StyledDropdown activeOption={!!sortValue}>
+                        <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                        <select
+                            name="track-order"
+                            id="order-select"
+                            onChange={e => setSortValue(e.target.value)}
+                        >
+                            <option value="">Sort tracks</option>
+                            {sortOptions.map((option, i) => (
+                                <option value={option} key={i}>
+                                    {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                                </option>
+                            ))}
+                        </select>
+                    </StyledDropdown>
+                    {sortedTracks && (
+                        <TrackList tracks={sortedTracks} />
                     )}
                 </SectionWrapper>
             </main>

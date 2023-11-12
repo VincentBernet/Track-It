@@ -8,6 +8,7 @@ export interface artist {
 }
 
 export interface track {
+    id: string;
     album: {
         images: image[];
         name: string;
@@ -15,6 +16,7 @@ export interface track {
     name: string;
     artists: artist[];
     duration_ms: number;
+    audio_features?: audioFeatures;
 }
 
 export interface playlist {
@@ -48,7 +50,7 @@ export interface topTracksData {
     items: track[];
 }
 
-export interface complexeTrack {
+export interface playlistTrack {
     track: track;
     added_at: string;
     is_local: boolean;
@@ -58,8 +60,8 @@ export interface complexeTrack {
     };
 }
 
-export interface tracksData {
-    items: complexeTrack[];
+export interface playlistTracksData {
+    items: playlistTrack[];
     total: number;
     offset: number;
     next: string;
@@ -72,4 +74,32 @@ export interface playlistsData {
     offset: number;
     next: string;
     limit: number;
+}
+
+export interface audioFeatures {
+    acousticness: number;
+    analysis_url: string;
+    danceability: number;
+    duration_ms: number;
+    energy: number;
+    id: string;
+    instrumentalness: number;
+    liveness: number;
+    loudness: number;
+    mode: number;
+    speechiness: number;
+    tempo: number;
+    time_signature: number;
+    track_href: string;
+    type: string;
+    uri: string;
+    valence: number;
+}
+
+export interface audioFeaturesData {
+    audio_features: audioFeatures[];
+}
+
+export interface trackWithAudioFeatures extends track {
+    audioFeatures: audioFeatures;
 }
