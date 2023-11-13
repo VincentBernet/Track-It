@@ -77,23 +77,24 @@ export interface playlistsData {
 }
 
 export interface audioFeatures {
-    acousticness: number;
+    [key: string]: string;
+    acousticness: string;
     analysis_url: string;
-    danceability: number;
-    duration_ms: number;
-    energy: number;
+    danceability: string;
+    duration_ms: string;
+    energy: string;
     id: string;
-    instrumentalness: number;
-    liveness: number;
-    loudness: number;
-    mode: number;
-    speechiness: number;
-    tempo: number;
-    time_signature: number;
+    instrumentalness: string;
+    liveness: string;
+    loudness: string;
+    mode: string;
+    speechiness: string;
+    tempo: string;
+    time_signature: string;
     track_href: string;
     type: string;
     uri: string;
-    valence: number;
+    valence: string;
 }
 
 export interface audioFeaturesData {

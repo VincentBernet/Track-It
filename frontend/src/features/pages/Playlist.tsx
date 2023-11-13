@@ -58,7 +58,7 @@ const Playlist = () => {
                 return 0;
             }
 
-            return bFeatures[sortValue] - aFeatures[sortValue];
+            return Number(bFeatures[sortValue]) - Number(aFeatures[sortValue]);
         });
     }, [sortValue, tracksWithAudioFeatures]);
 
