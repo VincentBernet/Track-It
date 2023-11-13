@@ -6,8 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "cd frontend && npm run dev",
-    "server": "cd backend && npm run start",
-    "server:prod": "cd backend && npm run start:prod",
+    "server": "cd backend && npm run start-local",
     "install": "npm run install-client && npm run install-server",
     "install-client": "cd frontend && npm install",
     "install-server": "cd backend && npm install"
