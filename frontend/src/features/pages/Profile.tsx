@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, getCurrentUserPlaylists, getCurrentUserTopArtists, getCurrentUserTopTracks } from '../../commons/spotify/requests';
 import { StyledHeader } from '../../commons/styles';
 import { profileData, playlistsData, topArtistsData, topTracksData } from '../../commons/spotify/responsesTypes';
-import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid } from '../../commons/components';
+import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid, Loader } from '../../commons/components';
 
 const Profile = () => {
     const [profile, setProfile] = useState<profileData | null>(null);
@@ -52,22 +52,24 @@ const Profile = () => {
                         </div>
                     </StyledHeader>
 
-                    <main>
-                        {topArtists &&
+                    {topArtists && topTracks && playlists ? (
+                        <main>
                             <SectionWrapper title="Top artists this month" seeAllLink="/top-artists">
                                 <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
-                            </SectionWrapper>}
-                        {topTracks &&
+                            </SectionWrapper>
                             <SectionWrapper title="Top tracks this month" seeAllLink="/top-tracks">
                                 <TrackList tracks={topTracks.items.slice(0, 10)} />
-                            </SectionWrapper>}
-                        {playlists &&
+                            </SectionWrapper>
                             <SectionWrapper title="Playlists" seeAllLink="/playlists">
                                 <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
-                            </SectionWrapper>}
-                    </main>
+                            </SectionWrapper>
+                        </main>
+                    ) : (
+                        <Loader />
+                    )}
                 </>
-            )}
+            )
+            }
         </>
     )
 };

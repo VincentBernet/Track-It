@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledDropdownProps {
-  activeOption?: boolean;
+  activeOption: boolean;
 }
 
 const StyledDropdown = styled.div<StyledDropdownProps>`
@@ -36,6 +36,11 @@ const StyledDropdown = styled.div<StyledDropdownProps>`
     font-size: var(--fz-sm);
     font-family: inherit;
     padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-sm);
+  }
+
+  option {
+    background-color: var(--black);
+    color: var(--white);
   }
 `;
 

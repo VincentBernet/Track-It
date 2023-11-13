@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArtistsGrid, SectionWrapper, TimeRangeButtons } from "../../commons/components";
+import { ArtistsGrid, Loader, SectionWrapper, TimeRangeButtons } from "../../commons/components";
 import { topArtistsData } from "../../commons/spotify/responsesTypes";
 import { getCurrentUserTopArtists } from "../../commons/spotify/requests";
 
@@ -15,9 +15,10 @@ const TopArtists = () => {
         fetchData();
     }, [timeRange]);
 
-
     if (!topArtists) {
-        return (<>Can't reach spotify API</>);
+        return (
+            <Loader />
+        );
     }
 
     return (

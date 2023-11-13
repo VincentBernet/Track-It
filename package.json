@@ -7,9 +7,10 @@
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "cd frontend && npm run dev",
     "server": "cd backend && npm run start",
-    "install": "npm run installclient && npm run installserver",
-    "installclient": "cd frontend && npm install",
-    "installserver": "cd backend && npm install"
+    "server:prod": "cd backend && npm run start:prod",
+    "install": "npm run install-client && npm run install-server",
+    "install-client": "cd frontend && npm install",
+    "install-server": "cd backend && npm install"
   },
   "keywords": [],
   "author": "",

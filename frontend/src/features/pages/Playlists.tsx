@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCurrentUserPlaylists } from '../../commons/spotify/requests';
 import { catchErrors } from '../../commons/utils';
-import { SectionWrapper, PlaylistsGrid } from '../../commons/components';
+import { SectionWrapper, PlaylistsGrid, Loader } from '../../commons/components';
 import { playlist, playlistsData } from "../../commons/spotify/responsesTypes";
 import axios from 'axios';
 
@@ -48,11 +48,11 @@ const Playlists = () => {
 
     }, [playlistsData]);
 
-    /* TODO: Plutôt mettre un loading ici, et gérer un composant d'erreur commun */
     if (!playlists) {
-        return (<>Can't reach spotify API</>);
+        return (
+            <Loader />
+        );
     }
-
 
     return (
         <main>

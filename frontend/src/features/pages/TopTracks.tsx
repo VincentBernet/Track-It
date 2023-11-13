@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { topTracksData } from "../../commons/spotify/responsesTypes";
 import { getCurrentUserTopTracks } from "../../commons/spotify/requests";
-import { SectionWrapper, TimeRangeButtons, TrackList } from "../../commons/components";
+import { Loader, SectionWrapper, TimeRangeButtons, TrackList } from "../../commons/components";
 
 const TopTracks = () => {
     const [topTracks, setTopTracks] = useState<topTracksData | null>(null);
@@ -16,7 +16,9 @@ const TopTracks = () => {
     }, [timeRange]);
 
     if (!topTracks) {
-        return (<>Can't reach spotify API</>);
+        return (
+            <Loader />
+        );
     }
 
     return (

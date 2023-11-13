@@ -5,7 +5,7 @@ import { getPlaylistById, getAudioFeaturesForTracks } from '../../commons/spotif
 import { StyledDropdown, StyledHeader } from '../../commons/styles';
 import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../commons/spotify/responsesTypes';
 import axios from 'axios';
-import { SectionWrapper, TrackList } from '../../commons/components';
+import { Loader, SectionWrapper, TrackList } from '../../commons/components';
 
 
 const Playlist = () => {
@@ -108,7 +108,9 @@ const Playlist = () => {
     }, [tracksData]);
 
     if (!playlist) {
-        return (<>Can't reach spotify API</>);
+        return (
+            <Loader />
+        );
     }
 
     return (
