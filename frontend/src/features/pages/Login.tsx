@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledLoginContainer = styled.main`
+export const StyledLoginContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +8,7 @@ const StyledLoginContainer = styled.main`
   height: 100vh;
 `;
 
-const StyledLoginButton = styled.a`
+export const StyledLoginButton = styled.a`
   display: inline-block;
   background-color: var(--green);
   color: var(--white);

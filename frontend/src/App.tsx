@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Login, Playlist, Playlists, Profile, TopArtists, TopTracks } from './features/pages';
+import { ErrorPage, Login, Playlist, Playlists, Profile, TopArtists, TopTracks } from './features/pages';
 import { NotFound, LogoutButton } from './commons/components';
 
 const App = () => {
@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/top-artists" element={<TopArtists />} />
           <Route path="/top-tracks" element={<TopTracks />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     );

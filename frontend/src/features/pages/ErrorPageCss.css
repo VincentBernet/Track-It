@@ -1,0 +1,139 @@
+.moko-404__a {
+    fill: #5aaf23
+}
+
+.moko-404__b {
+    fill: #70cf32
+}
+
+.moko-404__c {
+    fill: #8fea54
+}
+
+.moko-404__d {
+    fill: #f4f4f5
+}
+
+.moko-404__e {
+    fill: #e3e3e5
+}
+
+.moko-404__f {
+    fill: #1d3760
+}
+
+.moko-404__g {
+    fill: #1c4561
+}
+
+.moko-404__h {
+    fill: #61b729
+}
+
+.moko-404__i {
+    fill: #5bc92d
+}
+
+.moko-404__j {
+    fill: #6fd5d9
+}
+
+.moko-404__k {
+    fill: #2d3033
+}
+
+.moko-404__l {
+    fill: #6c7279
+}
+
+.moko-404__m {
+    fill: #163056
+}
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font: 12px "Open Sans", sans-serif
+}
+
+#wrapper {
+    width: 50%;
+    height: 560px;
+    overflow: hidden;
+    margin: 20px auto;
+    background: #fff;
+    border: 1px solid #c6c6c6
+}
+
+div.screen {
+    height: 560px;
+    overflow: hidden;
+    background: transparent;
+    margin: 15px
+}
+
+.list {
+    margin-top: 36px;
+    text-align: left
+}
+
+.item {
+    height: 115px;
+    margin-left: 115px;
+    clear: both
+}
+
+.item .img,
+.item span {
+    background: #f0f0f0
+}
+
+.item .img {
+    float: left;
+    width: 96px;
+    height: 81px;
+    margin-left: -113px
+}
+
+.item span {
+    height: 11px;
+    width: 320px;
+    margin-bottom: 19px;
+    float: left
+}
+
+.item span:nth-of-type(3) {
+    width: 95px;
+    margin-bottom: 0
+}
+
+
+.container {
+    position: absolute;
+    width: 100vw;
+    height: 120vh;
+    max-width: 80vmin;
+    max-height: 80vmin;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+}
+
+.container p {
+    text-align: center;
+    font-size: 30px;
+}
+
+.particles-js-canvas-el {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    bottom: 100%;
+    right: 100%;
+}
