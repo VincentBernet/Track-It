@@ -5,4 +5,6 @@ export { default as TopTracks } from './TopTracks';
 export { default as Playlists } from './Playlists';
 export { default as Playlist } from './Playlist';
 
+export { default as EasyModification } from './EasyModification';
+
 export { default as ErrorPage } from './ErrorPage';

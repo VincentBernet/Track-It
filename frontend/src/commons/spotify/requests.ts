@@ -63,3 +63,24 @@ export const getPlaylistById = (playlist_id: string) => {
 export const getAudioFeaturesForTracks = (ids: string) => {
     return axios.get(`/audio-features?ids=${ids}`);
 };
+
+
+/**
+ * Get user's saved tracks
+ * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
+ * @param {number} limit - The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+ * @returns {Promise}
+ */
+export const getCurrentUserSavedTracks = (limit: number = 50) => {
+    return axios.get(`me/tracks?limits=${limit}`);
+};
+
+/**
+ * Add one or more items to a user's playlist.
+ * @param playlist_id 
+ * @param uris 
+ * @returns 
+ */
+export const postAddTracksToPlaylist = (playlist_id: string, uris: string[]) => {
+    return axios.post(`/playlists/${playlist_id}/tracks?uris=${uris.join(',')}`);
+};

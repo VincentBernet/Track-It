@@ -135,7 +135,7 @@ const Playlist = () => {
 
             <main>
                 <SectionWrapper title="Playlist" breadcrumb>
-                    <StyledDropdown activeOption={!!sortValue}>
+                    <StyledDropdown activeoption={(!!sortValue).toString()}>
                         <label className="sr-only" htmlFor="order-select">Sort tracks</label>
                         <select
                             name="track-order"

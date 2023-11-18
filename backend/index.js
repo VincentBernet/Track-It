@@ -48,7 +48,10 @@ app.get('/login', (req, res) => {
     const scope = [
         'user-read-private',
         'user-read-email',
-        'user-top-read'
+        'user-top-read',
+        'user-library-read',
+        'playlist-modify-public',
+        'playlist-modify-private'
     ].join(' ');
 
     const queryParams = querystring.stringify({
