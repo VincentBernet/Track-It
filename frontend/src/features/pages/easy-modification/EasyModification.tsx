@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { Loader, PlaylistList, TrackCardList } from '../../commons/components';
-import { StyledNewGrid } from '../../commons/styles';
+import { ErrorOrLoader, PlaylistList, TrackCardList } from '../../../commons/components';
+import { StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist } from '../../commons/spotify/requests';
-import { playlist, playlistsData, tracksData, tracksDataItem } from '../../commons/spotify/responsesTypes';
-import { catchErrors } from '../../commons/utils';
+import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
+import { playlist, playlistsData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
+import { catchErrors } from '../../../commons/utils';
 
 export const StyledButton = styled.button`
   display: inline-block;
@@ -26,6 +26,11 @@ export const StyledButton = styled.button`
 
 
 const EasyModification = () => {
+    /* Error fetching state */
+    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<boolean>(false);
+    const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean>(false);
+
+
     /* For Fetching playlists */
     const [playlistsData, setPlaylistsData] = useState<playlistsData | null>(null);
     const [playlists, setPlaylists] = useState<playlist[] | null>(null);
@@ -66,12 +71,19 @@ const EasyModification = () => {
     }
 
     useEffect(() => {
+        // TODO : Delete this abberation, find another solution to change body styling in react
+        document.body.style.backgroundColor = "black";
         const fetchData = async () => {
-            const { data } = await getCurrentUserPlaylists();
-            setPlaylistsData(data);
+            try {
+                const { data } = await getCurrentUserPlaylists();
+                setPlaylistsData(data);
+            }
+            catch (e) {
+                console.log("Getting error : " + e);
+                setErrorFetchingPlaylists(true);
+            }
         };
-        console.log("fetching user playlists data")
-        catchErrors(fetchData());
+        fetchData();
     }, []);
 
 
@@ -107,9 +119,14 @@ const EasyModification = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data } = await getCurrentUserSavedTracks();
-            console.log("fetching user tracks data");
-            setTracksData(data);
+            try {
+                const { data } = await getCurrentUserSavedTracks();
+                console.log("fetching user tracks data");
+                setTracksData(data);
+            }
+            catch {
+                setErrorFetchingTracks(true);
+            }
         };
         catchErrors(fetchData());
     }, []);
@@ -150,7 +167,7 @@ const EasyModification = () => {
             <StyledButton onClick={handleAddTracksToPlaylists}>Add those {selectedTracksUris.length} tracks to {selectedPlaylistsId.length} playlists</StyledButton>
             <StyledNewGrid>
                 <aside>
-                    {playlists === null ? <Loader /> :
+                    {playlists === null ? <ErrorOrLoader error={errorFetchingPlaylists} /> :
                         <>
                             <h3>There you can select your playlists</h3>
                             <PlaylistList
@@ -163,7 +180,7 @@ const EasyModification = () => {
                     }
                 </aside>
                 <section>
-                    {tracks === null ? <Loader /> :
+                    {tracks === null ? <ErrorOrLoader error={errorFetchingTracks} /> :
                         <>
                             <h3>There you can select your Tracks</h3>
                             <TrackCardList

@@ -23,6 +23,11 @@ const StyledTrackCard = styled.li<StyledTrackCardProps>`
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
+  @media (min-width: 1280px) {
+    grid-template-columns: 20px 2fr 2fr 1fr minmax(60px, 1fr);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
   &:hover,
   &:focus {
     background-color: var(--dark-grey);
@@ -59,6 +64,15 @@ const StyledTrackCard = styled.li<StyledTrackCardProps>`
   display: none;
 
   @media (min-width: 768px) {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+.track__item__popularity {
+  display: none;
+
+  @media (min-width: 1280px) {
     display: block;
     white-space: nowrap;
   }

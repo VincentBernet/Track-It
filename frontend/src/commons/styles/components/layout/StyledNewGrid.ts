@@ -9,8 +9,13 @@ const StyledNewGrid = styled.div<StyledNewtGridProps>`
 
 
   display: grid;
-  grid-template-columns: 500px auto;
+  grid-template-columns: 25% auto;
   gap: 20px;
+
+  @media (max-width: 1280px) {
+    margin: 15px 25px 0 25px;
+    grid-template-columns: 100%;
+  }
 
   aside{
     padding: 30px 30px 30px 30px;

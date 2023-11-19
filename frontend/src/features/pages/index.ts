@@ -1,10 +1,11 @@
-export { default as Login } from './Login';
-export { default as Profile } from './Profile';
-export { default as TopArtists } from './TopArtists';
-export { default as TopTracks } from './TopTracks';
-export { default as Playlists } from './Playlists';
-export { default as Playlist } from './Playlist';
+export { default as Login } from './login/Login';
+export { default as ErrorPage } from './not-found/NotFound';
 
-export { default as EasyModification } from './EasyModification';
+export { default as Profile } from './profile/Profile';
+export { default as EasyModification } from './easy-modification/EasyModification';
 
-export { default as ErrorPage } from './ErrorPage';
+export { default as Playlists } from './playlists/Playlists';
+export { default as Playlist } from './playlists/Playlist';
+
+export { default as TopArtists } from './top-artists/TopArtists';
+export { default as TopTracks } from './top-tracks/TopTracks';
