@@ -63,10 +63,17 @@ const EasyModification = () => {
         }
     }
 
-    const handleAddTracksToPlaylists = () => {
+    const handleAddTracksToPlaylists = async () => {
+        setSelectedPlaylistsId([]);
+        setSelectedTracksUris([]);
         for (const playlistId of selectedPlaylistsId) {
-            console.log("adding tracks to playlist " + playlistId);
-            catchErrors(postAddTracksToPlaylist(playlistId, selectedTracksUris));
+            try {
+                const { data } = await postAddTracksToPlaylist(playlistId, selectedTracksUris);
+                console.log("adding tracks to playlist, here the response : " + JSON.stringify(data));
+            }
+            catch {
+                console.log("error adding tracks to playlist");
+            }
         }
     }
 
