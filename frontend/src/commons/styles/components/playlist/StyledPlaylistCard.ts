@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 interface StyledPlaylistCardProps {
-    selected: boolean;
-    clickable: string;
+    $selected: boolean;
+    $clickable: boolean;
 }
 
 const StyledPlaylistCard = styled.li<StyledPlaylistCardProps>`
-    border: ${props => props.selected ? `1px solid var(--green)` : '1px solid transparent'};
-    cursor: ${props => props.clickable === "clickable" ? 'pointer' : 'default'};
+    border: ${props => props.$selected ? `1px solid var(--green)` : '1px solid transparent'};
+    cursor: ${props => props.$clickable ? 'pointer' : 'default'};
     border-radius: var(border-radius-pill);
     width: 250px;
 

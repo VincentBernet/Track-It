@@ -7,6 +7,8 @@ export { default as PlaylistsGrid } from './PlaylistsGrid';
 export { default as TimeRangeButtons } from './TimeRangeButtons';
 
 export { default as PlaylistCard } from './PlaylistCard';
+export { default as NotificationIcone } from './NotificationIcone';
+
 export { default as PlaylistList } from './PlaylistList';
 export { default as TrackCardList } from './TrackCardList';
 

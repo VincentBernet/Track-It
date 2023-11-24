@@ -8,7 +8,7 @@ interface ArtistsGridProps {
 const ArtistsGrid = ({ artists }: ArtistsGridProps) => (
     <>
         {artists && artists.length ? (
-            <StyledGrid type="artist">
+            <StyledGrid $type="artist">
                 {artists.map((artist, i) => (
                     <li className="grid__item" key={i}>
                         <div className="grid__item__inner">

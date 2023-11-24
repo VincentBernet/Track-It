@@ -26,23 +26,29 @@ export const StyledButton = styled.button`
 
 
 const EasyModification = () => {
-    /* Error fetching state */
-    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<boolean>(false);
-    const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean>(false);
-
-
-    /* For Fetching playlists */
+    /* Get Playlist : For Fetching playlists */
     const [playlistsData, setPlaylistsData] = useState<playlistsData | null>(null);
     const [playlists, setPlaylists] = useState<playlist[] | null>(null);
+    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<boolean>(false);
 
-
-    /* For Fetching tracks */
+    /* Get Tracks : For Fetching tracks */
     const [tracksData, setTracksData] = useState<tracksData | null>(null);
     const [tracks, setTracks] = useState<tracksDataItem[] | null>(null);
+    const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean>(false);
 
+    /* Mode : For switching between consultation and edition */
+    const [consultationMode, setConsultationMode] = useState<boolean>(false);
 
     /* For sending list IDs of selected playlists */
     const [selectedPlaylistsId, setSelectedPlaylistsId] = useState<string[]>([]);
+
+    /* For sending list Uri of selected tracks */
+    const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
+
+    /* Post status : For displaying success/error messages after adding tracks to playlists */
+    const [playlistAdditionSuccess, setPlaylistAdditionSuccess] = useState<string[]>([]);
+    const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
+
 
     const handleSelectedPlaylist = (id: string) => {
         if (selectedPlaylistsId.includes(id)) {
@@ -52,8 +58,10 @@ const EasyModification = () => {
         }
     }
 
-    /* For sending list Uri of selected playlists */
-    const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
+    const handleOnDelete = (idPlaylist: string) => {
+        console.log("handleOnDelete : ", idPlaylist);
+        setPlaylistAdditionSuccess([...playlistAdditionSuccess.filter((playlistId) => playlistId !== idPlaylist)]);
+    }
 
     const handleSelectedTracks = (uri: string) => {
         if (selectedTracksUris.includes(uri)) {
@@ -68,17 +76,16 @@ const EasyModification = () => {
         setSelectedTracksUris([]);
         for (const playlistId of selectedPlaylistsId) {
             try {
-                const { data } = await postAddTracksToPlaylist(playlistId, selectedTracksUris);
-                console.log("adding tracks to playlist, here the response : " + JSON.stringify(data));
+                await postAddTracksToPlaylist(playlistId, selectedTracksUris);
+                setPlaylistAdditionSuccess([...playlistAdditionSuccess, playlistId]);
             }
             catch {
-                console.log("error adding tracks to playlist");
+                setPlaylistAdditionFailure([...playlistAdditionFailure, playlistId]);
             }
         }
     }
 
     useEffect(() => {
-        // TODO : Delete this abberation, find another solution to change body styling in react
         document.body.style.backgroundColor = "black";
         const fetchData = async () => {
             try {
@@ -86,7 +93,6 @@ const EasyModification = () => {
                 setPlaylistsData(data);
             }
             catch (e) {
-                console.log("Getting error : " + e);
                 setErrorFetchingPlaylists(true);
             }
         };
@@ -118,7 +124,6 @@ const EasyModification = () => {
             ...(playlistsData.items)
         ]));
 
-        console.log("fetching more user playlists data")
         // Fetch next set of playlists as needed
         catchErrors(fetchMoreData());
 
@@ -128,7 +133,6 @@ const EasyModification = () => {
         const fetchData = async () => {
             try {
                 const { data } = await getCurrentUserSavedTracks();
-                console.log("fetching user tracks data");
                 setTracksData(data);
             }
             catch {
@@ -162,24 +166,40 @@ const EasyModification = () => {
             ...(tracksData.items)
         ]));
 
-        console.log("fetching more user tracks data")
         // Fetch next set of tracks as needed
         catchErrors(fetchMoreData());
 
     }, [tracksData]);
 
+    const handleSwitchMode = () => {
+        resetAllState();
+        setConsultationMode(!consultationMode);
+    }
+
+    const resetAllState = () => {
+        setSelectedPlaylistsId([]);
+        setSelectedTracksUris([]);
+        setPlaylistAdditionSuccess([]);
+        setPlaylistAdditionFailure([]);
+    }
+
 
     return (
         <>
-            <StyledButton onClick={handleAddTracksToPlaylists}>Add those {selectedTracksUris.length} tracks to {selectedPlaylistsId.length} playlists</StyledButton>
-            <StyledNewGrid>
+            {!consultationMode &&
+                <StyledButton onClick={handleAddTracksToPlaylists}>Add those {selectedTracksUris.length} tracks to {selectedPlaylistsId.length} playlists</StyledButton>
+            }
+            <StyledNewGrid $hasMoreMargin={consultationMode}>
                 <aside>
                     {playlists === null ? <ErrorOrLoader error={errorFetchingPlaylists} /> :
                         <>
                             <h3>There you can select your playlists</h3>
                             <PlaylistList
                                 playlists={playlists}
+                                consultationMode={consultationMode}
+                                playlistAdditionSuccess={playlistAdditionSuccess}
                                 selectedPlaylistsId={selectedPlaylistsId}
+                                handleOnDelete={handleOnDelete}
                                 handleSelected={handleSelectedPlaylist}
                             />
                             <button style={{ marginTop: "25px" }}>New Playlist</button>
@@ -189,7 +209,10 @@ const EasyModification = () => {
                 <section>
                     {tracks === null ? <ErrorOrLoader error={errorFetchingTracks} /> :
                         <>
-                            <h3>There you can select your Tracks</h3>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <h3>There you can select your Tracks</h3>
+                                <button onClick={() => handleSwitchMode()}>{consultationMode ? "Consultation mode" : "Edition mode"}</button>
+                            </div>
                             <TrackCardList
                                 tracks={tracks}
                                 selectedTracksUris={selectedTracksUris}
@@ -199,6 +222,13 @@ const EasyModification = () => {
                     }
                 </section>
             </StyledNewGrid >
+
+            {/* TODO : Display success/error messages after adding tracks to playlists */}
+            {playlistAdditionFailure.length > 0 && (
+                <p>
+                    Some playlists could not be updated, please try again.
+                </p>
+            )}
         </>
     );
 }

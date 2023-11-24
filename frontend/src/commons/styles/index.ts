@@ -11,6 +11,7 @@ export { default as StyledNewGrid } from './components/layout/StyledNewGrid';
 
 export { default as StyledRangeButtons } from './components/other/StyledRangeButtons';
 export { default as StyledDropdown } from './components/other/StyledDropdown';
+export { default as StyledAnimatedIcone } from './components/other/StyledAnimatedIcone';
 
 export { default as StyledListReset } from './components/other/StyledListReset';
 export { default as StyledTrackCard } from './components/track/StyledTrackCard';

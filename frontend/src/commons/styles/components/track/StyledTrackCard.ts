@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface StyledTrackCardProps {
-  selected: boolean;
-  clickable: string;
+  $selected: boolean;
+  $clickable: boolean;
 }
 
 const StyledTrackCard = styled.li<StyledTrackCardProps>`
@@ -13,10 +13,10 @@ const StyledTrackCard = styled.li<StyledTrackCardProps>`
   padding: var(--spacing-xs);
   color: var(--light-grey);
   font-size: var(--fz-sm);
-  border: ${props => props.selected ? `1px solid var(--green)` : '1px solid transparent'};
+  border: ${props => props.$selected ? `1px solid var(--green)` : '1px solid transparent'};
   border-radius: var(--border-radius-subtle);
   transition: background-color 0.3s ease;
-  cursor: ${props => props.clickable === "clickable" ? 'pointer' : 'default'};
+  cursor: ${props => props.$clickable ? 'pointer' : 'default'};
 
   @media (min-width: 768px) {
     grid-template-columns: 20px 4fr 2fr minmax(60px, 1fr);

@@ -13,8 +13,8 @@ interface TrackCardProps {
 const TrackCard = ({ track, index, handleSelectedTracks, clickable = false, isSelected = false }: TrackCardProps) => {
     return (
         <StyledTrackCard
-            selected={isSelected}
-            clickable={clickable ? "clickable" : ""}
+            $selected={isSelected}
+            $clickable={clickable}
             onClick={() => ((clickable && handleSelectedTracks) && handleSelectedTracks(track.uri))}
         >
             <div className="track__item__num">{index + 1}</div>

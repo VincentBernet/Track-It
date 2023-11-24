@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 
 type StyledBarProps = {
-  delay: string;
+  $delay: string;
 };
 
 const dance = keyframes`
@@ -47,17 +47,17 @@ const StyledBar = styled.div<StyledBarProps>`
   animation-direction: alternate;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-delay: ${props => props.delay || '0ms'};
+  animation-delay: ${props => props.$delay || '0ms'};
 `;
 
 const Loader = () => (
   <StyledLoader>
     <div className="bars">
-      <StyledBar delay="250ms" />
-      <StyledBar delay="715ms" />
-      <StyledBar delay="475ms" />
-      <StyledBar delay="25ms" />
-      <StyledBar delay="190ms" />
+      <StyledBar $delay="250ms" />
+      <StyledBar $delay="715ms" />
+      <StyledBar $delay="475ms" />
+      <StyledBar $delay="25ms" />
+      <StyledBar $delay="190ms" />
     </div>
   </StyledLoader>
 );

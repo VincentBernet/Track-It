@@ -1,25 +1,32 @@
-import { PlaylistCard } from ".";
+import { PlaylistCard } from "./index";
 import { playlist } from "../spotify/responsesTypes";
 import { StyledListReset } from "../styles";
 
 interface PlaylistListProps {
     playlists: playlist[];
     selectedPlaylistsId: string[];
+    playlistAdditionSuccess: string[];
     handleSelected: (id: string) => void;
+    handleOnDelete: (idPlaylist: string) => void;
+    consultationMode?: boolean;
 }
 
-const PlaylistList = ({ playlists, selectedPlaylistsId, handleSelected }: PlaylistListProps) => {
+const PlaylistList = ({ playlists, selectedPlaylistsId, playlistAdditionSuccess, consultationMode = true, handleSelected, handleOnDelete }: PlaylistListProps) => {
     return (
         <>
             {playlists && playlists.length ? (
                 <StyledListReset>
                     {playlists.map((playlist) => (
                         <PlaylistCard
-                            playlist={playlist}
                             key={playlist.id}
-                            selectedPlaylistsId={selectedPlaylistsId}
-                            clickable={true}
-                            handleSelected={handleSelected} />
+                            playlist={playlist}
+                            clickable
+                            consultationMode={consultationMode}
+                            isSelected={selectedPlaylistsId.includes(playlist.id)}
+                            displayNotification={playlistAdditionSuccess.includes(playlist.id)}
+                            handleOnDelete={handleOnDelete}
+                            handleSelected={handleSelected}
+                        />
                     ))}
                 </StyledListReset>
             ) : (
