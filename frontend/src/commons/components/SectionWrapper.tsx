@@ -14,9 +14,14 @@ const SectionWrapper = ({ children, title, seeAllLink, breadcrumb }: SectionWrap
             <div className="section__top">
                 <h2 className="section__heading">
                     {breadcrumb && (
-                        <span className="section__breadcrumb">
-                            <Link to="/">Profile</Link>
-                        </span>
+                        <>
+                            <span className="section__breadcrumb">
+                                <Link to="/">Edition</Link>
+                            </span>
+                            <span className="section__breadcrumb">
+                                <Link to="/profile">Profile</Link>
+                            </span>
+                        </>
                     )}
                     {title && (
                         <>

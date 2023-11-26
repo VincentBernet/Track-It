@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, getCurrentUserPlaylists, getCurrentUserTopArtists, getCurrentUserTopTracks } from '../../../commons/spotify/requests';
-import { StyledHeader } from '../../../commons/styles';
 import { profileData, playlistsData, topArtistsData, topTracksData } from '../../../commons/spotify/responsesTypes';
-import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid, ErrorOrLoader } from '../../../commons/components';
+import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid, ErrorOrLoader, Layout } from '../../../commons/components';
+import { StyledHeader } from '../../../commons/styles';
 
 const Profile = () => {
     const [profile, setProfile] = useState<profileData | null>(null);
@@ -44,12 +44,14 @@ const Profile = () => {
 
     if (!profile) {
         return (
-            <ErrorOrLoader error={errorFetchingProfile} />
+            <Layout>
+                <ErrorOrLoader error={errorFetchingProfile} />
+            </Layout>
         );
     }
 
     return (
-        <>
+        <Layout extraHeader={
             <StyledHeader $type="user">
                 <div className="header__inner">
                     {profile.images.length && profile.images[0].url && (
@@ -69,9 +71,9 @@ const Profile = () => {
                     </div>
                 </div>
             </StyledHeader>
-
+        }>
             {topArtists && topTracks && playlists ? (
-                <main>
+                <>
                     <SectionWrapper title="Top artists this month" seeAllLink="/top-artists">
                         <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
                     </SectionWrapper>
@@ -81,11 +83,11 @@ const Profile = () => {
                     <SectionWrapper title="Playlists" seeAllLink="/playlists">
                         <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
                     </SectionWrapper>
-                </main>
+                </>
             ) : (
                 <ErrorOrLoader error={errorFetchingOther} />
             )}
-        </>
+        </Layout>
     )
 };
 

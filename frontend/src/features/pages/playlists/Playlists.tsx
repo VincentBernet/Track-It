@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCurrentUserPlaylists } from '../../../commons/spotify/requests';
 import { catchErrors } from '../../../commons/utils';
-import { SectionWrapper, PlaylistsGrid, ErrorOrLoader } from '../../../commons/components';
+import { SectionWrapper, PlaylistsGrid, ErrorOrLoader, Layout } from '../../../commons/components';
 import { playlist, playlistsData } from "../../../commons/spotify/responsesTypes";
 import axios from 'axios';
 
@@ -62,11 +62,11 @@ const Playlists = () => {
     }
 
     return (
-        <main>
+        <Layout>
             <SectionWrapper title="Public Playlists" breadcrumb>
                 <PlaylistsGrid playlists={playlists} />
             </SectionWrapper>
-        </main>
+        </Layout>
     );
 };
 

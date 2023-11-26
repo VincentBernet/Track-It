@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { topTracksData } from "../../../commons/spotify/responsesTypes";
 import { getCurrentUserTopTracks } from "../../../commons/spotify/requests";
-import { ErrorOrLoader, SectionWrapper, TimeRangeButtons, TrackList } from "../../../commons/components";
+import { ErrorOrLoader, Layout, SectionWrapper, TimeRangeButtons, TrackList } from "../../../commons/components";
 
 const TopTracks = () => {
     const [topTracks, setTopTracks] = useState<topTracksData | null>(null);
@@ -24,17 +24,19 @@ const TopTracks = () => {
 
     if (!topTracks) {
         return (
-            <ErrorOrLoader error={errorFetchingTracks} />
+            <Layout>
+                <ErrorOrLoader error={errorFetchingTracks} />
+            </Layout>
         );
     }
 
     return (
-        <main>
+        <Layout>
             <SectionWrapper title="Top tracks this month" breadcrumb>
                 <TimeRangeButtons timeRange={timeRange} handleClick={setTimeRange} />
                 <TrackList tracks={topTracks.items} />
             </SectionWrapper>
-        </main>
+        </Layout>
     );
 }
 

@@ -5,7 +5,7 @@ import { getPlaylistById, getAudioFeaturesForTracks } from '../../../commons/spo
 import { StyledDropdown, StyledHeader } from '../../../commons/styles';
 import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../../commons/spotify/responsesTypes';
 import axios from 'axios';
-import { ErrorOrLoader, SectionWrapper, TrackList } from '../../../commons/components';
+import { ErrorOrLoader, Layout, SectionWrapper, TrackList } from '../../../commons/components';
 
 
 const Playlist = () => {
@@ -115,12 +115,14 @@ const Playlist = () => {
 
     if (!playlist) {
         return (
-            <ErrorOrLoader error={errorFetchingPlaylist} />
+            <Layout>
+                <ErrorOrLoader error={errorFetchingPlaylist} />
+            </Layout>
         );
     }
 
     return (
-        <>
+        <Layout extraHeader={
             <StyledHeader>
                 <div className="header__inner">
                     {playlist.images.length && playlist.images[0].url ? (
@@ -138,30 +140,28 @@ const Playlist = () => {
                     </div>
                 </div>
             </StyledHeader>
-
-            <main>
-                <SectionWrapper title="Playlist" breadcrumb>
-                    <StyledDropdown $activeoption={!!sortValue}>
-                        <label className="sr-only" htmlFor="order-select">Sort tracks</label>
-                        <select
-                            name="track-order"
-                            id="order-select"
-                            onChange={e => setSortValue(e.target.value)}
-                        >
-                            <option value="">Sort tracks</option>
-                            {sortOptions.map((option, i) => (
-                                <option value={option} key={i}>
-                                    {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                                </option>
-                            ))}
-                        </select>
-                    </StyledDropdown>
-                    {sortedTracks && (
-                        <TrackList tracks={sortedTracks} />
-                    )}
-                </SectionWrapper>
-            </main>
-        </>
+        }>
+            <SectionWrapper title="Playlist" breadcrumb>
+                <StyledDropdown $activeoption={!!sortValue}>
+                    <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                    <select
+                        name="track-order"
+                        id="order-select"
+                        onChange={e => setSortValue(e.target.value)}
+                    >
+                        <option value="">Sort tracks</option>
+                        {sortOptions.map((option, i) => (
+                            <option value={option} key={i}>
+                                {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                            </option>
+                        ))}
+                    </select>
+                </StyledDropdown>
+                {sortedTracks && (
+                    <TrackList tracks={sortedTracks} />
+                )}
+            </SectionWrapper>
+        </Layout>
     )
 }
 

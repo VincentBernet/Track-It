@@ -4,7 +4,7 @@ interface StyledHeaderProps {
   $type?: 'user';
 }
 
-const StyledHeader = styled.header<StyledHeaderProps>`
+const StyledHeader = styled.div<StyledHeaderProps>`
   display: flex;
   align-items: flex-end;
   position: relative;

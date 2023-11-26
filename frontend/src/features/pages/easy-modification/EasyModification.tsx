@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ErrorOrLoader, PlaylistList, TrackCardList } from '../../../commons/components';
+import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader } from '../../../commons/components';
 import { StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ export const StyledButton = styled.button`
   font-weight: 700;
   font-size: var(--fz-lg);
   padding: var(--spacing-sm) var(--spacing-xl);
-  margin: 100px 50px 0 50px;
+  margin: 0px 50px 0 50px;
 
   &:hover,
   &:focus {
@@ -86,7 +86,6 @@ const EasyModification = () => {
     }
 
     useEffect(() => {
-        document.body.style.backgroundColor = "black";
         const fetchData = async () => {
             try {
                 const { data } = await getCurrentUserPlaylists();
@@ -183,9 +182,11 @@ const EasyModification = () => {
         setPlaylistAdditionFailure([]);
     }
 
-
     return (
-        <>
+        <Layout
+            extraHeader={<EasyModificationHeader />}
+            bodyColor={"black"}
+        >
             {!consultationMode &&
                 <StyledButton onClick={handleAddTracksToPlaylists}>Add those {selectedTracksUris.length} tracks to {selectedPlaylistsId.length} playlists</StyledButton>
             }
@@ -193,7 +194,7 @@ const EasyModification = () => {
                 <aside>
                     {playlists === null ? <ErrorOrLoader error={errorFetchingPlaylists} /> :
                         <>
-                            <h3>There you can select your playlists</h3>
+                            <h3 style={{ marginBottom: '10px' }}>There you can select your playlists</h3>
                             <PlaylistList
                                 playlists={playlists}
                                 consultationMode={consultationMode}
@@ -209,7 +210,7 @@ const EasyModification = () => {
                 <section>
                     {tracks === null ? <ErrorOrLoader error={errorFetchingTracks} /> :
                         <>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
                                 <h3>There you can select your Tracks</h3>
                                 <button onClick={() => handleSwitchMode()}>{consultationMode ? "Consultation mode" : "Edition mode"}</button>
                             </div>
@@ -229,7 +230,7 @@ const EasyModification = () => {
                     Some playlists could not be updated, please try again.
                 </p>
             )}
-        </>
+        </Layout>
     );
 }
 

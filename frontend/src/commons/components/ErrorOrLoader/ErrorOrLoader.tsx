@@ -1,5 +1,5 @@
 import Error from './Error';
-import { Loader } from '.';
+import { Loader } from '..';
 
 const ErrorOrLoader = ({ error }: { error: boolean }) => {
     if (error) {

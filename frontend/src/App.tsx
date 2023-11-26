@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { accessToken, logout } from "./commons/spotify/auth";
+import { accessToken } from "./commons/spotify/auth";
 import {
   BrowserRouter,
   Route,
   Routes,
 } from "react-router-dom";
 import { EasyModification, ErrorPage, Login, Playlist, Playlists, Profile, TopArtists, TopTracks } from './features/pages';
-import { NotFound, LogoutButton } from './commons/components';
+import { NotFound } from './commons/components';
 
 const App = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -23,14 +23,13 @@ const App = () => {
   if (token) {
     return (
       <BrowserRouter>
-        <LogoutButton logout={logout} />
         <Routes>
-          <Route path="/" element={<Profile />} />
+          <Route path="/" element={<EasyModification />} />
           <Route path="/playlists/:id" element={<Playlist />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/top-artists" element={<TopArtists />} />
           <Route path="/top-tracks" element={<TopTracks />} />
-          <Route path="/easy-modification" element={<EasyModification />} />
+          <Route path="/profile" element={<Profile />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>
