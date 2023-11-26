@@ -72,7 +72,7 @@ export const getAudioFeaturesForTracks = (ids: string) => {
  * @returns {Promise}
  */
 export const getCurrentUserSavedTracks = (limit: number = 50) => {
-    return axios.get(`me/tracks?limits=${limit}`);
+    return axios.get(`me/tracks?limit=${limit}`);
 };
 
 /**

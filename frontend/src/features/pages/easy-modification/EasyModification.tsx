@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader } from '../../../commons/components';
+import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification } from '../../../commons/components';
 import { StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -58,9 +58,8 @@ const EasyModification = () => {
         }
     }
 
-    const handleOnDelete = (idPlaylist: string) => {
-        console.log("handleOnDelete : ", idPlaylist);
-        setPlaylistAdditionSuccess([...playlistAdditionSuccess.filter((playlistId) => playlistId !== idPlaylist)]);
+    const handleOnDelete = () => {
+        setPlaylistAdditionSuccess([]);
     }
 
     const handleSelectedTracks = (uri: string) => {
@@ -72,17 +71,20 @@ const EasyModification = () => {
     }
 
     const handleAddTracksToPlaylists = async () => {
-        setSelectedPlaylistsId([]);
-        setSelectedTracksUris([]);
+        resetAllState();
+        const playlistAdditionSuccessTemp: string[] = [];
+        const playlistAdditionFailureTemp: string[] = [];
         for (const playlistId of selectedPlaylistsId) {
             try {
                 await postAddTracksToPlaylist(playlistId, selectedTracksUris);
-                setPlaylistAdditionSuccess([...playlistAdditionSuccess, playlistId]);
+                playlistAdditionSuccessTemp.push(playlistId);
             }
             catch {
-                setPlaylistAdditionFailure([...playlistAdditionFailure, playlistId]);
+                playlistAdditionFailureTemp.push(playlists?.find((playlist) => playlist.id === playlistId)?.name || "");
             }
         }
+        setPlaylistAdditionSuccess(playlistAdditionSuccessTemp);
+        setPlaylistAdditionFailure(playlistAdditionFailureTemp);
     }
 
     useEffect(() => {
@@ -226,9 +228,9 @@ const EasyModification = () => {
 
             {/* TODO : Display success/error messages after adding tracks to playlists */}
             {playlistAdditionFailure.length > 0 && (
-                <p>
-                    Some playlists could not be updated, please try again.
-                </p>
+                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                </TemporaryComponent>
             )}
         </Layout>
     );

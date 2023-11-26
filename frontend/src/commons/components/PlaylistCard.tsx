@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router";
-import { NotificationIcone } from ".";
+import { TemporaryComponent } from "./index";
 import { playlist } from "../spotify/responsesTypes";
-import { StyledPlaylistCard } from "../styles";
+import { StyledAnimatedIcone, StyledPlaylistCard } from "../styles";
 
 interface PlaylistCardProps {
     playlist: playlist,
-    handleOnDelete: (idPlaylist: string) => void;
+    handleOnDelete: () => void;
     consultationMode?: boolean,
     clickable?: boolean,
     isSelected?: boolean,
@@ -23,7 +23,6 @@ const PlaylistCard = ({
     handleSelected = () => { } }: PlaylistCardProps) => {
     const navigate = useNavigate();
 
-
     return (
         <StyledPlaylistCard $selected={isSelected} $clickable={clickable}
             onClick={() => clickable && (!consultationMode ? handleSelected(playlist.id) : navigate(`/playlists/${playlist.id}`))}>
@@ -34,7 +33,11 @@ const PlaylistCard = ({
             <span className={'playlistName'}>
                 {playlist.name}
             </span>
-            <NotificationIcone displayNotification={displayNotification} idPlaylist={playlist.id} handleOnDelete={handleOnDelete} />
+            {displayNotification &&
+                <TemporaryComponent handleOnDelete={handleOnDelete}>
+                    <StyledAnimatedIcone src={"./images/check.png"} alt={"check"} />
+                </TemporaryComponent>
+            }
         </StyledPlaylistCard>
     )
 };

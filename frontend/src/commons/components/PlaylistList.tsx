@@ -7,11 +7,11 @@ interface PlaylistListProps {
     selectedPlaylistsId: string[];
     playlistAdditionSuccess: string[];
     handleSelected: (id: string) => void;
-    handleOnDelete: (idPlaylist: string) => void;
+    handleOnDelete: () => void;
     consultationMode?: boolean;
 }
 
-const PlaylistList = ({ playlists, selectedPlaylistsId, playlistAdditionSuccess, consultationMode = true, handleSelected, handleOnDelete }: PlaylistListProps) => {
+const PlaylistList = ({ playlists, selectedPlaylistsId, playlistAdditionSuccess, consultationMode, handleSelected, handleOnDelete }: PlaylistListProps) => {
     return (
         <>
             {playlists && playlists.length ? (
