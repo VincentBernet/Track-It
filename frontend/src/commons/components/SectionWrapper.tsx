@@ -4,25 +4,26 @@ import { StyledSection } from '../styles';
 interface SectionWrapperProps {
     children: React.ReactNode,
     title: string,
+    extra?: React.ReactNode,
     seeAllLink?: string,
-    breadcrumb?: boolean
+    links?: {
+        title: string,
+        link: string,
+    }[],
 }
 
-const SectionWrapper = ({ children, title, seeAllLink, breadcrumb }: SectionWrapperProps) => (
+const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links }: SectionWrapperProps) => (
     <StyledSection>
         <div className="section__inner">
             <div className="section__top">
                 <h2 className="section__heading">
-                    {breadcrumb && (
-                        <>
-                            <span className="section__breadcrumb">
-                                <Link to="/">Edition</Link>
-                            </span>
-                            <span className="section__breadcrumb">
-                                <Link to="/profile">Profile</Link>
-                            </span>
-                        </>
-                    )}
+                    {links && links.map((link, i) => (
+                        <span key={i} className="section__breadcrumb">
+                            <Link to={`/${link.link}`}>
+                                {link.title}
+                            </Link>
+                        </span>))
+                    }
                     {title && (
                         <>
                             {seeAllLink ? (
@@ -33,6 +34,7 @@ const SectionWrapper = ({ children, title, seeAllLink, breadcrumb }: SectionWrap
                         </>
                     )}
                 </h2>
+                {extra}
                 {seeAllLink && (
                     <Link to={seeAllLink} className="section__see-all">See All</Link>
                 )}
@@ -40,7 +42,7 @@ const SectionWrapper = ({ children, title, seeAllLink, breadcrumb }: SectionWrap
 
             {children}
         </div>
-    </StyledSection>
+    </StyledSection >
 );
 
 export default SectionWrapper;

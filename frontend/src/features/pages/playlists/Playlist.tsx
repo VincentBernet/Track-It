@@ -113,6 +113,12 @@ const Playlist = () => {
 
     }, [tracksData]);
 
+    const links = [
+        { link: "", title: "Easy-Modification" },
+        { link: "profile", title: "Profile" },
+        { link: "playlists", title: "Playlists" },
+    ];
+
     if (!playlist) {
         return (
             <Layout>
@@ -141,7 +147,7 @@ const Playlist = () => {
                 </div>
             </StyledHeader>
         }>
-            <SectionWrapper title="Playlist" breadcrumb>
+            <SectionWrapper title="Playlist" links={links} extra={
                 <StyledDropdown $activeoption={!!sortValue}>
                     <label className="sr-only" htmlFor="order-select">Sort tracks</label>
                     <select
@@ -157,6 +163,7 @@ const Playlist = () => {
                         ))}
                     </select>
                 </StyledDropdown>
+            }>
                 {sortedTracks && (
                     <TrackList tracks={sortedTracks} />
                 )}

@@ -23,6 +23,8 @@ const TopArtists = () => {
         fetchData();
     }, [timeRange]);
 
+    const links = [{ link: "", title: "Easy-Modification" }, { link: "profile", title: "Profile" }];
+
     if (!topArtists) {
         return (
             <Layout>
@@ -33,8 +35,8 @@ const TopArtists = () => {
 
     return (
         <Layout>
-            <SectionWrapper title="Top artists this month" breadcrumb>
-                <TimeRangeButtons timeRange={timeRange} handleClick={setTimeRange} />
+            <SectionWrapper title="Top artists this month" extra={<TimeRangeButtons timeRange={timeRange} handleClick={setTimeRange} />
+            } links={links}>
                 <ArtistsGrid artists={topArtists.items} />
             </SectionWrapper>
         </Layout>

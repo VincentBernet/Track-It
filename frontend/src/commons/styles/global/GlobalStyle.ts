@@ -78,11 +78,6 @@ const GlobalStyle = createGlobalStyle`
     vertical-align: middle;
   }
 
-  main {
-    position: relative;
-    padding: var(--spacing-xxl) 0;
-  }
-
   .app {
     min-height: 100vh;
   }

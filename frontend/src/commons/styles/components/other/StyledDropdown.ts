@@ -5,9 +5,6 @@ interface StyledDropdownProps {
 }
 
 const StyledDropdown = styled.div<StyledDropdownProps>`
-  position: absolute;
-  top: 0;
-  right: var(--spacing-md);
   z-index: 1;
 
   @media (min-width: 768px) {
@@ -16,7 +13,7 @@ const StyledDropdown = styled.div<StyledDropdownProps>`
 
   &:after {
     content: '';
-    top: 15px;
+    top: 14px;
     right: var(--spacing-sm);
     position: absolute;
     width: 0;

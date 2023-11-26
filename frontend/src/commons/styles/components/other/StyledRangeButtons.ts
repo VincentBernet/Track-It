@@ -7,9 +7,6 @@ const StyledRangeButtons = styled.ul`
   padding: 0;
 
   @media (min-width: 768px) {
-    position: absolute;
-    top: 0;
-    right: var(--spacing-xxl);
     margin-bottom: 0;
   }
 

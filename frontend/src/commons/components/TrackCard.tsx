@@ -1,6 +1,7 @@
 import { formatDuration } from '../utils';
 import { track } from '../spotify/responsesTypes';
 import { StyledTrackCard } from '../styles';
+import { useNavigate } from 'react-router-dom';
 
 interface TrackCardProps {
     track: track;
@@ -8,14 +9,16 @@ interface TrackCardProps {
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
     clickable?: boolean;
+    consultationMode?: boolean;
 }
 
-const TrackCard = ({ track, index, handleSelectedTracks, clickable = false, isSelected = false }: TrackCardProps) => {
+const TrackCard = ({ track, index, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+    const navigate = useNavigate();
     return (
         <StyledTrackCard
             $selected={isSelected}
             $clickable={clickable}
-            onClick={() => ((clickable && handleSelectedTracks) && handleSelectedTracks(track.uri))}
+            onClick={() => clickable && (!consultationMode ? handleSelectedTracks(track.uri) : navigate(`/track/${track.id}`))}
         >
             <div className="track__item__num">{index + 1}</div>
             <div className="track__item__title-group">

@@ -84,3 +84,13 @@ export const getCurrentUserSavedTracks = (limit: number = 50) => {
 export const postAddTracksToPlaylist = (playlist_id: string, uris: string[]) => {
     return axios.post(`/playlists/${playlist_id}/tracks?uris=${uris.join(',')}`);
 };
+
+/**
+ * Get a Track
+ * https://developer.spotify.com/documentation/web-api/reference/get-track
+ * @param {string} track_id - The Spotify ID for the track.
+ * @returns {Promise}
+ */
+export const getTrackById = (track_id: string) => {
+    return axios.get(`/tracks/${track_id}`);
+}

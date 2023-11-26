@@ -12,17 +12,17 @@ const StyledSection = styled.section`
     max-width: var(--site-max-width);
     margin: 0 auto;
     position: relative;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-lg) 0;
 
     @media (min-width: 768px) {
-      padding: var(--spacing-xl) var(--spacing-xxl);
+      padding: var(--spacing-xl) 0;
     }
   }
 
   .section__top {
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     margin-bottom: var(--spacing-xl);
   }
 

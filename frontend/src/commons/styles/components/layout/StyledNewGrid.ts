@@ -5,7 +5,7 @@ interface StyledNewtGridProps {
 }
 
 const StyledNewGrid = styled.div<StyledNewtGridProps>`
-  margin: ${props => props.$hasMoreMargin ? "61px 50px 0 50px" : "15px 50px 0 50px"};
+  margin-top: ${props => props.$hasMoreMargin ? "61px" : "15px"};
   background: var(--new-black);
 
 
@@ -14,7 +14,7 @@ const StyledNewGrid = styled.div<StyledNewtGridProps>`
   gap: 20px;
 
   @media (max-width: 1280px) {
-    margin: 15px 25px 0 25px;
+    margin: 15px 0 0 20;
     grid-template-columns: 100%;
   }
 

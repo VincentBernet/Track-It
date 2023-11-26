@@ -51,7 +51,7 @@ const Profile = () => {
     }
 
     return (
-        <Layout extraHeader={
+        <Layout fixedMainMargin='64px 19% 64px 19%' extraHeader={
             <StyledHeader $type="user">
                 <div className="header__inner">
                     {profile.images.length && profile.images[0].url && (

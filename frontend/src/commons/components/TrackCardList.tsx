@@ -6,9 +6,11 @@ interface TrackCardListProps {
     tracks: tracksDataItem[];
     selectedTracksUris: string[];
     handleSelectedTracks: (id: string) => void;
+    consultationMode?: boolean;
+
 }
 
-const TrackCardList = ({ tracks, selectedTracksUris, handleSelectedTracks }: TrackCardListProps) => (
+const TrackCardList = ({ tracks, selectedTracksUris, handleSelectedTracks, consultationMode }: TrackCardListProps) => (
     <>
         {tracks && tracks.length ? (
             <StyledListReset>
@@ -18,6 +20,7 @@ const TrackCardList = ({ tracks, selectedTracksUris, handleSelectedTracks }: Tra
                         key={track.id + i}
                         index={i}
                         clickable
+                        consultationMode={consultationMode}
                         isSelected={selectedTracksUris.includes(track.uri)}
                         handleSelectedTracks={handleSelectedTracks}
                     />

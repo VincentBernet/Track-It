@@ -7,7 +7,7 @@ interface TrackListProps {
     clickable?: boolean;
 }
 
-const TrackList = ({ tracks, clickable = false }: TrackListProps) => (
+const TrackList = ({ tracks, clickable }: TrackListProps) => (
     <>
         {tracks && tracks.length ? (
             <StyledListReset>

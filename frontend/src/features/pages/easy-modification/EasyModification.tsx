@@ -15,7 +15,6 @@ export const StyledButton = styled.button`
   font-weight: 700;
   font-size: var(--fz-lg);
   padding: var(--spacing-sm) var(--spacing-xl);
-  margin: 0px 50px 0 50px;
 
   &:hover,
   &:focus {
@@ -190,13 +189,28 @@ const EasyModification = () => {
             bodyColor={"black"}
         >
             {!consultationMode &&
-                <StyledButton onClick={handleAddTracksToPlaylists}>Add those {selectedTracksUris.length} tracks to {selectedPlaylistsId.length} playlists</StyledButton>
+                <StyledButton onClick={handleAddTracksToPlaylists}>
+                    {
+                        // TODO : reformater cette immondice de ternaire ^^'
+                        selectedTracksUris.length === 0 && selectedPlaylistsId.length === 0 ?
+                            "First select tracks and playlists bellow" :
+                            selectedPlaylistsId.length === 0 ?
+                                "Then select the playlist where you want to add the tracks" :
+                                selectedTracksUris.length === 0 ?
+                                    "Then select the tracks to be added" :
+                                    selectedTracksUris.length === 1 ?
+                                        `Add 1 track to ${selectedPlaylistsId.length} playlist` :
+                                        selectedPlaylistsId.length === 1 ?
+                                            `Add ${selectedTracksUris.length} tracks to 1 playlist` :
+                                            `Add ${selectedTracksUris.length} tracks to ${selectedPlaylistsId.length} playlists`
+                    }
+                </StyledButton>
             }
             <StyledNewGrid $hasMoreMargin={consultationMode}>
                 <aside>
                     {playlists === null ? <ErrorOrLoader error={errorFetchingPlaylists} /> :
                         <>
-                            <h3 style={{ marginBottom: '10px' }}>There you can select your playlists</h3>
+                            <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
                             <PlaylistList
                                 playlists={playlists}
                                 consultationMode={consultationMode}
@@ -213,11 +227,12 @@ const EasyModification = () => {
                     {tracks === null ? <ErrorOrLoader error={errorFetchingTracks} /> :
                         <>
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
-                                <h3>There you can select your Tracks</h3>
+                                <h3>Your Tracks</h3>
                                 <button onClick={() => handleSwitchMode()}>{consultationMode ? "Consultation mode" : "Edition mode"}</button>
                             </div>
                             <TrackCardList
                                 tracks={tracks}
+                                consultationMode={consultationMode}
                                 selectedTracksUris={selectedTracksUris}
                                 handleSelectedTracks={handleSelectedTracks}
                             />
@@ -226,7 +241,6 @@ const EasyModification = () => {
                 </section>
             </StyledNewGrid >
 
-            {/* TODO : Display success/error messages after adding tracks to playlists */}
             {playlistAdditionFailure.length > 0 && (
                 <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
                     <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />

@@ -22,6 +22,8 @@ const TopTracks = () => {
         fetchData();
     }, [timeRange]);
 
+    const links = [{ link: "", title: "Easy-Modification" }, { link: "profile", title: "Profile" }];
+
     if (!topTracks) {
         return (
             <Layout>
@@ -32,8 +34,9 @@ const TopTracks = () => {
 
     return (
         <Layout>
-            <SectionWrapper title="Top tracks this month" breadcrumb>
+            <SectionWrapper title="Top tracks this month" links={links} extra={
                 <TimeRangeButtons timeRange={timeRange} handleClick={setTimeRange} />
+            }>
                 <TrackList tracks={topTracks.items} />
             </SectionWrapper>
         </Layout>
