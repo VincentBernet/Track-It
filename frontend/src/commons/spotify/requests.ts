@@ -94,3 +94,28 @@ export const postAddTracksToPlaylist = (playlist_id: string, uris: string[]) => 
 export const getTrackById = (track_id: string) => {
     return axios.get(`/tracks/${track_id}`);
 }
+
+/**
+ * Get a recommendation, based on seed artists, tracks and genres.
+ * https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+ * @param {string} tracksId - The Spotify ID for the track.
+ * @param {string} artistsId - The Spotify ID for the track.
+ * @param {string} genres - The Spotify ID for the track.
+ * @returns {Promise}
+ */
+export const getRecommendations = ({ tracksId, artistsId, genres }: { tracksId?: string[], artistsId?: string[], genres?: string[] }) => {
+    if (!tracksId && !artistsId && !genres) {
+        throw new Error('At least one of tracksId, artistsId or genres must be provided');
+    }
+    let params = "";
+    if (tracksId) {
+        params += `seed_tracks=${tracksId.join(',')}`;
+    }
+    if (artistsId) {
+        params += `seed_artists=${artistsId.join(',')}`;
+    }
+    if (genres) {
+        params += `seed_genres=${genres.join(',')}`;
+    }
+    return axios.get(`/recommendations?${params}`);
+}

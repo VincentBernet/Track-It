@@ -42,18 +42,7 @@ export interface track {
         };
         type: string;
         uri: string;
-        artists: [
-            {
-                external_urls: {
-                    spotify: string;
-                };
-                href: string;
-                id: string;
-                name: string;
-                type: string;
-                uri: string;
-            }
-        ]
+        artists: artist[];
     };
     artists: artist[];
     disc_number: number;
@@ -182,4 +171,16 @@ export interface tracksData {
     previous: string;
     total: number;
     items: tracksDataItem[];
+}
+
+export interface recommendations {
+    seeds: {
+        afterFilteringSize: number;
+        afterRelinkingSize: number;
+        href: string;
+        id: string;
+        initialPoolSize: number;
+        type: string;
+    }[];
+    tracks: track[];
 }

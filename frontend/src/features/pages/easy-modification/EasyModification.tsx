@@ -1,27 +1,10 @@
-import styled from 'styled-components';
-import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification } from '../../../commons/components';
-import { StyledNewGrid } from '../../../commons/styles';
+import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton } from '../../../commons/components';
+import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
 import { playlist, playlistsData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
 import { catchErrors } from '../../../commons/utils';
-
-export const StyledButton = styled.button`
-  display: inline-block;
-  background-color: var(--green);
-  color: var(--white);
-  border-radius: var(--border-radius-pill);
-  font-weight: 700;
-  font-size: var(--fz-lg);
-  padding: var(--spacing-sm) var(--spacing-xl);
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    filter: brightness(1.1);
-  }
-`;
 
 
 const EasyModification = () => {
@@ -36,7 +19,7 @@ const EasyModification = () => {
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean>(false);
 
     /* Mode : For switching between consultation and edition */
-    const [consultationMode, setConsultationMode] = useState<boolean>(false);
+    const [consultationMode, setConsultationMode] = useState<boolean>(true);
 
     /* For sending list IDs of selected playlists */
     const [selectedPlaylistsId, setSelectedPlaylistsId] = useState<string[]>([]);
@@ -189,7 +172,7 @@ const EasyModification = () => {
             bodyColor={"black"}
         >
             {!consultationMode &&
-                <StyledButton onClick={handleAddTracksToPlaylists}>
+                <StyledGreenButton onClick={handleAddTracksToPlaylists}>
                     {
                         // TODO : reformater cette immondice de ternaire ^^'
                         selectedTracksUris.length === 0 && selectedPlaylistsId.length === 0 ?
@@ -204,7 +187,7 @@ const EasyModification = () => {
                                             `Add ${selectedTracksUris.length} tracks to 1 playlist` :
                                             `Add ${selectedTracksUris.length} tracks to ${selectedPlaylistsId.length} playlists`
                     }
-                </StyledButton>
+                </StyledGreenButton>
             }
             <StyledNewGrid $hasMoreMargin={consultationMode}>
                 <aside>
@@ -228,7 +211,7 @@ const EasyModification = () => {
                         <>
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
                                 <h3>Your Tracks</h3>
-                                <button onClick={() => handleSwitchMode()}>{consultationMode ? "Consultation mode" : "Edition mode"}</button>
+                                <SwitchButton onChange={handleSwitchMode} />
                             </div>
                             <TrackCardList
                                 tracks={tracks}

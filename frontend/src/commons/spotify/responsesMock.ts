@@ -115,12 +115,19 @@ const TracksMock: track[] = [
             uri: "spotify:album:album1",
             artists: [
                 {
+                    name: "Artist 1",
+                    images: [],
                     external_urls: {
                         spotify: "https://example.com/artist1",
                     },
+                    followers: {
+                        href: "https://example.com/followers1",
+                        total: 10000,
+                    },
+                    genres: ["pop", "rock"],
                     href: "https://api.spotify.com/v1/artists/artist1",
+                    popularity: 80,
                     id: "artist1",
-                    name: "Artist 1",
                     type: "artist",
                     uri: "spotify:artist:artist1",
                 },
@@ -187,14 +194,21 @@ const TracksMock: track[] = [
             uri: "spotify:album:album2",
             artists: [
                 {
+                    name: "Artist 1",
+                    images: [],
                     external_urls: {
-                        spotify: "https://example.com/artist2",
+                        spotify: "https://example.com/artist1",
                     },
-                    href: "https://api.spotify.com/v1/artists/artist2",
-                    id: "artist2",
-                    name: "Artist 2",
+                    followers: {
+                        href: "https://example.com/followers1",
+                        total: 10000,
+                    },
+                    genres: ["pop", "rock"],
+                    href: "https://api.spotify.com/v1/artists/artist1",
+                    popularity: 80,
+                    id: "artist1",
                     type: "artist",
-                    uri: "spotify:artist:artist2",
+                    uri: "spotify:artist:artist1",
                 },
             ],
         },

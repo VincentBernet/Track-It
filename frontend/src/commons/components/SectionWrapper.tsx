@@ -4,6 +4,7 @@ import { StyledSection } from '../styles';
 interface SectionWrapperProps {
     children: React.ReactNode,
     title: string,
+    forcedWidth?: string,
     extra?: React.ReactNode,
     seeAllLink?: string,
     links?: {
@@ -12,8 +13,8 @@ interface SectionWrapperProps {
     }[],
 }
 
-const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links }: SectionWrapperProps) => (
-    <StyledSection>
+const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, forcedWidth }: SectionWrapperProps) => (
+    <StyledSection forced_width={forcedWidth}>
         <div className="section__inner">
             <div className="section__top">
                 <h2 className="section__heading">
