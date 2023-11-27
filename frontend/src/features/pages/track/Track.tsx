@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getRecommendations, getTrackById } from "../../../commons/spotify/requests";
 import { ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
 import { track } from './../../../commons/spotify/responsesTypes';
@@ -93,7 +93,10 @@ const Track = () => {
                                     <h1>{track.name}</h1>
                                     <h2>{track.artists[0].name}</h2>
                                     <p>{track.album.name} in {track.album.release_date}</p>
-                                    <StyledGreenButton>Play on Spotify</StyledGreenButton>
+                                    <StyledGreenButton onClick={() => {
+                                        window.open(track.external_urls.spotify);
+                                        return null;
+                                    }}>Play on Spotify</StyledGreenButton>
                                     <br />
                                     <br />
                                     <StyledGreenButton onClick={handleNextRecommendation}>New recommandation</StyledGreenButton>
