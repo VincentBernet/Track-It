@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getRecommendations, getTrackById } from "../../../commons/spotify/requests";
 import { ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
 import { track } from './../../../commons/spotify/responsesTypes';
