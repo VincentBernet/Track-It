@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+
 type NotificationProps = {
     children: React.ReactNode;
     timeBeforeDeletion?: number;

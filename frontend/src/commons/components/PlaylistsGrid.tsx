@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { StyledGrid } from '../styles';
 import { playlist } from '../spotify/responsesTypes';
 
+
 interface PlaylistsGridProps {
     playlists: playlist[];
 }

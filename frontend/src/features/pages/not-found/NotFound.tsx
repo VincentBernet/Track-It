@@ -1,9 +1,9 @@
 import './NotFound.css';
-import { StyledLoginButton } from '../login/Login';
 import { Layout } from '../../../commons/components';
+import { StyledLoginButton } from '../login/StyledLogin';
+
 
 const ErrorPage = () => {
-
     return (
         <Layout>
             <div className="container" id="fore-particles">

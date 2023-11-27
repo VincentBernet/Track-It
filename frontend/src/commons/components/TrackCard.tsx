@@ -3,6 +3,7 @@ import { track } from '../spotify/responsesTypes';
 import { StyledTrackCard } from '../styles';
 import { useNavigate } from 'react-router-dom';
 
+
 interface TrackCardProps {
     track: track;
     index: number;

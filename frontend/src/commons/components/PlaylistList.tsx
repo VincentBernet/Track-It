@@ -2,6 +2,7 @@ import { PlaylistCard } from "./index";
 import { playlist } from "../spotify/responsesTypes";
 import { StyledListReset } from "../styles";
 
+
 interface PlaylistListProps {
     playlists: playlist[];
     selectedPlaylistsId: string[];

@@ -13,6 +13,7 @@ export { default as StyledRangeButtons } from './components/other/StyledRangeBut
 export { default as StyledDropdown } from './components/other/StyledDropdown';
 export { default as StyledAnimatedIcone } from './components/other/StyledAnimatedIcone';
 export { default as StyledGreenButton } from './components/other/StyledGreenButton';
+export { default as StyledSwitchButton } from './components/other/StyledSwitchButton';
 
 export { default as StyledListReset } from './components/other/StyledListReset';
 export { default as StyledTrackCard } from './components/track/StyledTrackCard';

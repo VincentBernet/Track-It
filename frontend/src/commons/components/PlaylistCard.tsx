@@ -3,6 +3,7 @@ import { TemporaryComponent } from "./index";
 import { playlist } from "../spotify/responsesTypes";
 import { StyledAnimatedIcone, StyledPlaylistCard } from "../styles";
 
+
 interface PlaylistCardProps {
     playlist: playlist,
     handleOnDelete: () => void;
@@ -13,16 +14,18 @@ interface PlaylistCardProps {
     handleSelected?: (id: string) => void,
 }
 
-const PlaylistCard = ({
-    playlist,
-    handleOnDelete,
-    isSelected = false,
-    clickable = false,
-    displayNotification = false,
-    consultationMode = true,
-    handleSelected = () => { } }: PlaylistCardProps) => {
-    const navigate = useNavigate();
+const PlaylistCard = (
+    {
+        playlist,
+        handleOnDelete,
+        isSelected = false,
+        clickable = false,
+        displayNotification = false,
+        consultationMode = true,
+        handleSelected = () => { }
+    }: PlaylistCardProps) => {
 
+    const navigate = useNavigate();
     return (
         <StyledPlaylistCard $selected={isSelected} $clickable={clickable}
             onClick={() => clickable && (!consultationMode ? handleSelected(playlist.id) : navigate(`/playlists/${playlist.id}`))}>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { StyledSection } from '../styles';
 
+
 interface SectionWrapperProps {
     children: React.ReactNode,
     title: string,

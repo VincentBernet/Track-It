@@ -3,6 +3,7 @@ import { ArtistsGrid, ErrorOrLoader, Layout, SectionWrapper, TimeRangeButtons } 
 import { topArtistsData } from "../../../commons/spotify/responsesTypes";
 import { getCurrentUserTopArtists } from "../../../commons/spotify/requests";
 
+
 const TopArtists = () => {
     const [topArtists, setTopArtists] = useState<topArtistsData | null>(null);
     const [timeRange, setTimeRange] = useState<string>('short_term');

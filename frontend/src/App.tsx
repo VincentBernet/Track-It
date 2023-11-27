@@ -6,7 +6,6 @@ import {
   Routes,
 } from "react-router-dom";
 import { EasyModification, ErrorPage, Login, Playlist, Playlists, Profile, TopArtists, TopTracks, Track } from './features/pages';
-import { NotFound } from './commons/components';
 
 const App = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -36,11 +35,6 @@ const App = () => {
         </Routes>
       </BrowserRouter>
     );
-  }
-
-  if (!token) {
-    console.log("No token found, token:", token);
-    return (<NotFound />);
   }
 }
 

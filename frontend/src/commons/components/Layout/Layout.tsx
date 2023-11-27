@@ -3,10 +3,6 @@ import { LogoutButton } from "../index";
 import { logout } from "../../spotify/auth";
 import styled from "styled-components";
 
-const StyledHeader = styled.header`
-min-height: 65px;
-`
-
 type LayoutProps = {
     children: React.ReactNode;
     extraHeader?: React.ReactNode;
@@ -27,5 +23,9 @@ const Layout = ({ children, extraHeader, bodyColor, fixedMainMargin = "64px 64px
         </>
     );
 }
+
+const StyledHeader = styled.header`
+    min-height: 65px;
+`;
 
 export default Layout;

@@ -2,6 +2,7 @@ import { StyledListReset } from '../styles';
 import { track } from '../spotify/responsesTypes';
 import TrackCard from './TrackCard';
 
+
 interface TrackListProps {
     tracks: track[];
     clickable?: boolean;

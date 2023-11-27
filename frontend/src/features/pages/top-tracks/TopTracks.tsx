@@ -3,6 +3,7 @@ import { topTracksData } from "../../../commons/spotify/responsesTypes";
 import { getCurrentUserTopTracks } from "../../../commons/spotify/requests";
 import { ErrorOrLoader, Layout, SectionWrapper, TimeRangeButtons, TrackList } from "../../../commons/components";
 
+
 const TopTracks = () => {
     const [topTracks, setTopTracks] = useState<topTracksData | null>(null);
     const [timeRange, setTimeRange] = useState<string>('short_term');

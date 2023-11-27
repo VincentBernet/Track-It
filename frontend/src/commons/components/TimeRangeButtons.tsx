@@ -1,5 +1,6 @@
 import { StyledRangeButtons } from "../styles";
 
+
 interface TimeRangeButtonsProps {
     timeRange: string;
     handleClick: (timeRange: string) => void;

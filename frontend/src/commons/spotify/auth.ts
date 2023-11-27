@@ -117,4 +117,10 @@ const getAccessToken = () => {
     return null;
 };
 
+export const LOGIN_URI =
+    process.env.NODE_ENV !== 'production'
+        ? 'http://localhost:8888/login'
+        : 'https://track-it-spotify.herokuapp.com/login';
+
+
 export const accessToken = getAccessToken();

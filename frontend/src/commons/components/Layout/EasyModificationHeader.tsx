@@ -4,17 +4,6 @@ import { getCurrentUserProfile } from "../../spotify/requests";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const StyledEasyModificationHeader = styled.div`
-    margin-left: var(--spacing-xl);
-    padding-top: 15px;
-    display: flex;
-    align-items: center;
-    
-    img {
-        border-radius: 50%;
-        margin-right: var(--spacing-sm);
-    }
-    `;
 
 const EasyModificationHeader = () => {
     const [profile, setProfile] = useState<profileData | null>(null);
@@ -48,5 +37,17 @@ const EasyModificationHeader = () => {
         </StyledEasyModificationHeader>
     );
 }
+
+const StyledEasyModificationHeader = styled.div`
+    margin-left: var(--spacing-xl);
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    
+    img {
+        border-radius: 50%;
+        margin-right: var(--spacing-sm);
+    }
+    `;
 
 export default EasyModificationHeader;

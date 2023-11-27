@@ -2,6 +2,7 @@ import { StyledListReset } from '../styles';
 import { tracksDataItem } from '../spotify/responsesTypes';
 import TrackCard from './TrackCard';
 
+
 interface TrackCardListProps {
     tracks: tracksDataItem[];
     selectedTracksUris: string[];

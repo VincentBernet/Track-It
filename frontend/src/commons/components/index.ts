@@ -5,7 +5,6 @@ export { default as LogoutButton } from './Layout/LogoutButton';
 
 export { default as Loader } from './Loader';
 export { default as ErrorOrLoader } from './ErrorOrLoader/ErrorOrLoader';
-export { default as NotFound } from './NotFound';
 export { default as Notification } from './Notification';
 
 export { default as ArtistsGrid } from './ArtistsGrid';

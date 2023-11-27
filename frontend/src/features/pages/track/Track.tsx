@@ -6,32 +6,6 @@ import { track } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
 import { StyledGreenButton } from "../../../commons/styles";
 
-const StyledTrackCard = styled.section`
-    img {
-        width: 300px;
-        border-radius: 8px;
-    }
-
-    .right__arrow__icone {
-        width: 50px;
-        height: 50px;
-    }
-
-    .section__flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .section__card__music {
-        display: flex;
-        gap: 20px;
-    }
-
-    .v2 {
-            justify-content: flex-end;
-        }
-`;
 
 const Track = () => {
     const { id } = useParams();
@@ -157,5 +131,28 @@ const Track = () => {
         </Layout >
     );
 };
+
+const StyledTrackCard = styled.section`
+    img {
+        width: 300px;
+        border-radius: 8px;
+    }
+    .right__arrow__icone {
+        width: 50px;
+        height: 50px;
+    }
+    .section__flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .section__card__music {
+        display: flex;
+        gap: 20px;
+    }
+    .v2 {
+            justify-content: flex-end;
+        }
+`;
 
 export default Track;

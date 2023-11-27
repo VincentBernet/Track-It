@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 
+type NotificationProps = {
+    message: string;
+    status: string;
+};
+
+const Notification = ({ message, status }: NotificationProps) => {
+    return (
+        <StyledNotification status={status}>
+            {message}
+        </StyledNotification>)
+}
+
 type StyledNotificationProps = {
     status: string;
 };
@@ -17,17 +29,5 @@ const StyledNotification = styled.div<StyledNotificationProps>`
     text-align: center;
     z-index: 100;
 `;
-
-type NotificationProps = {
-    message: string;
-    status: string;
-};
-
-const Notification = ({ message, status }: NotificationProps) => {
-    return (
-        <StyledNotification status={status}>
-            {message}
-        </StyledNotification>)
-}
 
 export default Notification;

@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+
+const EditionHeader = () => {
+    return (
+        <StyledProfileHeader>
+            <Link to="/">Edition</Link>
+        </StyledProfileHeader>
+    );
+}
+
 const StyledProfileHeader = styled.div`
     display: flex;
     margin-left: var(--spacing-md);
@@ -12,13 +21,5 @@ const StyledProfileHeader = styled.div`
         margin-right: var(--spacing-sm);
     }
     `;
-
-const EditionHeader = () => {
-    return (
-        <StyledProfileHeader>
-            <Link to="/">Edition</Link>
-        </StyledProfileHeader>
-    );
-}
 
 export default EditionHeader;
