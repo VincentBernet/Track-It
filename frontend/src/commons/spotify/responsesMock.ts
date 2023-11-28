@@ -7,7 +7,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -16,7 +16,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -25,7 +25,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -34,7 +34,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -43,7 +43,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -52,7 +52,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -61,7 +61,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -70,7 +70,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -79,7 +79,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
     {
@@ -88,7 +88,7 @@ const PlaylistsMock: playlist[] = [
         images: [],
         artists: [],
         duration_ms: 0,
-        followers: { total: 0 },
+        followers: { href: "", total: 0 },
         tracks: { total: 0 },
     },
 ];

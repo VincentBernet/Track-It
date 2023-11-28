@@ -1,10 +1,11 @@
-import { PlaylistCard } from "./index";
+import { ErrorOrLoader, PlaylistCard } from "./index";
 import { playlist } from "../spotify/responsesTypes";
 import { StyledListReset } from "../styles";
 
 
 interface PlaylistListProps {
-    playlists: playlist[];
+    playlists: playlist[] | null;
+    errorFetchingPlaylists: boolean;
     selectedPlaylistsId: string[];
     playlistAdditionSuccess: string[];
     handleSelected: (id: string) => void;
@@ -12,7 +13,12 @@ interface PlaylistListProps {
     consultationMode?: boolean;
 }
 
-const PlaylistList = ({ playlists, selectedPlaylistsId, playlistAdditionSuccess, consultationMode, handleSelected, handleOnDelete }: PlaylistListProps) => {
+const PlaylistList = ({ playlists, errorFetchingPlaylists, selectedPlaylistsId, playlistAdditionSuccess, consultationMode, handleSelected, handleOnDelete }: PlaylistListProps) => {
+    if (playlists === null) {
+        return (
+            <ErrorOrLoader error={errorFetchingPlaylists} />
+        );
+    }
     return (
         <>
             {playlists && playlists.length ? (

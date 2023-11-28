@@ -1,10 +1,11 @@
-import { Layout, ErrorOrLoader, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton } from '../../../commons/components';
+import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton } from '../../../commons/components';
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
+import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist, postNewPlaylist } from '../../../commons/spotify/requests';
 import { playlist, playlistsData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
 import { catchErrors } from '../../../commons/utils';
+import getWordingButtonTracksToPlaylists from './EasyModificationUtils';
 
 
 const EasyModification = () => {
@@ -173,54 +174,35 @@ const EasyModification = () => {
         >
             {!consultationMode &&
                 <StyledGreenButton onClick={handleAddTracksToPlaylists}>
-                    {
-                        // TODO : reformater cette immondice de ternaire ^^'
-                        selectedTracksUris.length === 0 && selectedPlaylistsId.length === 0 ?
-                            "First select tracks and playlists bellow" :
-                            selectedPlaylistsId.length === 0 ?
-                                "Then select the playlist where you want to add the tracks" :
-                                selectedTracksUris.length === 0 ?
-                                    "Then select the tracks to be added" :
-                                    selectedTracksUris.length === 1 ?
-                                        `Add 1 track to ${selectedPlaylistsId.length} playlist` :
-                                        selectedPlaylistsId.length === 1 ?
-                                            `Add ${selectedTracksUris.length} tracks to 1 playlist` :
-                                            `Add ${selectedTracksUris.length} tracks to ${selectedPlaylistsId.length} playlists`
-                    }
+                    {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylistsId.length)}
                 </StyledGreenButton>
             }
             <StyledNewGrid $hasMoreMargin={consultationMode}>
                 <aside>
-                    {playlists === null ? <ErrorOrLoader error={errorFetchingPlaylists} /> :
-                        <>
-                            <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
-                            <PlaylistList
-                                playlists={playlists}
-                                consultationMode={consultationMode}
-                                playlistAdditionSuccess={playlistAdditionSuccess}
-                                selectedPlaylistsId={selectedPlaylistsId}
-                                handleOnDelete={handleOnDelete}
-                                handleSelected={handleSelectedPlaylist}
-                            />
-                            <button style={{ marginTop: "25px" }}>New Playlist</button>
-                        </>
-                    }
+                    <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
+                    <PlaylistList
+                        playlists={playlists}
+                        errorFetchingPlaylists={errorFetchingPlaylists}
+                        consultationMode={consultationMode}
+                        playlistAdditionSuccess={playlistAdditionSuccess}
+                        selectedPlaylistsId={selectedPlaylistsId}
+                        handleOnDelete={handleOnDelete}
+                        handleSelected={handleSelectedPlaylist}
+                    />
+                    <button onClick={() => { postNewPlaylist({ user_id: '314wafiswyysxppdmuqlqf2tpnbi' }) }} style={{ marginTop: "25px" }}>New Playlist</button>
                 </aside>
                 <section>
-                    {tracks === null ? <ErrorOrLoader error={errorFetchingTracks} /> :
-                        <>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
-                                <h3>Your Tracks</h3>
-                                <SwitchButton onChange={handleSwitchMode} />
-                            </div>
-                            <TrackCardList
-                                tracks={tracks}
-                                consultationMode={consultationMode}
-                                selectedTracksUris={selectedTracksUris}
-                                handleSelectedTracks={handleSelectedTracks}
-                            />
-                        </>
-                    }
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
+                        <h3>Your Tracks</h3>
+                        <SwitchButton onChange={handleSwitchMode} />
+                    </div>
+                    <TrackCardList
+                        tracks={tracks}
+                        errorFetchingTracks={errorFetchingTracks}
+                        consultationMode={consultationMode}
+                        selectedTracksUris={selectedTracksUris}
+                        handleSelectedTracks={handleSelectedTracks}
+                    />
                 </section>
             </StyledNewGrid >
 

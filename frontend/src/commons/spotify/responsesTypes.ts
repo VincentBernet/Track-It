@@ -1,20 +1,23 @@
-export interface image {
+export type image = {
     url: string;
     height: number;
     width: number;
 }
 
-export interface artist {
+export type followers = {
+    href: string;
+    total: number;
+};
+
+export type external_urls = {
+    spotify: string;
+};
+
+export type artist = {
     name: string;
     images: image[];
-
-    external_urls: {
-        spotify: string;
-    };
-    followers: {
-        href: string;
-        total: number;
-    };
+    external_urls: external_urls
+    followers: followers;
     genres: string[];
     href: string;
     id: string;
@@ -23,14 +26,12 @@ export interface artist {
     uri: string;
 }
 
-export interface track {
+export type track = {
     album: {
         album_type: string;
         total_tracks: number;
         available_markets: string[];
-        external_urls: {
-            spotify: string
-        };
+        external_urls: external_urls
         href: string;
         id: string;
         images: image[];
@@ -48,9 +49,7 @@ export interface track {
     disc_number: number;
     duration_ms: number;
     explicit: false;
-    external_urls: {
-        spotify: string;
-    };
+    external_urls: external_urls
     href: string;
     id: string;
     is_playable: false;
@@ -67,15 +66,13 @@ export interface track {
     audio_features?: audioFeatures;
 }
 
-export interface playlist {
+export type playlist = {
     id: string;
     images: image[];
     name: string;
     artists: artist[];
     duration_ms: number;
-    followers: {
-        total: number;
-    };
+    followers: followers;
     tracks: {
         total: number;
     };
@@ -86,24 +83,34 @@ export interface PlaylistWithSelectedType extends playlist {
     selected: boolean;
 }
 
-export interface profileData {
+export type profileData = {
     display_name: string;
+    external_urls: external_urls
+    href: string;
+    id: string;
     images: image[];
-    followers: {
-        total: number;
+    type: string;
+    uri: string;
+    followers: followers;
+    country: string;
+    product: string;
+    explicit_content: {
+        filter_enabled: boolean;
+        filter_locked: boolean;
     };
+    email: string;
 }
 
-export interface topArtistsData {
+export type topArtistsData = {
     items: artist[];
 }
 
 
-export interface topTracksData {
+export type topTracksData = {
     items: track[];
 }
 
-export interface playlistTrack {
+export type playlistTrack = {
     track: track;
     added_at: string;
     is_local: boolean;
@@ -113,7 +120,7 @@ export interface playlistTrack {
     };
 }
 
-export interface playlistTracksData {
+export type playlistTracksData = {
     items: playlistTrack[];
     total: number;
     offset: number;
@@ -121,7 +128,7 @@ export interface playlistTracksData {
     limit: number;
 }
 
-export interface playlistsData {
+export type playlistsData = {
     items: playlist[];
     total: number;
     offset: number;
@@ -129,7 +136,7 @@ export interface playlistsData {
     limit: number;
 }
 
-export interface audioFeatures {
+export type audioFeatures = {
     [key: string]: string;
     acousticness: string;
     analysis_url: string;
@@ -150,7 +157,7 @@ export interface audioFeatures {
     valence: string;
 }
 
-export interface audioFeaturesData {
+export type audioFeaturesData = {
     audio_features: audioFeatures[];
 }
 
@@ -158,12 +165,12 @@ export interface trackWithAudioFeatures extends track {
     audioFeatures: audioFeatures;
 }
 
-export interface tracksDataItem {
+export type tracksDataItem = {
     added_at: string;
     track: track;
 }
 
-export interface tracksData {
+export type tracksData = {
     href: string;
     limit: number;
     next: string;
@@ -173,7 +180,7 @@ export interface tracksData {
     items: tracksDataItem[];
 }
 
-export interface recommendations {
+export type recommendations = {
     seeds: {
         afterFilteringSize: number;
         afterRelinkingSize: number;

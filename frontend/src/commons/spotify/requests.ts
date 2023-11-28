@@ -119,3 +119,18 @@ export const getRecommendations = ({ tracksId, artistsId, genres }: { tracksId?:
     }
     return axios.get(`/recommendations?${params}`);
 }
+
+/**
+ * Post a new playlist
+ * https://developer.spotify.com/documentation/web-api/reference/create-playlist
+ * @param {string} user_id - The userID for the new playlist.
+ * @param {string} name - The name for the new playlist.
+ * @param {string} description - The description for the new playlist.
+ * @returns {Promise}
+ */
+export const postNewPlaylist = ({ user_id }: { user_id: string }) => {
+    return axios.post(`/users/${user_id}/playlists`, {
+        name: 'Playlistify',
+        description: 'Playlist generated with Playlistify'
+    });
+}
