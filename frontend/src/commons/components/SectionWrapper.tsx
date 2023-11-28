@@ -15,7 +15,7 @@ interface SectionWrapperProps {
 }
 
 const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, forcedWidth }: SectionWrapperProps) => (
-    <StyledSection forced_width={forcedWidth}>
+    <StyledSection $forcedWidth={forcedWidth}>
         <div className="section__inner">
             <div className="section__top">
                 <h2 className="section__heading">

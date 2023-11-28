@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getRecommendations, getTrackById } from "../../../commons/spotify/requests";
-import { ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
+import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
 import { track } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
 import { StyledGreenButton } from "../../../commons/styles";
@@ -84,10 +84,11 @@ const Track = () => {
                         <div className={"section__flex"}>
                             <div className={"section__card__music"}>
                                 <div>
-                                    {track.album.images.length && track.album.images[0] ? (
-                                        <img src={track.album.images[0].url} alt={`${track.name} thumbnail`} />
-                                    ) : <img src={'/images/default_image.png'} alt={`${track.name} default thumbnail`} />
-                                    }
+                                    <Artwork
+                                        images={track.album.images}
+                                        size={"300px"}
+                                        isRounded
+                                    />
                                 </div>
                                 <div>
                                     <h1>{track.name}</h1>
@@ -136,10 +137,6 @@ const Track = () => {
 };
 
 const StyledTrackCard = styled.section`
-    img {
-        width: 300px;
-        border-radius: 8px;
-    }
     .right__arrow__icone {
         width: 50px;
         height: 50px;

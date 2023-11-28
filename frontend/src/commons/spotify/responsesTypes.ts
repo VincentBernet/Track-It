@@ -1,4 +1,4 @@
-interface image {
+export interface image {
     url: string;
     height: number;
     width: number;

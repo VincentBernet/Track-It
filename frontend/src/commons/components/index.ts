@@ -7,6 +7,7 @@ export { default as Loader } from './Loader';
 export { default as ErrorOrLoader } from './ErrorOrLoader/ErrorOrLoader';
 export { default as Notification } from './Notification';
 
+export { default as Artwork } from './Artwork';
 export { default as ArtistsGrid } from './ArtistsGrid';
 export { default as SectionWrapper } from './SectionWrapper';
 export { default as TrackList } from './TrackList';

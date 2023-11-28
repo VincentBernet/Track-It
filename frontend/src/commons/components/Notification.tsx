@@ -8,13 +8,13 @@ type NotificationProps = {
 
 const Notification = ({ message, status }: NotificationProps) => {
     return (
-        <StyledNotification status={status}>
+        <StyledNotification $status={status}>
             {message}
         </StyledNotification>)
 }
 
 type StyledNotificationProps = {
-    status: string;
+    $status: string;
 };
 
 const StyledNotification = styled.div<StyledNotificationProps>`
@@ -23,7 +23,7 @@ const StyledNotification = styled.div<StyledNotificationProps>`
     left: 0;
     width: 100%;
     padding: 1rem;
-    background: ${props => props.status === "error" ? "red" : "green"};
+    background: ${props => props.$status === "error" ? "red" : "green"};
     color: white;
     font-weight: bold;
     text-align: center;
