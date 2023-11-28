@@ -111,10 +111,11 @@ const Track = () => {
                                 {tracksReco === null ? <ErrorOrLoader error={errorFechingRecommendedTracks} /> :
                                     <>
                                         <div>
-                                            {tracksReco[indexReco].album.images.length && tracksReco[indexReco].album.images[0] ? (
-                                                <img src={tracksReco[indexReco].album.images[0].url} alt={`${tracksReco[indexReco].name} thumbnail`} />
-                                            ) : <img src={'/images/default_image.png'} alt={`${tracksReco[indexReco].name} default thumbnail`} />
-                                            }
+                                            <Artwork
+                                                images={tracksReco[indexReco].album.images}
+                                                size={"300px"}
+                                                isRounded
+                                            />
                                         </div>
                                         <div>
                                             <h1>{tracksReco[indexReco].name}</h1>
