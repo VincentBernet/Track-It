@@ -55,7 +55,7 @@ const Track = () => {
         if (!tracksReco) {
             return;
         }
-        if (indexReco >= tracksReco.length) {
+        if (indexReco >= tracksReco.length - 1) {
             setIndexReco(0);
             return;
         }
