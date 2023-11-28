@@ -121,10 +121,10 @@ const Track = () => {
                                             <h1>{tracksReco[indexReco].name}</h1>
                                             <h2>{tracksReco[indexReco].artists[0].name}</h2>
                                             <p>{tracksReco[indexReco].album.name} in {tracksReco[indexReco].album.release_date}</p>
-                                            <StyledGreenButton>Play on Spotify</StyledGreenButton>
-                                            <br />
-                                            <br />
-                                            <StyledGreenButton>Like button</StyledGreenButton>
+                                            <StyledGreenButton onClick={() => {
+                                                window.open(track.external_urls.spotify);
+                                                return null;
+                                            }}>Play on Spotify</StyledGreenButton>
                                         </div>
                                     </>
                                 }
