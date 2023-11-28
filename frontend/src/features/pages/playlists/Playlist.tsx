@@ -5,7 +5,7 @@ import { getPlaylistById, getAudioFeaturesForTracks } from '../../../commons/spo
 import { StyledDropdown, StyledHeader } from '../../../commons/styles';
 import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../../commons/spotify/responsesTypes';
 import axios from 'axios';
-import { Artwork, ErrorOrLoader, Layout, SectionWrapper, TrackList } from '../../../commons/components';
+import { ErrorOrLoader, Layout, SectionWrapper, TrackList } from '../../../commons/components';
 
 
 const Playlist = () => {
