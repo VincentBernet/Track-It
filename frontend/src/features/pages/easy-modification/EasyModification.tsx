@@ -169,7 +169,7 @@ const EasyModification = () => {
     return (
         <Layout
             extraHeader={<EasyModificationHeader />}
-            bodyColor={"black"}
+            bodyColor={"#000000"}
         >
             {!consultationMode &&
                 <StyledGreenButton onClick={handleAddTracksToPlaylists}>
