@@ -36,7 +36,7 @@ const StyledSwitchButton = styled.div`
         font-size: 12px;
         font-weight: 500;
         top: 11px;
-        right: 30px;
+        right: 14px;
     }
 
     // Le container du switch qui
@@ -80,7 +80,7 @@ const StyledSwitchButton = styled.div`
     .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before{
         content: attr(data-off);
         right: auto;
-        left: 15px;
+        left: 30px;
     }
 
     .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{

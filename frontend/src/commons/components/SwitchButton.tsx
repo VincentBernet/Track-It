@@ -10,7 +10,7 @@ const SwitchButton = ({ onChange }: SwitchButton) => {
         <StyledSwitchButton onClick={onChange}>
             <label className="switch btn-color-mode-switch">
                 <input type="checkbox" name="color_mode" id="color_mode" value="1" />
-                <label data-on="Edition" data-off="Consultation" className="btn-color-mode-switch-inner"></label>
+                <label data-on="Consultation" data-off="Edition" className="btn-color-mode-switch-inner"></label>
             </label>
         </StyledSwitchButton>
     );

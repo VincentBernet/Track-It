@@ -2,8 +2,8 @@ import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryC
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getCurrentUserPlaylists, getCurrentUserSavedTracks, postAddTracksToPlaylist, postNewPlaylist } from '../../../commons/spotify/requests';
-import { playlist, playlistsData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
+import { getCurrentUserPlaylists, getCurrentUserProfile, getCurrentUserSavedTracks, postAddTracksToPlaylist, postNewPlaylist } from '../../../commons/spotify/requests';
+import { playlist, playlistsData, profileData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
 import { catchErrors } from '../../../commons/utils';
 import getWordingButtonTracksToPlaylists from './EasyModificationUtils';
 
@@ -19,57 +19,24 @@ const EasyModification = () => {
     const [tracks, setTracks] = useState<tracksDataItem[] | null>(null);
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean>(false);
 
-    /* Mode : For switching between consultation and edition */
-    const [consultationMode, setConsultationMode] = useState<boolean>(true);
+    /* Get Profile : For Fetching profile */
+    const [profile, setProfile] = useState<profileData | null>(null);
 
-    /* For sending list IDs of selected playlists */
-    const [selectedPlaylistsId, setSelectedPlaylistsId] = useState<string[]>([]);
-
-    /* For sending list Uri of selected tracks */
-    const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
-
-    /* Post status : For displaying success/error messages after adding tracks to playlists */
+    /* Post status : For displaying success/error messages after adding tracks to playlists or creating new playlist */
     const [playlistAdditionSuccess, setPlaylistAdditionSuccess] = useState<string[]>([]);
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
+    const [playlistCreationFailure, setPlaylistCreationFailure] = useState<boolean>(false);
 
+    /* Consultation mode state : For switching between consultation and edition */
+    const [consultationMode, setConsultationMode] = useState<boolean>(false);
 
-    const handleSelectedPlaylist = (id: string) => {
-        if (selectedPlaylistsId.includes(id)) {
-            setSelectedPlaylistsId(selectedPlaylistsId.filter((playlistId) => playlistId !== id));
-        } else {
-            setSelectedPlaylistsId([...selectedPlaylistsId, id]);
-        }
-    }
+    /* Selected Playlist(s) state : For sending list IDs of selected playlists */
+    const [selectedPlaylistsId, setSelectedPlaylistsId] = useState<string[]>([]);
 
-    const handleOnDelete = () => {
-        setPlaylistAdditionSuccess([]);
-    }
+    /* Selected Track(s) state : For sending list Uri of selected tracks */
+    const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
 
-    const handleSelectedTracks = (uri: string) => {
-        if (selectedTracksUris.includes(uri)) {
-            setSelectedTracksUris(selectedTracksUris.filter((trackUri) => trackUri !== uri));
-        } else {
-            setSelectedTracksUris([...selectedTracksUris, uri]);
-        }
-    }
-
-    const handleAddTracksToPlaylists = async () => {
-        resetAllState();
-        const playlistAdditionSuccessTemp: string[] = [];
-        const playlistAdditionFailureTemp: string[] = [];
-        for (const playlistId of selectedPlaylistsId) {
-            try {
-                await postAddTracksToPlaylist(playlistId, selectedTracksUris);
-                playlistAdditionSuccessTemp.push(playlistId);
-            }
-            catch {
-                playlistAdditionFailureTemp.push(playlists?.find((playlist) => playlist.id === playlistId)?.name || "");
-            }
-        }
-        setPlaylistAdditionSuccess(playlistAdditionSuccessTemp);
-        setPlaylistAdditionFailure(playlistAdditionFailureTemp);
-    }
-
+    /* Fetch first playlists batch on first render */
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -123,7 +90,7 @@ const EasyModification = () => {
                 setErrorFetchingTracks(true);
             }
         };
-        catchErrors(fetchData());
+        fetchData();
     }, []);
 
     // When tracksData updates, check if there are more tracks to fetch
@@ -155,63 +122,136 @@ const EasyModification = () => {
 
     }, [tracksData]);
 
-    const handleSwitchMode = () => {
+    /* Fetch profile on first render */
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userProfile = await getCurrentUserProfile();
+                setProfile(userProfile.data);
+            }
+            catch (e) {
+                setProfile(null);
+            }
+        };
+        fetchData();
+    }, []);
+
+
+    const handleSelectedPlaylist = (id: string) => {
+        if (selectedPlaylistsId.includes(id)) {
+            setSelectedPlaylistsId(selectedPlaylistsId.filter((playlistId) => playlistId !== id));
+        } else {
+            setSelectedPlaylistsId([...selectedPlaylistsId, id]);
+        }
+    }
+
+    const handleSelectedTracks = (uri: string) => {
+        if (selectedTracksUris.includes(uri)) {
+            setSelectedTracksUris(selectedTracksUris.filter((trackUri) => trackUri !== uri));
+        } else {
+            setSelectedTracksUris([...selectedTracksUris, uri]);
+        }
+    }
+
+    const handleAddTracksToPlaylists = async () => {
         resetAllState();
+        const playlistAdditionSuccessTemp: string[] = [];
+        const playlistAdditionFailureTemp: string[] = [];
+        for (const playlistId of selectedPlaylistsId) {
+            try {
+                await postAddTracksToPlaylist(playlistId, selectedTracksUris);
+                playlistAdditionSuccessTemp.push(playlistId);
+            }
+            catch {
+                playlistAdditionFailureTemp.push(playlists?.find((playlist) => playlist.id === playlistId)?.name || "");
+            }
+        }
+        setPlaylistAdditionSuccess(playlistAdditionSuccessTemp);
+        setPlaylistAdditionFailure(playlistAdditionFailureTemp);
+    }
+
+    const handleSwitchMode = () => {
+        resetSelectedItems();
         setConsultationMode(!consultationMode);
     }
 
-    const resetAllState = () => {
+    const handleCreateNewPlaylist = () => {
+        const fetchData = async () => {
+            try {
+                const { data } = await postNewPlaylist({ user_id: profile?.id || '' });
+                setPlaylists([...playlists ? playlists : [], data])
+            }
+            catch (e) {
+                setPlaylistCreationFailure(true);
+            }
+        };
+        fetchData();
+    }
+
+    const resetSelectedItems = () => {
         setSelectedPlaylistsId([]);
         setSelectedTracksUris([]);
+    }
+
+    const resetAllState = () => {
+        resetSelectedItems();
         setPlaylistAdditionSuccess([]);
         setPlaylistAdditionFailure([]);
     }
 
     return (
-        <Layout
-            extraHeader={<EasyModificationHeader />}
-            bodyColor={"#000000"}
-        >
-            {!consultationMode &&
-                <StyledGreenButton onClick={handleAddTracksToPlaylists}>
-                    {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylistsId.length)}
-                </StyledGreenButton>
-            }
-            <StyledNewGrid $hasMoreMargin={consultationMode}>
-                <aside>
-                    <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
-                    <PlaylistList
-                        playlists={playlists}
-                        errorFetchingPlaylists={errorFetchingPlaylists}
-                        consultationMode={consultationMode}
-                        playlistAdditionSuccess={playlistAdditionSuccess}
-                        selectedPlaylistsId={selectedPlaylistsId}
-                        handleOnDelete={handleOnDelete}
-                        handleSelected={handleSelectedPlaylist}
-                    />
-                    <button onClick={() => { postNewPlaylist({ user_id: '314wafiswyysxppdmuqlqf2tpnbi' }) }} style={{ marginTop: "25px" }}>New Playlist</button>
-                </aside>
-                <section>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
-                        <h3>Your Tracks</h3>
-                        <SwitchButton onChange={handleSwitchMode} />
-                    </div>
-                    <TrackCardList
-                        tracks={tracks}
-                        errorFetchingTracks={errorFetchingTracks}
-                        consultationMode={consultationMode}
-                        selectedTracksUris={selectedTracksUris}
-                        handleSelectedTracks={handleSelectedTracks}
-                    />
-                </section>
-            </StyledNewGrid >
-
+        <>
+            <Layout
+                extraHeader={<EasyModificationHeader profile={profile} />}
+                bodyColor={"#000000"}
+            >
+                {!consultationMode &&
+                    <StyledGreenButton onClick={handleAddTracksToPlaylists}>
+                        {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylistsId.length)}
+                    </StyledGreenButton>
+                }
+                <StyledNewGrid $hasMoreMargin={consultationMode}>
+                    <aside>
+                        <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
+                        <PlaylistList
+                            playlists={playlists}
+                            errorFetchingPlaylists={errorFetchingPlaylists}
+                            consultationMode={consultationMode}
+                            playlistAdditionSuccess={playlistAdditionSuccess}
+                            selectedPlaylistsId={selectedPlaylistsId}
+                            handleOnDelete={() => setPlaylistAdditionSuccess([])}
+                            handleSelected={handleSelectedPlaylist}
+                        />
+                        {profile &&
+                            <button onClick={() => handleCreateNewPlaylist()} style={{ marginTop: "25px" }}>New Playlist</button>
+                        }
+                    </aside>
+                    <section>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
+                            <h3>Your Tracks</h3>
+                            <SwitchButton onChange={handleSwitchMode} />
+                        </div>
+                        <TrackCardList
+                            tracks={tracks}
+                            errorFetchingTracks={errorFetchingTracks}
+                            consultationMode={consultationMode}
+                            selectedTracksUris={selectedTracksUris}
+                            handleSelectedTracks={handleSelectedTracks}
+                        />
+                    </section>
+                </StyledNewGrid>
+            </Layout>
             {playlistAdditionFailure.length > 0 && (
                 <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
                     <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
                 </TemporaryComponent>
             )}
-        </Layout>
+            {playlistCreationFailure && (
+                <TemporaryComponent handleOnDelete={() => setPlaylistCreationFailure(false)}>
+                    <Notification status={"error"} message={`Your playlist couldn't be created, try again later`} />
+                </TemporaryComponent>
+            )}
+        </>
     );
 }
 

@@ -128,9 +128,18 @@ export const getRecommendations = ({ tracksId, artistsId, genres }: { tracksId?:
  * @param {string} description - The description for the new playlist.
  * @returns {Promise}
  */
-export const postNewPlaylist = ({ user_id }: { user_id: string }) => {
+type postNewPlaylistParams = {
+    user_id: string,
+    playlist_name?: string,
+    playlist_description?: string
+}
+export const postNewPlaylist = ({
+    user_id,
+    playlist_name = "Trackit-fy",
+    playlist_description = 'Playlist generated with Trackit' }
+    : postNewPlaylistParams) => {
     return axios.post(`/users/${user_id}/playlists`, {
-        name: 'Playlistify',
-        description: 'Playlist generated with Playlistify'
+        name: playlist_name,
+        description: playlist_description
     });
 }

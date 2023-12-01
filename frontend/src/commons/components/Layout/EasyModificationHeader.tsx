@@ -1,27 +1,13 @@
-import { useEffect, useState } from "react";
 import { profileData } from "../../spotify/responsesTypes";
-import { getCurrentUserProfile } from "../../spotify/requests";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+type EasyModificationHeaderProps = {
+    profile: profileData | null;
+};
 
-const EasyModificationHeader = () => {
-    const [profile, setProfile] = useState<profileData | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const userProfile = await getCurrentUserProfile();
-                setProfile(userProfile.data);
-            }
-            catch (e) {
-                console.log("Error fetching profile data :", e);
-            }
-        };
-
-        fetchData();
-    }, []);
-
+const EasyModificationHeader = ({ profile }: EasyModificationHeaderProps) => {
     if (!profile) {
         return null;
     }
