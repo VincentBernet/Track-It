@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { TemporaryComponent } from "./index";
+import { Artwork, TemporaryComponent } from "./index";
 import { playlist } from "../spotify/responsesTypes";
 import { StyledAnimatedIcone, StyledPlaylistCard } from "../styles";
 
@@ -27,20 +27,31 @@ const PlaylistCard = (
 
     const navigate = useNavigate();
     return (
-        <StyledPlaylistCard $selected={isSelected} $clickable={clickable}
-            onClick={() => clickable && (!consultationMode ? handleSelected(playlist.id) : navigate(`/playlists/${playlist.id}`))}>
-            {playlist.images.length && playlist.images[0] ? (
-                <img className={'playlistImage'} src={playlist.images[0].url} alt={playlist.name} />
-            ) : <img className={'playlistImage'} src={'/images/default_image.png'} alt={playlist.name} />
-            }
-            <span className={'playlistName'}>
-                {playlist.name}
-            </span>
-            {displayNotification &&
-                <TemporaryComponent handleOnDelete={handleOnDelete}>
-                    <StyledAnimatedIcone src={"./images/check.png"} alt={"check"} />
-                </TemporaryComponent>
-            }
+        <StyledPlaylistCard
+            $selected={isSelected}
+            $clickable={clickable}
+            onClick={() => clickable && (
+                !consultationMode ? handleSelected(playlist.id)
+                    : navigate(`/playlists/${playlist.id}`)
+            )}
+        >
+            <div>
+                <Artwork
+                    images={playlist.images}
+                    size={"40px"}
+                    alt={playlist.name}
+                />
+                <span className={'playlistName'}>
+                    {playlist.name}
+                </span>
+            </div>
+            <div>
+                {displayNotification &&
+                    <TemporaryComponent handleOnDelete={handleOnDelete}>
+                        <StyledAnimatedIcone src={"./images/check.png"} alt={"check"} />
+                    </TemporaryComponent>
+                }
+            </div>
         </StyledPlaylistCard>
     )
 };

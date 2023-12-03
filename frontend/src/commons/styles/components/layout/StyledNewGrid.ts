@@ -6,7 +6,7 @@ interface StyledNewtGridProps {
 
 const StyledNewGrid = styled.div<StyledNewtGridProps>`
   margin-top: ${props => props.$hasMoreMargin ? "61px" : "15px"};
-  background: var(--new-black);
+  background: var(--true-black);
 
 
   display: grid;
