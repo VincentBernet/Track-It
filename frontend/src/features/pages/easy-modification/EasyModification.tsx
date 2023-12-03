@@ -1,4 +1,4 @@
-import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton } from '../../../commons/components';
+import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton, Modal } from '../../../commons/components';
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -25,6 +25,9 @@ const EasyModification = () => {
     /* Post status : For displaying success/error messages after adding tracks to playlists or creating new playlist */
     const [playlistAdditionSuccess, setPlaylistAdditionSuccess] = useState<string[]>([]);
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
+
+    /* Open modal creation new playlist */
+    const [isModalNewPlaylistOpened, setIsModalNewPlaylistOpened] = useState<boolean>(false);
     const [playlistCreationFailure, setPlaylistCreationFailure] = useState<boolean>(false);
 
     /* Consultation mode state : For switching between consultation and edition */
@@ -175,10 +178,19 @@ const EasyModification = () => {
         setConsultationMode(!consultationMode);
     }
 
-    const handleCreateNewPlaylist = () => {
+    const handleOnClickNewPlaylist = () => {
+        setIsModalNewPlaylistOpened(true);
+    }
+
+    const handleOnCloseModalNewPlaylist = () => {
+        setIsModalNewPlaylistOpened(false);
+    }
+
+    const handleCreateNewPlaylist = ({ playlistName, playlistDescription }:
+        { playlistName: string, playlistDescription: string }) => {
         const fetchData = async () => {
             try {
-                const { data } = await postNewPlaylist({ user_id: profile?.id || '' });
+                const { data } = await postNewPlaylist({ user_id: profile?.id || '', playlist_name: playlistName, playlist_description: playlistDescription });
                 setPlaylists([...playlists ? playlists : [], data])
             }
             catch (e) {
@@ -222,8 +234,8 @@ const EasyModification = () => {
                             handleOnDelete={() => setPlaylistAdditionSuccess([])}
                             handleSelected={handleSelectedPlaylist}
                         />
-                        {profile &&
-                            <button onClick={() => handleCreateNewPlaylist()} style={{ marginTop: "25px" }}>New Playlist</button>
+                        {profile && playlists &&
+                            <button onClick={() => handleOnClickNewPlaylist()} style={{ marginTop: "25px" }}>New Playlist</button>
                         }
                     </aside>
                     <section>
@@ -241,6 +253,10 @@ const EasyModification = () => {
                     </section>
                 </StyledNewGrid>
             </Layout>
+
+            {isModalNewPlaylistOpened && (
+                <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />
+            )}
             {playlistAdditionFailure.length > 0 && (
                 <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
                     <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
