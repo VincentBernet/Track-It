@@ -17,6 +17,8 @@ const Loader = () => (
   </StyledLoader>
 );
 
+export default Loader;
+
 const dance = keyframes`
   from {
     height: 10px;
@@ -25,8 +27,6 @@ const dance = keyframes`
     height: 100%;
   }
 `;
-
-export default Loader;
 
 const StyledLoader = styled.div`
   display: flex;
