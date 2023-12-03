@@ -67,8 +67,8 @@ const GlobalStyle = createGlobalStyle`
 
     &:hover,
     &:focus {
-      background-color: var(--dark-grey);
-      outline: 0;
+      background-color: var(--dark-grey) !important;
+      outline: 0 !important;
     }
   }
 

@@ -215,6 +215,7 @@ const EasyModification = () => {
         <>
             <Layout
                 extraHeader={<EasyModificationHeader profile={profile} />}
+                blured={isModalNewPlaylistOpened}
                 bodyColor={"#000000"}
             >
                 {!consultationMode &&
@@ -235,7 +236,7 @@ const EasyModification = () => {
                             handleSelected={handleSelectedPlaylist}
                         />
                         {profile && playlists &&
-                            <button onClick={() => handleOnClickNewPlaylist()} style={{ marginTop: "25px" }}>New Playlist</button>
+                            <button onClick={() => handleOnClickNewPlaylist()} style={{ marginTop: "15px" }}>New Playlist</button>
                         }
                     </aside>
                     <section>

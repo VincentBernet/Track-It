@@ -22,7 +22,7 @@ const StyledAnimatedIcone = styled.img<StyledAnimatedIconeProps>`
     animation: 
         ${jumpShaking} 1000ms 500ms 3 normal,
         ${jumpShaking} 1000ms 4500ms 3 normal,
-        ${fadeOut} 1000ms 7500ms 1 linear
+        ${fadeOut} 600ms 7500ms 1 linear
     ;
 `;
 
