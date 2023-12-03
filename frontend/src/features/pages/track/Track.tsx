@@ -86,6 +86,7 @@ const Track = () => {
                                 <div>
                                     <Artwork
                                         images={track.album.images}
+                                        alt={track.name}
                                         size={"300px"}
                                         isRounded
                                     />
@@ -113,6 +114,7 @@ const Track = () => {
                                         <div>
                                             <Artwork
                                                 images={tracksReco[indexReco].album.images}
+                                                alt={tracksReco[indexReco].name}
                                                 size={"300px"}
                                                 isRounded
                                             />
