@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getRecommendations, getTrackById } from "../../../commons/spotify/requests";
+import { getRecommendations, getTrackById, checkIfTrackIsSaved, addToLikedTracks, removeFromLikedTracks } from "../../../commons/spotify/requests";
 import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
 import { track } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
@@ -12,17 +12,20 @@ const Track = () => {
 
     const [track, setTrack] = useState<track | null>(null);
     const [errorFetchingTrack, setErrorFetchingTrack] = useState<boolean>(false);
+    const [isLiked, setIsLiked] = useState<boolean | null>(null);
 
     const [tracksReco, setTracksReco] = useState<track[] | null>(null);
     const [errorFechingRecommendedTracks, setErrorFetchingRecommendedTracks] = useState<boolean>(false);
 
     const [indexReco, setIndexReco] = useState<number>(0);
+    const [recoIsLiked, setRecoIsLiked] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const { data } = await getTrackById(id || '');
                 setTrack(data);
+                checkIfTrackIsSavedInLikedTracks(data.id);
             }
             catch {
                 setErrorFetchingTrack(true);
@@ -51,7 +54,18 @@ const Track = () => {
         fetchData();
     }, [track]);
 
+    const checkIfTrackIsSavedInLikedTracks = async (id: string) => {
+        try {
+            const { data } = await checkIfTrackIsSaved([id]);
+            setIsLiked(data[0]);
+        }
+        catch {
+            console.log("error during checking if track is saved")
+        }
+    }
+
     const handleNextRecommendation = () => {
+        setRecoIsLiked(false);
         if (!tracksReco) {
             return;
         }
@@ -60,6 +74,52 @@ const Track = () => {
             return;
         }
         setIndexReco(indexReco + 1);
+    }
+
+    const handleLikeTrack = (track_id: string) => {
+        if (!isLiked) {
+            try {
+                addToLikedTracks([track_id]);
+                setIsLiked(!isLiked);
+            }
+            catch {
+                setIsLiked(false);
+                console.log("error during liking current track");
+            }
+        }
+        else {
+            try {
+                removeFromLikedTracks([track_id]);
+                setIsLiked(!isLiked);
+            }
+            catch {
+                setIsLiked(true);
+                console.log("error during un-liking current track");
+            }
+        }
+    }
+
+    const handleLikeRecoTrack = (track_id: string) => {
+        if (!recoIsLiked) {
+            try {
+                addToLikedTracks([track_id]);
+                setRecoIsLiked(!recoIsLiked);
+            }
+            catch {
+                setRecoIsLiked(false);
+                console.log("error during liking reco track");
+            }
+        }
+        else {
+            try {
+                removeFromLikedTracks([track_id]);
+                setRecoIsLiked(!recoIsLiked);
+            }
+            catch {
+                setRecoIsLiked(true);
+                console.log("error during un-liking reco track");
+            }
+        }
     }
 
     const links = [
@@ -102,6 +162,24 @@ const Track = () => {
                                     <br />
                                     <br />
                                     <StyledGreenButton onClick={handleNextRecommendation}>New recommendation</StyledGreenButton>
+                                    <br />
+                                    <br />
+                                    {isLiked !== null &&
+                                        <button onClick={() => handleLikeTrack(track.id)} aria-label={"Liked current music"}>
+                                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    fill={isLiked ? "#1DB954" : "none"}
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    stroke="white"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                                                />
+                                            </svg>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                             <div>
@@ -127,6 +205,22 @@ const Track = () => {
                                                 window.open(tracksReco[indexReco].external_urls.spotify);
                                                 return null;
                                             }}>Play on Spotify</StyledGreenButton>
+                                            <br />
+                                            <br />
+                                            <button onClick={() => handleLikeRecoTrack(tracksReco[indexReco].id)} aria-label={"Liked recommended music"}>
+                                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        fill={recoIsLiked ? "green" : "none"}
+                                                        fill-rule="evenodd"
+                                                        clip-rule="evenodd"
+                                                        stroke="white"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                                                    />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </>
                                 }
@@ -154,8 +248,8 @@ const StyledTrackCard = styled.section`
         gap: 20px;
     }
     .v2 {
-            justify-content: flex-end;
-        }
+        justify-content: flex-end;
+    }
 `;
 
 export default Track;

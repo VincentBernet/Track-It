@@ -50,6 +50,7 @@ app.get('/login', (req, res) => {
         'user-read-email',
         'user-top-read',
         'user-library-read',
+        'user-library-modify',
         'playlist-modify-public',
         'playlist-modify-private'
     ].join(' ');

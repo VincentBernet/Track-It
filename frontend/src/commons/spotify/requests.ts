@@ -143,3 +143,34 @@ export const postNewPlaylist = ({
         description: playlist_description
     });
 }
+
+/**
+ * Put / add one or multiples tracks to your liked tracks
+ * https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
+ * @param {string[]} tracks_id - List of Spotify tracks IDs
+ * @returns {Promise}
+ */
+export const addToLikedTracks = (tracks_id: string[]) => {
+    return axios.put(`/me/tracks?ids=${tracks_id.join(',')}`);
+}
+
+/**
+ * Delete / remove one or multiples tracks from your liked tracks
+ * https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user
+ * @param {string[]} tracks_id - List of Spotify tracks IDs
+ * @returns {Promise}
+ */
+export const removeFromLikedTracks = (tracks_id: string[]) => {
+    return axios.delete(`/me/tracks?ids=${tracks_id.join(',')}`);
+}
+
+/**
+ * Get if a track is saved in the current user's library
+ * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks
+ * @param {string[]} tracks_id - List of Spotify tracks IDs
+ * @returns {Promise}
+ */
+export const checkIfTrackIsSaved = (tracks_id: string[]) => {
+    return axios.get(`/me/tracks/contains?ids=${tracks_id.join(',')}`);
+}
+
