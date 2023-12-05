@@ -218,11 +218,11 @@ const EasyModification = () => {
                 blured={isModalNewPlaylistOpened}
                 bodyColor={"#000000"}
             >
-                {!consultationMode &&
+                {!consultationMode && (
                     <StyledGreenButton onClick={handleAddTracksToPlaylists}>
                         {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylistsId.length)}
                     </StyledGreenButton>
-                }
+                )}
                 <StyledNewGrid $hasMoreMargin={consultationMode}>
                     <aside>
                         <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
@@ -241,7 +241,7 @@ const EasyModification = () => {
                     </aside>
                     <section>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
-                            <h3>Your Tracks</h3>
+                            <h3>Your liked Tracks</h3>
                             <SwitchButton onChange={handleSwitchMode} />
                         </div>
                         <TrackCardList

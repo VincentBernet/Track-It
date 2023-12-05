@@ -1,7 +1,7 @@
 const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selectedPlaylistsLength: number) => {
     return (
         selectedTracksLength === 0 && selectedPlaylistsLength === 0 ?
-            "First select tracks and playlists bellow" :
+            "First select tracks and playlists below" :
             selectedPlaylistsLength === 0 ?
                 "Then select the playlist where you want to add the tracks" :
                 selectedTracksLength === 0 ?

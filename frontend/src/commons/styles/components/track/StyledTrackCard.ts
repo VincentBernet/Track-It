@@ -8,7 +8,6 @@ interface StyledTrackCardProps {
 const StyledTrackCard = styled.li<StyledTrackCardProps>`
   display: grid;
   align-items: center;
-  grid-template-columns: 20px 1fr;
   grid-gap: var(--spacing-md);
   padding: var(--spacing-xs);
   color: var(--light-grey);
@@ -24,7 +23,7 @@ const StyledTrackCard = styled.li<StyledTrackCardProps>`
   }
 
   @media (min-width: 1280px) {
-    grid-template-columns: 20px 2fr 2fr 1fr minmax(60px, 1fr);
+    grid-template-columns: 20px 3fr 2fr minmax(60px, 1fr);
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
@@ -64,15 +63,6 @@ const StyledTrackCard = styled.li<StyledTrackCardProps>`
   display: none;
 
   @media (min-width: 768px) {
-    display: block;
-    white-space: nowrap;
-  }
-}
-
-.track__item__popularity {
-  display: none;
-
-  @media (min-width: 1280px) {
     display: block;
     white-space: nowrap;
   }

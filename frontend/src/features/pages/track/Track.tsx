@@ -101,7 +101,7 @@ const Track = () => {
                                     }}>Play on Spotify</StyledGreenButton>
                                     <br />
                                     <br />
-                                    <StyledGreenButton onClick={handleNextRecommendation}>New recommandation</StyledGreenButton>
+                                    <StyledGreenButton onClick={handleNextRecommendation}>New recommendation</StyledGreenButton>
                                 </div>
                             </div>
                             <div>

@@ -48,9 +48,6 @@ const TrackCard = ({ track, index, handleSelectedTracks = () => { }, clickable =
             <div className="track__item__album overflow-ellipsis">
                 {track.album.name}
             </div>
-            <div className="track__item__popularity">
-                {`Popularity : ${(track.popularity / 10)} / 10`}
-            </div>
             <div className="track__item__duration">
                 {formatDuration(track.duration_ms)}
             </div>
