@@ -1,4 +1,4 @@
-import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton, Modal } from '../../../commons/components';
+import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton, Modal, ModalTutorial } from '../../../commons/components';
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -39,8 +39,15 @@ const EasyModification = () => {
     /* Selected Track(s) state : For sending list Uri of selected tracks */
     const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
 
+    /* Modal state : For displaying tutorial modal on first render */
+    const [isModalTutorialOpen, setIsModalTutorialOpen] = useState<boolean>(false);
+
     /* Fetch first playlists batch on first render */
     useEffect(() => {
+        if (localStorage.getItem("tutorial") !== "true") {
+            setIsModalTutorialOpen(true);
+            localStorage.setItem("tutorial", "true");
+        }
         const fetchData = async () => {
             try {
                 const { data } = await getCurrentUserPlaylists();
@@ -215,7 +222,7 @@ const EasyModification = () => {
         <>
             <Layout
                 extraHeader={<EasyModificationHeader profile={profile} />}
-                blured={isModalNewPlaylistOpened}
+                blured={isModalNewPlaylistOpened || isModalTutorialOpen}
                 bodyColor={"#000000"}
             >
                 {!consultationMode && (
@@ -254,6 +261,9 @@ const EasyModification = () => {
                     </section>
                 </StyledNewGrid>
             </Layout>
+
+
+            {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
 
             {isModalNewPlaylistOpened && (
                 <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />

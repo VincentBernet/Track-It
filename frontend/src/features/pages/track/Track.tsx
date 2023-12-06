@@ -210,7 +210,7 @@ const Track = () => {
                                             <button onClick={() => handleLikeRecoTrack(tracksReco[indexReco].id)} aria-label={"Liked recommended music"}>
                                                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                                                     <path
-                                                        fill={recoIsLiked ? "green" : "none"}
+                                                        fill={recoIsLiked ? "#1DB954" : "none"}
                                                         fill-rule="evenodd"
                                                         clip-rule="evenodd"
                                                         stroke="white"

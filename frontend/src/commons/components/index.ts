@@ -7,6 +7,7 @@ export { default as Loader } from './Loader';
 export { default as ErrorOrLoader } from './ErrorOrLoader/ErrorOrLoader';
 export { default as Notification } from './Notification';
 export { default as Modal } from './Modal';
+export { default as ModalTutorial } from './ModalTutorial';
 
 export { default as Artwork } from './Artwork';
 export { default as ArtistsGrid } from './ArtistsGrid';
