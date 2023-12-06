@@ -1,4 +1,4 @@
-import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton, Modal, ModalTutorial } from '../../../commons/components';
+import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton, Modal } from '../../../commons/components';
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -219,7 +219,6 @@ const EasyModification = () => {
         <>
             <Layout
                 extraHeader={<EasyModificationHeader profile={profile} />}
-                blured={isModalNewPlaylistOpened}
                 bodyColor={"#000000"}
             >
                 {!consultationMode ? (
