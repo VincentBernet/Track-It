@@ -5,6 +5,7 @@ type SwitchButton = {
     onChange: () => void;
 }
 
+// FIX le switch a une value donnée
 const SwitchButton = ({ onChange }: SwitchButton) => {
     return (
         <StyledSwitchButton onClick={onChange}>

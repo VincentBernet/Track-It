@@ -6,6 +6,7 @@ import { getCurrentUserPlaylists, getCurrentUserProfile, getCurrentUserSavedTrac
 import { playlist, playlistsData, profileData, tracksData, tracksDataItem } from '../../../commons/spotify/responsesTypes';
 import { catchErrors } from '../../../commons/utils';
 import getWordingButtonTracksToPlaylists from './EasyModificationUtils';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const EasyModification = () => {
@@ -31,7 +32,7 @@ const EasyModification = () => {
     const [playlistCreationFailure, setPlaylistCreationFailure] = useState<boolean>(false);
 
     /* Consultation mode state : For switching between consultation and edition */
-    const [consultationMode, setConsultationMode] = useState<boolean>(false);
+    const [consultationMode, setConsultationMode] = useState<boolean>(localStorage.getItem("consultationMode") === "true");
 
     /* Selected Playlist(s) state : For sending list IDs of selected playlists */
     const [selectedPlaylistsId, setSelectedPlaylistsId] = useState<string[]>([]);
@@ -182,6 +183,7 @@ const EasyModification = () => {
 
     const handleSwitchMode = () => {
         resetSelectedItems();
+        localStorage.setItem("consultationMode", (!consultationMode).toString());
         setConsultationMode(!consultationMode);
     }
 
@@ -218,6 +220,8 @@ const EasyModification = () => {
         setPlaylistAdditionFailure([]);
     }
 
+    const navigate = useNavigate();
+
     return (
         <>
             <Layout
@@ -225,14 +229,22 @@ const EasyModification = () => {
                 blured={isModalNewPlaylistOpened || isModalTutorialOpen}
                 bodyColor={"#000000"}
             >
-                {!consultationMode && (
+                {!consultationMode ? (
                     <StyledGreenButton onClick={handleAddTracksToPlaylists}>
                         {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylistsId.length)}
                     </StyledGreenButton>
-                )}
-                <StyledNewGrid $hasMoreMargin={consultationMode}>
+                ) :
+                    <>
+                        <StyledGreenButton onClick={() => { navigate('/top-tracks'); }}> Check your top Tracks</StyledGreenButton>
+                        <StyledGreenButton style={{ marginLeft: "15px" }} onClick={() => { navigate('/top-artists'); }}> Check your top Artists </StyledGreenButton>
+                    </>
+                }
+                <StyledNewGrid>
                     <aside>
-                        <h3 style={{ marginBottom: '10px' }}>Your Playlists</h3>
+                        <div style={{ marginBottom: '10px', display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <h3>Your Playlists</h3>
+                            {consultationMode && <Link to="/playlists">See playlists detail</Link>}
+                        </div>
                         <PlaylistList
                             playlists={playlists}
                             errorFetchingPlaylists={errorFetchingPlaylists}
@@ -260,24 +272,31 @@ const EasyModification = () => {
                         />
                     </section>
                 </StyledNewGrid>
-            </Layout>
+            </Layout >
 
 
-            {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
+            {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />
+            }
 
-            {isModalNewPlaylistOpened && (
-                <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />
-            )}
-            {playlistAdditionFailure.length > 0 && (
-                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
-                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
-                </TemporaryComponent>
-            )}
-            {playlistCreationFailure && (
-                <TemporaryComponent handleOnDelete={() => setPlaylistCreationFailure(false)}>
-                    <Notification status={"error"} message={`Your playlist couldn't be created, try again later`} />
-                </TemporaryComponent>
-            )}
+            {
+                isModalNewPlaylistOpened && (
+                    <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />
+                )
+            }
+            {
+                playlistAdditionFailure.length > 0 && (
+                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                    </TemporaryComponent>
+                )
+            }
+            {
+                playlistCreationFailure && (
+                    <TemporaryComponent handleOnDelete={() => setPlaylistCreationFailure(false)}>
+                        <Notification status={"error"} message={`Your playlist couldn't be created, try again later`} />
+                    </TemporaryComponent>
+                )
+            }
         </>
     );
 }

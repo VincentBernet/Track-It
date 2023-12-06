@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledNewtGridProps {
-  $hasMoreMargin: boolean;
+  $hasMoreMargin?: boolean;
 }
 
 const StyledNewGrid = styled.div<StyledNewtGridProps>`
