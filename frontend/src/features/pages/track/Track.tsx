@@ -183,7 +183,7 @@ const Track = () => {
                                 </div>
                             </div>
                             <div>
-                                <img className={"right__arrow__icone"} src={'/images/right_arrow.png'} alt={`${track.name} default thumbnail`} />
+                                <img className={"right__arrow__icone"} src={'/images/right_arrow.png'} alt={`righ arrow image`} />
                             </div>
 
                             <div className={"section__card__music v2"}>

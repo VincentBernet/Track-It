@@ -40,15 +40,8 @@ const EasyModification = () => {
     /* Selected Track(s) state : For sending list Uri of selected tracks */
     const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
 
-    /* Modal state : For displaying tutorial modal on first render */
-    const [isModalTutorialOpen, setIsModalTutorialOpen] = useState<boolean>(false);
-
     /* Fetch first playlists batch on first render */
     useEffect(() => {
-        if (localStorage.getItem("tutorial") !== "true") {
-            setIsModalTutorialOpen(true);
-            localStorage.setItem("tutorial", "true");
-        }
         const fetchData = async () => {
             try {
                 const { data } = await getCurrentUserPlaylists();
@@ -226,7 +219,7 @@ const EasyModification = () => {
         <>
             <Layout
                 extraHeader={<EasyModificationHeader profile={profile} />}
-                blured={isModalNewPlaylistOpened || isModalTutorialOpen}
+                blured={isModalNewPlaylistOpened}
                 bodyColor={"#000000"}
             >
                 {!consultationMode ? (
@@ -274,29 +267,21 @@ const EasyModification = () => {
                 </StyledNewGrid>
             </Layout >
 
+            {isModalNewPlaylistOpened && (
+                <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />
+            )}
 
-            {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />
-            }
+            {playlistAdditionFailure.length > 0 && (
+                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                </TemporaryComponent>
+            )}
 
-            {
-                isModalNewPlaylistOpened && (
-                    <Modal onClose={handleOnCloseModalNewPlaylist} onValidate={handleCreateNewPlaylist} />
-                )
-            }
-            {
-                playlistAdditionFailure.length > 0 && (
-                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
-                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
-                    </TemporaryComponent>
-                )
-            }
-            {
-                playlistCreationFailure && (
-                    <TemporaryComponent handleOnDelete={() => setPlaylistCreationFailure(false)}>
-                        <Notification status={"error"} message={`Your playlist couldn't be created, try again later`} />
-                    </TemporaryComponent>
-                )
-            }
+            {playlistCreationFailure && (
+                <TemporaryComponent handleOnDelete={() => setPlaylistCreationFailure(false)}>
+                    <Notification status={"error"} message={`Your playlist couldn't be created, try again later`} />
+                </TemporaryComponent>
+            )}
         </>
     );
 }

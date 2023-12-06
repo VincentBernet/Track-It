@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoutButton } from "../index";
+import { LogoutButton, HelpButton } from "../index";
 import { logout } from "../../spotify/auth";
 import styled from "styled-components";
 
@@ -16,6 +16,7 @@ const Layout = ({ children, blured = false, extraHeader, bodyColor, fixedMainMar
         <StyledLayout $blured={blured}>
             <StyledHeader>
                 {extraHeader}
+                <HelpButton />
                 <LogoutButton logout={logout} bodyColor={bodyColor} />
             </StyledHeader>
             <main style={{ padding: fixedMainMargin }}>

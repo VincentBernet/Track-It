@@ -2,6 +2,7 @@ export { default as Layout } from './Layout/Layout';
 export { default as EditionHeader } from './Layout/EditionHeader';
 export { default as EasyModificationHeader } from './Layout/EasyModificationHeader';
 export { default as LogoutButton } from './Layout/LogoutButton';
+export { default as HelpButton } from './Layout/HelpButton';
 
 export { default as Loader } from './Loader';
 export { default as ErrorOrLoader } from './ErrorOrLoader/ErrorOrLoader';
