@@ -12,7 +12,7 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
     const [playlistName, setPlaylistName] = useState<string>('');
     const [playlistDescription, setPlaylistDescription] = useState<string>('');
     return (
-        <StyledModalOverlay onClick={() => onClose()}>
+        <StyledModalOverlay>
             <StyledModal>
                 <div className={'flex'}>
                     <h3>Create a new playlist</h3>
@@ -66,7 +66,7 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
 
 const StyledModalOverlay = styled.div`
     position: fixed;
-    z-index: 999;
+    z-index: 1001;
     top: 0;
     left: 0;
     width: 100vw;
