@@ -261,7 +261,7 @@ const EasyModification = () => {
                     <section>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
                             <h3>Your liked Tracks</h3>
-                            <SwitchButton onChange={handleSwitchMode} />
+                            <SwitchButton checked={consultationMode} onChange={handleSwitchMode} />
                         </div>
                         <TrackCardList
                             tracks={tracks}
