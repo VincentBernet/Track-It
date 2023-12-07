@@ -11,7 +11,7 @@ const ModalTutorial = ({ onClose }: ModalTutorialProps) => {
             <StyledModal>
                 <div className={'flex'}>
                     <h3>Welcome to Track-IT</h3>
-                    <button type='button' onClick={() => onClose()} aria-label="Close modal and cancel new playlist creation">
+                    <button type='button' onClick={() => onClose()} aria-label="Close tutorial modal">
                         <img src={'./images/cross.png'} alt={"Cross image"} />
                     </button>
                 </div>
