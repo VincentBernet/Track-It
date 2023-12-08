@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { fadeIn } from "../styles/global/animation";
+import { CrossSvg } from "./Icon";
 
 type ModalProps = {
     onValidate: ({ playlistName, playlistDescription }:
@@ -17,7 +18,7 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
                 <div className={'flex'}>
                     <h3>Create a new playlist</h3>
                     <button type='button' onClick={() => onClose()} aria-label="Close modal and cancel new playlist creation">
-                        <img src={'./images/cross.png'} alt={"Cross image"} />
+                        <CrossSvg />
                     </button>
                 </div>
 
@@ -92,11 +93,6 @@ const StyledModal = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-
-    img {
-        width: 20px;
-        height: 20px;
     }
 
     form {

@@ -63,7 +63,7 @@ const Playlists = () => {
 
     return (
         <Layout>
-            <SectionWrapper title="Public Playlists" links={[{ link: "", title: "Easy-Modification" }, { link: "profile", title: "Profile" }]}>
+            <SectionWrapper title="Public Playlists" links={[{ link: "", title: "Easy-Modification" }]}>
                 <PlaylistsGrid playlists={playlists} />
             </SectionWrapper>
         </Layout>

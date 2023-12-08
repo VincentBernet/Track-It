@@ -5,6 +5,7 @@ import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons
 import { track } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
 import { StyledGreenButton } from "../../../commons/styles";
+import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/Icon";
 
 
 const Track = () => {
@@ -124,8 +125,6 @@ const Track = () => {
 
     const links = [
         { link: "", title: "Easy-Modification" },
-        { link: "profile", title: "Profile" },
-        { link: "playlists", title: "Playlists" },
     ];
 
     if (!track) {
@@ -139,92 +138,70 @@ const Track = () => {
     return (
         <Layout>
             <StyledTrackCard>
-                <SectionWrapper title={"Track"} links={links} forcedWidth="80%">
-                    <div className={"section__centered"}>
-                        <div className={"section__flex"}>
-                            <div className={"section__card__music"}>
-                                <div>
-                                    <Artwork
-                                        images={track.album.images}
-                                        alt={track.name}
-                                        size={"300px"}
-                                        isRounded
-                                    />
-                                </div>
-                                <div>
-                                    <h1>{track.name}</h1>
-                                    <h2>{track.artists[0].name}</h2>
-                                    <p>{track.album.name} in {track.album.release_date}</p>
-                                    <StyledGreenButton onClick={() => {
-                                        window.open(track.external_urls.spotify);
-                                        return null;
-                                    }}>Play on Spotify</StyledGreenButton>
-                                    <br />
-                                    <br />
-                                    <StyledGreenButton onClick={handleNextRecommendation}>New recommendation</StyledGreenButton>
-                                    <br />
-                                    <br />
-                                    {isLiked !== null &&
-                                        <button onClick={() => handleLikeTrack(track.id)} aria-label={"Liked current music"}>
-                                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    fill={isLiked ? "#1DB954" : "none"}
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    stroke="white"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
-                                                />
-                                            </svg>
-                                        </button>
-                                    }
-                                </div>
+                <SectionWrapper title={"Track"} links={links}>
+                    <div className="tracks_flex_section">
+                        <div className="track_section">
+                            <div>
+                                <Artwork
+                                    images={track.album.images}
+                                    alt={track.name}
+                                    size={"300px"}
+                                    isRounded
+                                />
                             </div>
                             <div>
-                                <img className={"right__arrow__icone"} src={'/images/right_arrow.png'} alt={`righ arrow image`} />
-                            </div>
-
-                            <div className={"section__card__music v2"}>
-                                {tracksReco === null ? <ErrorOrLoader error={errorFechingRecommendedTracks} /> :
-                                    <>
-                                        <div>
-                                            <Artwork
-                                                images={tracksReco[indexReco].album.images}
-                                                alt={tracksReco[indexReco].name}
-                                                size={"300px"}
-                                                isRounded
-                                            />
-                                        </div>
-                                        <div>
-                                            <h1>{tracksReco[indexReco].name}</h1>
-                                            <h2>{tracksReco[indexReco].artists[0].name}</h2>
-                                            <p>{tracksReco[indexReco].album.name} in {tracksReco[indexReco].album.release_date}</p>
-                                            <StyledGreenButton onClick={() => {
-                                                window.open(tracksReco[indexReco].external_urls.spotify);
-                                                return null;
-                                            }}>Play on Spotify</StyledGreenButton>
-                                            <br />
-                                            <br />
-                                            <button onClick={() => handleLikeRecoTrack(tracksReco[indexReco].id)} aria-label={"Liked recommended music"}>
-                                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                                    <path
-                                                        fill={recoIsLiked ? "#1DB954" : "none"}
-                                                        fillRule="evenodd"
-                                                        clipRule="evenodd"
-                                                        stroke="white"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </>
+                                <h1>{track.name}</h1>
+                                <h2>{track.artists[0].name}</h2>
+                                <p>{track.album.name} in {track.album.release_date}</p>
+                                <StyledGreenButton onClick={() => {
+                                    window.open(track.external_urls.spotify);
+                                    return null;
+                                }}>Play on Spotify</StyledGreenButton>
+                                <br />
+                                <br />
+                                <StyledGreenButton onClick={handleNextRecommendation}>New reco</StyledGreenButton>
+                                <br />
+                                <br />
+                                {isLiked !== null &&
+                                    <button onClick={() => handleLikeTrack(track.id)} aria-label={"Liked current music"}>
+                                        <HeartSvg isLiked={isLiked} />
+                                    </button>
                                 }
                             </div>
+                        </div>
+
+                        <div>
+                            <DoubleArrowSvg />
+                        </div>
+
+
+                        <div className="track_section justify_end">
+                            {tracksReco === null ? <ErrorOrLoader error={errorFechingRecommendedTracks} /> :
+                                <>
+                                    <div>
+                                        <Artwork
+                                            images={tracksReco[indexReco].album.images}
+                                            alt={tracksReco[indexReco].name}
+                                            size={"300px"}
+                                            isRounded
+                                        />
+                                    </div>
+                                    <div>
+                                        <h1>{tracksReco[indexReco].name}</h1>
+                                        <h2>{tracksReco[indexReco].artists[0].name}</h2>
+                                        <p>{tracksReco[indexReco].album.name} in {tracksReco[indexReco].album.release_date}</p>
+                                        <StyledGreenButton onClick={() => {
+                                            window.open(tracksReco[indexReco].external_urls.spotify);
+                                            return null;
+                                        }}>Play on Spotify</StyledGreenButton>
+                                        <br />
+                                        <br />
+                                        <button onClick={() => handleLikeRecoTrack(tracksReco[indexReco].id)} aria-label={"Liked recommended music"}>
+                                            <HeartSvg isLiked={recoIsLiked} />
+                                        </button>
+                                    </div>
+                                </>
+                            }
                         </div>
                     </div>
                 </SectionWrapper>
@@ -234,20 +211,17 @@ const Track = () => {
 };
 
 const StyledTrackCard = styled.section`
-    .right__arrow__icone {
-        width: 50px;
-        height: 50px;
-    }
-    .section__flex {
+    .tracks_flex_section {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .section__card__music {
+    .track_section { 
         display: flex;
+        width: 550px;
         gap: 20px;
     }
-    .v2 {
+    .justify_end {
         justify-content: flex-end;
     }
 `;

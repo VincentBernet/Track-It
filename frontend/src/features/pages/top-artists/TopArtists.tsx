@@ -24,7 +24,7 @@ const TopArtists = () => {
         fetchData();
     }, [timeRange]);
 
-    const links = [{ link: "", title: "Easy-Modification" }, { link: "profile", title: "Profile" }];
+    const links = [{ link: "", title: "Easy-Modification" }];
 
     if (!topArtists) {
         return (

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ModalTutorial } from '../index';
+import { QuestionMarkCircleSvg } from '../Icon';
 
 
 const HelpButton = React.memo(() => {
@@ -17,8 +18,8 @@ const HelpButton = React.memo(() => {
 
   return (
     <>
-      <StyledAbsoluteHelpButton onClick={() => { setIsModalTutorialOpen(true) }}>
-        Help
+      <StyledAbsoluteHelpButton onClick={() => { setIsModalTutorialOpen(true) }} aria-label={'Need help ? Open tutorial'}>
+        <QuestionMarkCircleSvg />
       </StyledAbsoluteHelpButton>
       {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
     </>
@@ -27,8 +28,7 @@ const HelpButton = React.memo(() => {
 
 const StyledAbsoluteHelpButton = styled.button`
   position: absolute;
-  top: var(--spacing-lg);
-  right: var(--spacing-xxl);
+  top: 17.5px;
   padding: var(--spacing-xs) var(--spacing-sm);
   background-color: rgba(0,0,0,.7);
   color: var(--white);
@@ -37,7 +37,7 @@ const StyledAbsoluteHelpButton = styled.button`
   border-radius: var(--border-radius-pill);
   z-index: 10;
   @media (min-width: 768px) {
-    right: 140px;
+    right: 110px;
   }
 `;
 

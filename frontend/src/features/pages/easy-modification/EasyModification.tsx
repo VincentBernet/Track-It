@@ -235,7 +235,7 @@ const EasyModification = () => {
                     <aside>
                         <div style={{ marginBottom: '10px', display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <h3>Your Playlists</h3>
-                            {consultationMode && <Link to="/playlists">See playlists detail</Link>}
+                            {consultationMode && <Link to="/playlists">See all</Link>}
                         </div>
                         <PlaylistList
                             playlists={playlists}

@@ -115,7 +115,6 @@ const Playlist = () => {
 
     const links = [
         { link: "", title: "Easy-Modification" },
-        { link: "profile", title: "Profile" },
         { link: "playlists", title: "Playlists" },
     ];
 

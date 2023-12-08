@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { fadeIn } from "../styles/global/animation";
+import { CrossSvg } from "./Icon";
 
 type ModalTutorialProps = {
     onClose: () => void;
@@ -12,7 +13,7 @@ const ModalTutorial = ({ onClose }: ModalTutorialProps) => {
                 <div className={'flex'}>
                     <h3>Welcome to Track-IT</h3>
                     <button type='button' onClick={() => onClose()} aria-label="Close tutorial modal">
-                        <img src={'./images/cross.png'} alt={"Cross image"} />
+                        <CrossSvg />
                     </button>
                 </div>
 
@@ -74,11 +75,6 @@ const StyledModal = styled.div`
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-    }
-
-    img {
-        width: 20px;
-        height: 20px;
     }
 
     .button_submit {
