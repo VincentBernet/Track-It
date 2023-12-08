@@ -28,7 +28,7 @@ const HelpButton = React.memo(() => {
 
 const StyledAbsoluteHelpButton = styled.button`
   position: absolute;
-  top: 17.5px;
+  top: 17px;
   padding: var(--spacing-xs) var(--spacing-sm);
   background-color: rgba(0,0,0,.7);
   color: var(--white);
@@ -37,7 +37,7 @@ const StyledAbsoluteHelpButton = styled.button`
   border-radius: var(--border-radius-pill);
   z-index: 10;
   @media (min-width: 768px) {
-    right: 110px;
+    right: 115px;
   }
 `;
 

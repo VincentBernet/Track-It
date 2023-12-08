@@ -119,7 +119,7 @@ div.screen {
     height: 120vh;
     max-width: 80vmin;
     max-height: 80vmin;
-    top: 50%;
+    top: 42%;
     left: 50%;
     -webkit-transform: translate(-50%, -40%);
     transform: translate(-50%, -40%);
