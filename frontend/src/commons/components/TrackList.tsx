@@ -1,6 +1,6 @@
 import { StyledListReset } from '../styles';
 import { track } from '../spotify/responsesTypes';
-import TrackCard from './TrackCard';
+import TrackCardOld from './TrackCardOld';
 
 
 interface TrackListProps {
@@ -13,7 +13,7 @@ const TrackList = ({ tracks, clickable }: TrackListProps) => (
         {tracks && tracks.length ? (
             <StyledListReset>
                 {tracks.map((track, i) => (
-                    <TrackCard key={track.id + i} track={track} index={i} clickable={clickable} />
+                    <TrackCardOld key={track.id + i} track={track} index={i} clickable={clickable} />
                 ))}
             </StyledListReset>
         ) : (
