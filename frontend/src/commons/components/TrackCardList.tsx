@@ -5,7 +5,7 @@ import TrackCard from './TrackCard';
 
 
 interface TrackCardListProps {
-    tracks: tracksDataItem[] | track[] | null;
+    tracks: tracksDataItem[] | null;
     errorFetchingTracks?: boolean;
     selectedTracksUris: string[];
     handleSelectedTracks: (id: string) => void;
