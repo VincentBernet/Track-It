@@ -1,12 +1,11 @@
-import { StyledListReset } from '../styles';
+import styled from 'styled-components';
 import { tracksDataItem } from '../spotify/responsesTypes';
+import { ErrorOrLoader } from './index';
 import TrackCard from './TrackCard';
-import { Artwork, ErrorOrLoader } from './index';
-import { formatDuration } from '../utils';
 
 
 interface TrackCardListProps {
-    tracks: tracksDataItem[] | null;
+    tracks: tracksDataItem[] | track[] | null;
     errorFetchingTracks?: boolean;
     selectedTracksUris: string[];
     handleSelectedTracks: (id: string) => void;
@@ -22,28 +21,18 @@ const TrackCardList = ({ tracks, errorFetchingTracks, selectedTracksUris, handle
     return (
         <>
             {tracks && tracks.length ? (
-                <table>
-                    <tr>
-                        <th>Index</th>
-                        <th>Name</th>
-                        <th>Album</th>
-                        <th>Duration</th>
-                    </tr>
-                    {tracks.map(({ track }, i) => (
+                <StyledTable>
+                    <thead>
                         <tr>
-                            <td>{i + 1}</td>
-                            <td>
-                                <Artwork
-                                    images={track.album.images}
-                                    size={"40px"}
-                                    alt={`${track.name} artwork`}
-                                />
-                                {track.name}
-                                {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 && ', '))}
-                            </td>
-                            <td>{track.album.name}</td>
-                            <td>{formatDuration(track.duration_ms)}</td>
-                            {/*<TrackCard
+                            <th title='Sort by custom spotify index'>Index</th>
+                            <th title='Sort by music title'>Name</th>
+                            <th title='Sort by album'>Album</th>
+                            <th title='Sort by duration'>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tracks.map(({ track }, i) => (
+                            <TrackCard
                                 track={track}
                                 key={track.id + i}
                                 index={i}
@@ -51,23 +40,10 @@ const TrackCardList = ({ tracks, errorFetchingTracks, selectedTracksUris, handle
                                 consultationMode={consultationMode}
                                 isSelected={selectedTracksUris.includes(track.uri)}
                                 handleSelectedTracks={handleSelectedTracks}
-                            />*/}
-                        </tr>
-                    ))}
-                </table>
-                /*<StyledListReset>
-                    {tracks.map(({ track }, i) => (
-                        <TrackCard
-                            track={track}
-                            key={track.id + i}
-                            index={i}
-                            clickable
-                            consultationMode={consultationMode}
-                            isSelected={selectedTracksUris.includes(track.uri)}
-                            handleSelectedTracks={handleSelectedTracks}
-                        />
-                    ))}
-                </StyledListReset>*/
+                            />
+                        ))}
+                    </tbody>
+                </StyledTable>
             ) : (
                 <p className="empty-notice">No tracks available</p>
             )}
@@ -76,3 +52,19 @@ const TrackCardList = ({ tracks, errorFetchingTracks, selectedTracksUris, handle
 }
 
 export default TrackCardList;
+
+const StyledTable = styled.table`
+    th {
+        cursor: pointer;
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #282828;
+        &:hover {
+            background-color: #282828;
+        }
+    }
+
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+`;
