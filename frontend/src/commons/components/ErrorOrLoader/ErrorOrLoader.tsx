@@ -2,7 +2,7 @@ import Error from './Error';
 import { Loader } from '..';
 
 
-const ErrorOrLoader = ({ error }: { error: boolean }) => {
+const ErrorOrLoader = ({ error }: { error: boolean | null }) => {
     if (error) {
         return (
             <Error />
