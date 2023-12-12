@@ -57,6 +57,7 @@ const GlobalStyle = createGlobalStyle`
   button {
     border: 0;
     cursor: pointer;
+
     font-family: inherit;
     border-radius: var(--border-radius-pill);
     background-color: rgba(0,0,0,.7);
@@ -69,6 +70,10 @@ const GlobalStyle = createGlobalStyle`
     &:focus {
       background-color: var(--dark-grey) !important;
       outline: 0 !important;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
     }
   }
 

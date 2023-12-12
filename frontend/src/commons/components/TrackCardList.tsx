@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { tracksData, tracksDataItem } from '../spotify/responsesTypes';
-import { ErrorOrLoader } from './index';
+import { ErrorOrLoader, SearchFilter } from './index';
 import TrackCard from './TrackCard';
 import { useEffect, useMemo, useState } from 'react';
 import { getCurrentUserSavedTracks } from '../spotify/requests';
@@ -72,8 +72,12 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
     }, [tracksData]);
 
     type sortValue = 'spotify' | 'name' | 'album' | 'duration';
+    // Sorting state
     const [sortValue, setSortValue] = useState<sortValue>('spotify');
     const [sortDescOrder, setSortDescOrder] = useState<boolean>(true);
+
+    // Filtering state
+    const [searchFilter, setSearchFilter] = useState<string>('');
 
     // Sort tracks by audio feature to be used in template
     const sortedTracks = useMemo(() => {
@@ -125,8 +129,24 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         return sortedTracks;
     }, [sortDescOrder, sortValue, successFetchingTracks, tracks]);
 
+    const filteredTracks = useMemo(() => {
+        if (!sortedTracks) {
+            return null;
+        }
 
-    if (sortedTracks === null || errorFetchingTracks === true) {
+        if (searchFilter === '') {
+            return sortedTracks;
+        }
+
+        return sortedTracks.filter((track) => (
+            track.track.name.toLowerCase().includes(searchFilter.toLowerCase())
+            || track.track.album.name.toLowerCase().includes(searchFilter.toLowerCase())
+            || track.track.artists[0].name.toLowerCase().includes(searchFilter.toLowerCase())
+        ));
+    }, [searchFilter, sortedTracks]);
+
+
+    if (filteredTracks === null || errorFetchingTracks === true) {
         return (
             <ErrorOrLoader error={errorFetchingTracks} />
         );
@@ -134,7 +154,16 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
     return (
         <>
-            {sortedTracks && sortedTracks.length ? (
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <SearchFilter
+                    onChange={(inputValue) => setSearchFilter(inputValue)}
+                />
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <button disabled>Add filter</button>
+                    <button disabled>Modify Columns</button>
+                </div>
+            </div>
+            {filteredTracks && filteredTracks.length ? (
                 <StyledTable>
                     <thead>
                         <tr>
@@ -177,11 +206,11 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedTracks.map(({ track }, i) => (
+                        {filteredTracks.map(({ track }, i) => (
                             <TrackCard
                                 track={track}
                                 key={track.id + i}
-                                index={(sortValue === 'spotify' && !sortDescOrder) ? sortedTracks.length - 1 - i : i}
+                                index={(sortValue === 'spotify' && !sortDescOrder) ? filteredTracks.length - 1 - i : i}
                                 clickable
                                 consultationMode={consultationMode}
                                 isSelected={selectedTracksUris.includes(track.uri)}
