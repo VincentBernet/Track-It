@@ -181,7 +181,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                             <TrackCard
                                 track={track}
                                 key={track.id + i}
-                                index={i}
+                                index={(sortValue === 'spotify' && !sortDescOrder) ? sortedTracks.length - 1 - i : i}
                                 clickable
                                 consultationMode={consultationMode}
                                 isSelected={selectedTracksUris.includes(track.uri)}
@@ -211,7 +211,7 @@ const StyledTable = styled.table`
         .flex {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             gap: 20px;
         }
     }
