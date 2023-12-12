@@ -1,4 +1,4 @@
-import './SearchFilter.scss';
+import './SearchFilter.css';
 
 type SearchFilterProps = {
     onChange: (inputValue: string) => void;

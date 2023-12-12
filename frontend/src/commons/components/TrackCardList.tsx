@@ -72,6 +72,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
     }, [tracksData]);
 
     type sortValue = 'spotify' | 'name' | 'album' | 'duration';
+
     // Sorting state
     const [sortValue, setSortValue] = useState<sortValue>('spotify');
     const [sortDescOrder, setSortDescOrder] = useState<boolean>(true);
