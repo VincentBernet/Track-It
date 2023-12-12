@@ -5,6 +5,7 @@ import TrackCard from './TrackCard';
 import { useEffect, useMemo, useState } from 'react';
 import { getCurrentUserSavedTracks } from '../spotify/requests';
 import axios from 'axios';
+import { SortArrowSvg } from './Icon';
 
 
 interface TrackCardListProps {
@@ -70,9 +71,9 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
     }, [tracksData]);
 
-
-    const [sortValue, setSortValue] = useState<'name' | 'album' | 'duration'>('name');
-
+    type sortValue = 'spotify' | 'name' | 'album' | 'duration';
+    const [sortValue, setSortValue] = useState<sortValue>('spotify');
+    const [sortDescOrder, setSortDescOrder] = useState<boolean>(true);
 
     // Sort tracks by audio feature to be used in template
     const sortedTracks = useMemo(() => {
@@ -84,19 +85,45 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
             return null;
         }
 
+        if (sortValue === 'spotify') {
+            if (sortDescOrder) {
+                return tracks;
+            }
+            else {
+                return [...tracks].reverse();
+            }
+        }
+
         const sortedTracks = [...tracks];
+
         sortedTracks.sort((a, b) => {
             switch (sortValue) {
                 case 'name':
-                    return a.track.name.localeCompare(b.track.name);
+                    if (sortDescOrder) {
+                        return a.track.name.localeCompare(b.track.name);
+                    }
+                    else {
+                        return b.track.name.localeCompare(a.track.name);
+                    }
                 case 'album':
-                    return a.track.album.name.localeCompare(b.track.album.name);
+                    if (sortDescOrder) {
+                        return a.track.album.name.localeCompare(b.track.album.name);
+                    }
+                    else {
+                        return b.track.album.name.localeCompare(a.track.album.name);
+                    }
                 case 'duration':
-                    return b.track.duration_ms - a.track.duration_ms;
+                    if (sortDescOrder) {
+                        return a.track.duration_ms - b.track.duration_ms;
+                    }
+                    else {
+                        return b.track.duration_ms - a.track.duration_ms;
+                    }
             }
         });
+
         return sortedTracks;
-    }, [sortValue, successFetchingTracks, tracks]);
+    }, [sortDescOrder, sortValue, successFetchingTracks, tracks]);
 
 
     if (sortedTracks === null || errorFetchingTracks === true) {
@@ -111,10 +138,42 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                 <StyledTable>
                     <thead>
                         <tr>
-                            <th onClick={() => { }} title='Sort by custom spotify index'>Index</th>
-                            <th onClick={() => { setSortValue('name') }} title='Sort by music title'>Name</th>
-                            <th onClick={() => { setSortValue('album') }} title='Sort by album'>Album</th>
-                            <th onClick={() => { setSortValue('duration') }} title='Sort by duration'>Duration</th>
+                            <th onClick={() => { setSortValue('spotify'); setSortDescOrder(!sortDescOrder) }} title='Sort by custom spotify index'>
+                                <div className='flex'>
+                                    Index
+                                    <SortArrowSvg
+                                        orientation={sortDescOrder ? 'descending' : 'ascending'}
+                                        strokeColor={sortValue === 'spotify' ? 'white' : 'none'}
+                                    />
+                                </div>
+                            </th>
+                            <th onClick={() => { setSortValue('name'); setSortDescOrder(!sortDescOrder) }} title='Sort by music title'>
+                                <div className='flex'>
+                                    Name
+                                    <SortArrowSvg
+                                        orientation={sortDescOrder ? 'descending' : 'ascending'}
+                                        strokeColor={sortValue === 'name' ? 'white' : 'none'}
+                                    />
+                                </div>
+                            </th>
+                            <th onClick={() => { setSortValue('album'); setSortDescOrder(!sortDescOrder) }} title='Sort by album'>
+                                <div className='flex'>
+                                    Album
+                                    <SortArrowSvg
+                                        orientation={sortDescOrder ? 'descending' : 'ascending'}
+                                        strokeColor={sortValue === 'album' ? 'white' : 'none'}
+                                    />
+                                </div>
+                            </th>
+                            <th onClick={() => { setSortValue('duration'); setSortDescOrder(!sortDescOrder) }} title='Sort by duration'>
+                                <div className='flex'>
+                                    Duration
+                                    <SortArrowSvg
+                                        orientation={sortDescOrder ? 'descending' : 'ascending'}
+                                        strokeColor={sortValue === 'duration' ? 'white' : 'none'}
+                                    />
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,6 +207,12 @@ const StyledTable = styled.table`
         border-bottom: 1px solid #282828;
         &:hover {
             background-color: #282828;
+        }
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
         }
     }
 
