@@ -11,7 +11,7 @@ interface PlaylistCardProps {
     clickable?: boolean,
     isSelected?: boolean,
     displayNotification?: boolean,
-    handleSelected?: (id: string) => void,
+    handleSelected?: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
 }
 
 const PlaylistCard = (
@@ -26,12 +26,13 @@ const PlaylistCard = (
     }: PlaylistCardProps) => {
 
     const navigate = useNavigate();
+
     return (
         <StyledPlaylistCard
             $selected={isSelected}
             $clickable={clickable}
             onClick={() => clickable && (
-                !consultationMode ? handleSelected(playlist.id)
+                !consultationMode ? handleSelected({ playlistId: playlist.id, playlistName: playlist.name })
                     : navigate(`/playlists/${playlist.id}`)
             )}
         >
