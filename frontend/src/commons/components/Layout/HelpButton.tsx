@@ -18,7 +18,7 @@ const HelpButton = React.memo(() => {
 
   return (
     <>
-      <StyledAbsoluteHelpButton onClick={() => { setIsModalTutorialOpen(true) }} aria-label={'Need help ? Open tutorial'}>
+      <StyledAbsoluteHelpButton onClick={() => { setIsModalTutorialOpen(true) }} aria-label={'Need help ? Open tutorial'} title={'help'}>
         <QuestionMarkCircleSvg />
       </StyledAbsoluteHelpButton>
       {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
