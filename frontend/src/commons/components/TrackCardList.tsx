@@ -152,6 +152,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         );
     }
 
+
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -218,7 +219,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                             />
                         ))}
                     </tbody>
-                </StyledTable >
+                </StyledTable>
             ) : (
                 <p className="empty-notice">No tracks available</p>
             )}
