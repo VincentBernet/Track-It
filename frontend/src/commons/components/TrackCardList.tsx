@@ -171,7 +171,6 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                         <tr>
                             <th onClick={() => { setSortValue('spotify'); setSortDescOrder(!sortDescOrder) }} title='Sort by custom spotify index'>
                                 <div className='flex'>
-                                    Index
                                     <SortArrowSvg
                                         orientation={sortDescOrder ? 'descending' : 'ascending'}
                                         strokeColor={sortValue === 'spotify' ? 'white' : 'none'}
@@ -180,7 +179,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                             </th>
                             <th onClick={() => { setSortValue('name'); setSortDescOrder(!sortDescOrder) }} title='Sort by music title'>
                                 <div className='flex'>
-                                    Name
+                                    Track
                                     <SortArrowSvg
                                         orientation={sortDescOrder ? 'descending' : 'ascending'}
                                         strokeColor={sortValue === 'name' ? 'white' : 'none'}
