@@ -124,7 +124,7 @@ const EasyModification = () => {
 
                     </aside>
                     <section>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '10px' }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
                             <h3>Your liked Tracks</h3>
                             <SwitchButton checked={consultationMode} onChange={handleSwitchMode} />
                         </div>
