@@ -6,8 +6,12 @@ type SearchFilterProps = {
 
 const SearchFilter = ({ onChange }: SearchFilterProps) => {
     return (
-        <div className="search">
-            <input placeholder="" onChange={(e) => onChange(e.target.value)} />
+        <div className='search'>
+            <input
+                placeholder=""
+                onChange={(e) => onChange(e.target.value)}
+                title="Search by"
+            />
             <div>
                 <svg>
                     <path

@@ -68,12 +68,22 @@ const GlobalStyle = createGlobalStyle`
 
     &:hover,
     &:focus {
-      background-color: var(--dark-grey) !important;
-      outline: 0 !important;
+      background-color: var(--dark-grey);
+      outline: 0;
     }
 
     &[disabled] {
       cursor: not-allowed;
+    }
+
+    &.inversed {
+      background-color: var(--new-light-grey);
+      color: var(--white);
+
+      &:hover,
+      &:focus {
+        background-color: var(--dark-grey);
+      }
     }
   }
 

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 interface TrackCardProps {
     track: track;
+    addedAt: string;
     index: number;
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
@@ -14,7 +15,7 @@ interface TrackCardProps {
     consultationMode?: boolean;
 }
 
-const TrackCard = ({ track, index, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+const TrackCard = ({ track, addedAt, index, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
@@ -40,7 +41,8 @@ const TrackCard = ({ track, index, handleSelectedTracks = () => { }, clickable =
                 </div>
             </td>
             <td>{track.album.name}</td>
-            <td className="centered last">{formatDuration(track.duration_ms)}</td>
+            <td>{addedAt}</td>
+            <td className="last">{formatDuration(track.duration_ms)}</td>
         </StyledTableRow>
     );
 }

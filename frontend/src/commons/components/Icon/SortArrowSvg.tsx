@@ -1,6 +1,11 @@
+type SortArrowSvgProps = {
+    orientation: 'ascending' | 'descending',
+    strokeColor: 'white' | 'none'
+}
+
 
 /* https://www.svgrepo.com/svg/533608/arrow-narrow-top-alignment | https://www.svgrepo.com/svg/533603/arrow-narrow-down-move */
-const SortArrowSvg = ({ orientation, strokeColor }: { orientation: 'ascending' | 'descending', strokeColor: 'white' | 'none' }) => {
+const SortArrowSvg = ({ orientation, strokeColor }: SortArrowSvgProps) => {
     if (orientation === 'ascending') {
         return (
             <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
