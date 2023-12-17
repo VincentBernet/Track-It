@@ -80,7 +80,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
     }, [tracksData]);
 
-    type columnsNameType = 'date_added' | 'name' | 'artist' | 'album' | 'duration';
+    /*type columnsNameType = 'date_added' | 'name' | 'artist' | 'album' | 'duration';*/
 
     const initialSortByOptionValue: sortOptionType = {
         date_added: true,

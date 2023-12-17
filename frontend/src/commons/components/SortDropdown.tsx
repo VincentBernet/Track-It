@@ -68,7 +68,7 @@ const isAscending = (sortByOption: sortOptionType) => {
 }
 
 
-const SortDropdown = ({ sortByOption, handleSort }: SortDropdownProps) => {
+const SortDropdown = ({ sortByOption, /*handleSort*/ }: SortDropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
