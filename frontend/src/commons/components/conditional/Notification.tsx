@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { fadeIn, fadeOut } from "../styles/global/animation";
+import { fadeIn, fadeOut } from "../../styles/global/animation";
 
 
 type NotificationProps = {

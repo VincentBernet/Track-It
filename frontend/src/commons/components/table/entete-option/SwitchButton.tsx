@@ -1,4 +1,4 @@
-import { StyledSwitchButton } from "../styles";
+import { StyledSwitchButton } from "../../../styles";
 
 
 type SwitchButton = {
