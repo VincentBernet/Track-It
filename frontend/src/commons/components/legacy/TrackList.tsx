@@ -1,5 +1,5 @@
-import { StyledListReset } from '../styles';
-import { track } from '../spotify/responsesTypes';
+import { StyledListReset } from '../../styles';
+import { track } from '../../spotify/responsesTypes';
 import TrackCardOld from './TrackCardOld';
 
 

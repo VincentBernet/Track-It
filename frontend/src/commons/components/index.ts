@@ -1,33 +1,40 @@
-export { default as Layout } from './Layout/Layout';
-export { default as EditionHeader } from './Layout/EditionHeader';
-export { default as EasyModificationHeader } from './Layout/EasyModificationHeader';
-export { default as LogoutButton } from './Layout/LogoutButton';
-export { default as HelpButton } from './Layout/HelpButton';
+export { default as Layout } from './layout/Layout';
+export { default as EditionHeader } from './layout/EditionHeader';
+export { default as EasyModificationHeader } from './layout/EasyModificationHeader';
+export { default as LogoutButton } from './layout/LogoutButton';
+export { default as HelpButton } from './layout/HelpButton';
 
-export { default as Loader } from './Loader';
-export { default as ErrorOrLoader } from './ErrorOrLoader/ErrorOrLoader';
-export { default as Notification } from './Notification';
-export { default as Modal } from './Modal';
-export { default as ModalTutorial } from './ModalTutorial';
+export { default as Loader } from './global/Loader';
+export { default as ErrorOrLoader } from './global/ErrorOrLoader';
+export { default as Notification } from './conditional/Notification';
+export { default as Modal } from './conditional/Modal';
+export { default as ModalTutorial } from './conditional/ModalTutorial';
 
-export { default as Artwork } from './Artwork';
-export { default as ArtistsGrid } from './ArtistsGrid';
-export { default as SectionWrapper } from './SectionWrapper';
-export { default as PlaylistsGrid } from './PlaylistsGrid';
-export { default as TimeRangeButtons } from './TimeRangeButtons';
-export { default as SwitchButton } from './SwitchButton';
+export { default as Artwork } from './global/Artwork';
+export { default as ArtistsGrid } from './legacy/ArtistsGrid';
+export { default as SectionWrapper } from './layout/SectionWrapper';
+export { default as PlaylistsGrid } from './legacy/PlaylistsGrid';
+export { default as TimeRangeButtons } from './legacy/TimeRangeButtons';
 
-export { default as PlaylistCard } from './PlaylistCard';
-export { default as TemporaryComponent } from './TemporaryComponent';
+export { default as PlaylistCard } from './legacy/PlaylistCard';
+export { default as TemporaryComponent } from './conditional/TemporaryComponent';
 
-export { default as PlaylistList } from './PlaylistList';
+export { default as PlaylistList } from './legacy/PlaylistList';
 
 
-export { default as TrackCard } from './TrackCard';
-export { default as TrackCardList } from './TrackCardList';
 
-export { default as TrackList } from './TrackList';
-export { default as TrackCardOld } from './TrackCardOld';
+export { default as TrackList } from './legacy/TrackList';
+export { default as TrackCardOld } from './legacy/TrackCardOld';
 
-export { default as SearchFilter } from './SearchFilter';
-export { default as SortDropdown } from './SortDropdown';
+// table options
+export { default as SwitchButton } from './table/entete-option/SwitchButton';
+export { default as PropertiesDropdown } from './table/entete-option/PropertiesDropdown';
+export { default as SearchFilter } from './table/entete-option/SearchFilter';
+export { default as SortDropdown } from './table/entete-option/SortDropdown';
+
+// table related components
+export { default as TrackCardList } from './table/TrackCardList';
+export { default as TableHeader } from './table/entete-option/TableHeader';
+export { default as ColumnHeader } from './table/entete-option/ColumnHeader';
+export { default as TrackCard } from './table/TrackCard';
+

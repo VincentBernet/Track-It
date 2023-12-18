@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { StyledSection } from '../styles';
+import { StyledSection } from '../../styles';
 
 
 interface SectionWrapperProps {

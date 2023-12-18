@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { image } from "../spotify/responsesTypes";
+import { image } from "../../spotify/responsesTypes";
 
 type ArtworkProps = {
     images: image[];

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
-import { Artwork, TemporaryComponent } from "./index";
-import { playlist } from "../spotify/responsesTypes";
-import { StyledAnimatedIcone, StyledPlaylistCard } from "../styles";
+import { Artwork, TemporaryComponent } from "../index";
+import { playlist } from "../../spotify/responsesTypes";
+import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
 
 
 interface PlaylistCardProps {

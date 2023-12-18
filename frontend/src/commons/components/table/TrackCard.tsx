@@ -1,7 +1,7 @@
-import { formatDuration } from '../utils';
-import { track } from '../spotify/responsesTypes';
+import { formatDuration } from '../../utils';
+import { track } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
-import { Artwork } from './index';
+import { Artwork } from '../index';
 import styled from 'styled-components';
 
 

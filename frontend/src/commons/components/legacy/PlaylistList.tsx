@@ -1,10 +1,10 @@
-import { ErrorOrLoader, Modal, PlaylistCard, TemporaryComponent, Notification } from "./index";
-import { playlist, playlistsData, profileData } from "../spotify/responsesTypes";
-import { StyledListReset } from "../styles";
+import { ErrorOrLoader, Modal, PlaylistCard, TemporaryComponent, Notification } from "../index";
+import { playlist, playlistsData, profileData } from "../../spotify/responsesTypes";
+import { StyledListReset } from "../../styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getCurrentUserPlaylists, postNewPlaylist } from "../spotify/requests";
-import { catchErrors } from "../utils";
+import { getCurrentUserPlaylists, postNewPlaylist } from "../../spotify/requests";
+import { catchErrors } from "../../utils";
 
 
 interface PlaylistListProps {

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { StyledGrid } from '../styles';
-import { playlist } from '../spotify/responsesTypes';
+import { StyledGrid } from '../../styles';
+import { playlist } from '../../spotify/responsesTypes';
 
 
 interface PlaylistsGridProps {

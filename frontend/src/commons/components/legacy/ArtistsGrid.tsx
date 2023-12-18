@@ -1,5 +1,5 @@
-import { StyledGrid } from '../styles';
-import { artist } from '../spotify/responsesTypes';
+import { StyledGrid } from '../../styles';
+import { artist } from '../../spotify/responsesTypes';
 
 
 interface ArtistsGridProps {

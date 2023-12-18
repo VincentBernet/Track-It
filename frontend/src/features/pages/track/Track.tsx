@@ -5,7 +5,7 @@ import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons
 import { track } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
 import { StyledGreenButton } from "../../../commons/styles";
-import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/Icon";
+import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/icon";
 
 
 const Track = () => {

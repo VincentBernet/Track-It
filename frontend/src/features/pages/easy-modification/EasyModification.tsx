@@ -98,7 +98,7 @@ const EasyModification = () => {
                 bodyColor={"#000000"}
             >
                 {!consultationMode ? (
-                    <StyledGreenButton onClick={handleAddTracksToPlaylists}>
+                    <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>
                         {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
                     </StyledGreenButton>
                 ) :
