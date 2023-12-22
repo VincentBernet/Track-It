@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DoubleSortSvg } from "../../icon";
+import { DoubleSortSvg } from "../../icons";
 import { tableOptionsType } from "../TrackCardList";
 import DropdownSorting from "../../conditional/DropdownSorting";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PropertiesSvg } from "../../icon";
+import { PropertiesSvg } from "../../icons";
 import { tableOptionsType } from "../TrackCardList";
 import DropdownProperties from "../../conditional/DropdownProperties";
 

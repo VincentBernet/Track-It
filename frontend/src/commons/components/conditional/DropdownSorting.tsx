@@ -1,5 +1,5 @@
 import { StyledDropdown } from "../../styles";
-import { SortArrowSvg } from "../icon";
+import { SortArrowSvg } from "../icons";
 import { tableOptionsType } from "../table/TrackCardList";
 
 type DropdownSortingType = {

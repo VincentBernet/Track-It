@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { fadeIn } from "../../styles/global/animation";
-import { CrossSvg } from "../icon";
+import { CrossSvg } from "../icons";
 
 type ModalTutorialProps = {
     onClose: () => void;

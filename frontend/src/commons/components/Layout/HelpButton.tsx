@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ModalTutorial } from '../index';
-import { QuestionMarkCircleSvg } from '../icon';
+import { QuestionMarkCircleSvg } from '../icons';
 
 
 const HelpButton = React.memo(() => {

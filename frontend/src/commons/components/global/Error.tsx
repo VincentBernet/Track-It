@@ -1,4 +1,4 @@
-import { WarningSvg } from "../icon";
+import { WarningSvg } from "../icons";
 
 const Error = () => {
     return (
