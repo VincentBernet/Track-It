@@ -3,19 +3,21 @@ import { track } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
 import { Artwork } from '../index';
 import styled from 'styled-components';
+import { tableOptionsType } from './TrackCardList';
 
 
 interface TrackCardProps {
     track: track;
     addedAt: string;
     index: number;
+    tableOptions: tableOptionsType;
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
     clickable?: boolean;
     consultationMode?: boolean;
 }
 
-const TrackCard = ({ track, addedAt, index, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
@@ -23,26 +25,38 @@ const TrackCard = ({ track, addedAt, index, handleSelectedTracks = () => { }, cl
             onClick={() => clickable && (!consultationMode ? handleSelectedTracks(track.uri) : navigate(`/track/${track.id}`))}
         >
             <td className="centered first">{index + 1}</td>
-            <td>
-                <div className={'flex'}>
-                    <Artwork
-                        images={track.album.images}
-                        size={"40px"}
-                        alt={`${track.name} artwork`}
-                    />
-                    <div>
+
+            {(tableOptions.name.isDisplayed || tableOptions.artist.isDisplayed) && (
+                <td>
+                    <div className={'flex'}>
+                        <Artwork
+                            images={track.album.images}
+                            size={"40px"}
+                            alt={`${track.name} artwork`}
+                        />
                         <div>
-                            {track.name}
-                        </div>
-                        <div>
-                            {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
+                            {tableOptions.name.isDisplayed && (
+                                <div>
+                                    {track.name}
+                                </div>
+                            )}
+                            {tableOptions.artist.isDisplayed && (
+                                <div>
+                                    {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
+                                </div>
+                            )}
                         </div>
                     </div>
-                </div>
-            </td>
-            <td>{track.album.name}</td>
-            <td>{addedAt}</td>
-            <td className="last">{formatDuration(track.duration_ms)}</td>
+                </td>)}
+            {tableOptions.album.isDisplayed && (
+                <td>{track.album.name}</td>
+            )}
+            {tableOptions.date_added.isDisplayed && (
+                <td>{addedAt}</td>
+            )}
+            {tableOptions.duration.isDisplayed && (
+                <td className="last">{formatDuration(track.duration_ms)}</td>
+            )}
         </StyledTableRow>
     );
 }

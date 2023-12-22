@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { DoubleSortSvg } from "../../icon";
 import { tableOptionsType } from "../TrackCardList";
+import DropdownSorting from "../../conditional/DropdownSorting";
 
 type SortDropdownProps = {
     handleSort: (sort: string) => void;
     tableOptions: tableOptionsType;
 }
 
-const SortDropdown = ({ tableOptions, /*handleSort*/ }: SortDropdownProps) => {
+const SortDropdown = ({ tableOptions, handleSort }: SortDropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const selectedColumn = Object.entries(tableOptions).find((object) => object[1].isAscending !== undefined) ||
         ['date_added', { label: 'Date added', isAscending: true, isDisplayed: true }];
@@ -29,6 +30,7 @@ const SortDropdown = ({ tableOptions, /*handleSort*/ }: SortDropdownProps) => {
                     fillBottom={!isAscending}
                 />
             </button>
+            <DropdownSorting isOpen={isOpen} handleSorting={handleSort} tableOptions={tableOptions} />
         </>
     );
 }

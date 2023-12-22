@@ -1,3 +1,4 @@
+import { StyledDropdown } from "../../styles";
 import { tableOptionsType } from "../table/TrackCardList";
 
 type DropdownPropertiesType = {
@@ -9,13 +10,11 @@ type DropdownPropertiesType = {
 const DropdownProperties = ({ isOpen, tableOptions, handleDisplay }: DropdownPropertiesType) => {
     if (!isOpen) return null;
     return (
-        <div style={{
-            position: 'absolute', marginTop: '200px', padding: '15px', borderRadius: '8px', zIndex: 2, backgroundColor: 'var(--true-black)',
-        }}>
+        <StyledDropdown $isProperties>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 {Object.entries(tableOptions).map((option) => {
                     return (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }} key={option[1].label}>
                             <input
                                 type="checkbox"
                                 id={option[1].label}
@@ -29,7 +28,7 @@ const DropdownProperties = ({ isOpen, tableOptions, handleDisplay }: DropdownPro
                     );
                 })}
             </div>
-        </div >
+        </StyledDropdown>
     );
 }
 

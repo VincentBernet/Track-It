@@ -16,21 +16,25 @@ const TableHeader = ({ tableOptions, handleSort }: TableHeaderProps) => {
                     </div>
                 </th>
                 <ColumnHeader
+                    isDisplayed={(tableOptions['name'].isDisplayed || tableOptions['artist'].isDisplayed)}
                     isAscending={tableOptions['name'].isAscending}
                     onClick={() => handleSort('name')}
                     title="Track"
                 />
                 <ColumnHeader
+                    isDisplayed={tableOptions['album'].isDisplayed}
                     isAscending={tableOptions['album'].isAscending}
                     onClick={() => handleSort('album')}
                     title="Album"
                 />
                 <ColumnHeader
+                    isDisplayed={tableOptions['date_added'].isDisplayed}
                     isAscending={tableOptions['date_added'].isAscending}
                     onClick={() => handleSort('date_added')}
                     title="Date added"
                 />
                 <ColumnHeader
+                    isDisplayed={tableOptions['duration'].isDisplayed}
                     isAscending={tableOptions['duration'].isAscending}
                     onClick={() => handleSort('duration')}
                     title="Dur."

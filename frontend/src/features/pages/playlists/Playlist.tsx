@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { catchErrors } from '../../../commons/utils'
 import { getPlaylistById, getAudioFeaturesForTracks } from '../../../commons/spotify/requests';
-import { StyledDropdown, StyledHeader } from '../../../commons/styles';
+import { StyledDropdownOld, StyledHeader } from '../../../commons/styles';
 import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../../commons/spotify/responsesTypes';
 import axios from 'axios';
 import { ErrorOrLoader, Layout, SectionWrapper, TrackList } from '../../../commons/components';
@@ -147,7 +147,7 @@ const Playlist = () => {
             </StyledHeader>
         }>
             <SectionWrapper title="Playlist" links={links} extra={
-                <StyledDropdown $activeOption={!!sortValue}>
+                <StyledDropdownOld $activeOption={!!sortValue}>
                     <label className="sr-only" htmlFor="order-select">Sort tracks</label>
                     <select
                         name="track-order"
@@ -161,7 +161,7 @@ const Playlist = () => {
                             </option>
                         ))}
                     </select>
-                </StyledDropdown>
+                </StyledDropdownOld>
             }>
                 {sortedTracks && (
                     <TrackList tracks={sortedTracks} />
