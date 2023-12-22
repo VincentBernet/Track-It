@@ -209,27 +209,27 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
             date_added: {
                 isAscending: undefined,
                 label: 'Date added',
-                isDisplayed: true,
+                isDisplayed: tableOptions.date_added.isDisplayed,
             },
             name: {
                 isAscending: undefined,
                 label: 'Name',
-                isDisplayed: true,
+                isDisplayed: tableOptions.name.isDisplayed,
             },
             artist: {
                 isAscending: undefined,
                 label: 'Artist',
-                isDisplayed: true,
+                isDisplayed: tableOptions.artist.isDisplayed,
             },
             album: {
                 isAscending: undefined,
                 label: 'Album',
-                isDisplayed: true,
+                isDisplayed: tableOptions.album.isDisplayed,
             },
             duration: {
                 isAscending: undefined,
                 label: 'Duration',
-                isDisplayed: true,
+                isDisplayed: tableOptions.duration.isDisplayed,
             },
         };
         if (tableOptions[selectedColumnName].isAscending === undefined) {
@@ -245,10 +245,38 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
     }
 
     const handleDisplay = (selectedColumnName: string) => {
-        const temporaryTableOptions = tableOptions;
+        const temporaryTableOptions: tableOptionsType = {
+            date_added: {
+                isAscending: tableOptions.date_added.isAscending,
+                label: 'Date added',
+                isDisplayed: tableOptions.date_added.isDisplayed,
+            },
+            name: {
+                isAscending: tableOptions.name.isAscending,
+                label: 'Name',
+                isDisplayed: tableOptions.name.isDisplayed,
+            },
+            artist: {
+                isAscending: tableOptions.artist.isAscending,
+                label: 'Artist',
+                isDisplayed: tableOptions.artist.isDisplayed,
+            },
+            album: {
+                isAscending: tableOptions.album.isAscending,
+                label: 'Album',
+                isDisplayed: tableOptions.album.isDisplayed,
+            },
+            duration: {
+                isAscending: tableOptions.duration.isAscending,
+                label: 'Duration',
+                isDisplayed: tableOptions.duration.isDisplayed,
+            },
+        };
         temporaryTableOptions[selectedColumnName].isDisplayed = !tableOptions[selectedColumnName].isDisplayed;
         setTableOptions(temporaryTableOptions)
     }
+
+    console.log('rendering TrackCardList', tableOptions)
 
 
     return (
@@ -275,6 +303,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                     <tbody>
                         {filteredAndSortedTracks.map(({ track, added_at }, i) => (
                             <TrackCard
+                                tableOptions={tableOptions}
                                 track={track}
                                 addedAt={added_at}
                                 key={track.id + i}

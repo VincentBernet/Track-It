@@ -1,12 +1,16 @@
 import { SortArrowSvg } from "../../icon";
 
 type ColumnProps = {
+    isDisplayed: boolean;
     isAscending: boolean | undefined;
     onClick: () => void;
     title: string;
 }
 
-const ColumnHeader = ({ isAscending, title, onClick }: ColumnProps) => {
+const ColumnHeader = ({ isDisplayed, isAscending, title, onClick }: ColumnProps) => {
+    if (!isDisplayed) {
+        return null;
+    }
     return (
         <th onClick={onClick} title='Sort by music title'>
             <div className='flex'>
