@@ -1,3 +1,5 @@
+import { artist } from "../../../commons/spotify/responsesTypes";
+
 const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selectedPlaylistsLength: number) => {
     return (
         selectedTracksLength === 0 && selectedPlaylistsLength === 0 ?
@@ -14,4 +16,8 @@ const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selecte
     );
 }
 
-export default getWordingButtonTracksToPlaylists;
+const getArtistsName = (artists: artist[]) => {
+    return artists.reduce((acc, artist, i) => acc + artist.name + (i !== artists.length - 1 ? ', ' : ''), '');
+}
+
+export { getWordingButtonTracksToPlaylists, getArtistsName };

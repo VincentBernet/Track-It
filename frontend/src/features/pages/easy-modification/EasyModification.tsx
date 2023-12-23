@@ -3,7 +3,7 @@ import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
 import { profileData } from '../../../commons/spotify/responsesTypes';
-import getWordingButtonTracksToPlaylists from './EasyModificationUtils';
+import { getWordingButtonTracksToPlaylists } from './EasyModificationUtils';
 import { Link, useNavigate } from 'react-router-dom';
 
 

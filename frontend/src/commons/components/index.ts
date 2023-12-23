@@ -37,4 +37,5 @@ export { default as TrackCardList } from './table/TrackCardList';
 export { default as TableHeader } from './table/entete-option/TableHeader';
 export { default as ColumnHeader } from './table/entete-option/ColumnHeader';
 export { default as TrackCard } from './table/TrackCard';
+export { default as SearchedElement } from './table/SearchedElement';
 

@@ -1,9 +1,10 @@
 import { formatDuration } from '../../utils';
 import { track } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
-import { Artwork } from '../index';
+import { Artwork, SearchedElement } from '../index';
 import styled from 'styled-components';
 import { tableOptionsType } from './TrackCardList';
+import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
 
 
 interface TrackCardProps {
@@ -12,13 +13,15 @@ interface TrackCardProps {
     index: number;
     tableOptions: tableOptionsType;
     displayMode: 'list' | 'compact';
+    searchFilter: string;
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
     clickable?: boolean;
     consultationMode?: boolean;
 }
 
-const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFilter,
+    handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
@@ -38,41 +41,52 @@ const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, handleSel
                         <div>
                             {tableOptions.name.isDisplayed && (
                                 <div className="big-primary-text">
-                                    {track.name}
+                                    <SearchedElement searchFilter={searchFilter} text={track.name} />
                                 </div>
                             )}
                             {tableOptions.artist.isDisplayed && (
                                 <div className="secondary-text">
-                                    {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
+                                    <SearchedElement searchFilter={searchFilter} text={getArtistsName(track.artists)} />
                                 </div>
                             )}
                         </div>
                     </div>
                 </td>
-            )}
-            {(displayMode === 'compact') && (
-                <>
-                    {tableOptions.name.isDisplayed && (
-                        <td>
-                            {track.name}
-                        </td>
-                    )}
-                    {tableOptions.artist.isDisplayed && (
-                        <td className="secondary-text">
-                            {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
-                        </td>
-                    )}
-                </>
-            )}
-            {tableOptions.album.isDisplayed && (
-                <td className="secondary-text">{track.album.name}</td>
-            )}
-            {tableOptions.date_added.isDisplayed && (
-                <td className="secondary-text" >{addedAt}</td>
-            )}
-            {tableOptions.duration.isDisplayed && (
-                <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
-            )}
+            )
+            }
+            {
+                (displayMode === 'compact') && (
+                    <>
+                        {tableOptions.name.isDisplayed && (
+                            <td>
+                                <SearchedElement searchFilter={searchFilter} text={track.name} />
+                            </td>
+                        )}
+                        {tableOptions.artist.isDisplayed && (
+                            <td className="secondary-text">
+                                <SearchedElement searchFilter={searchFilter} text={getArtistsName(track.artists)} />
+                            </td>
+                        )}
+                    </>
+                )
+            }
+            {
+                tableOptions.album.isDisplayed && (
+                    <td className="secondary-text">
+                        <SearchedElement searchFilter={searchFilter} text={track.album.name} />
+                    </td>
+                )
+            }
+            {
+                tableOptions.date_added.isDisplayed && (
+                    <td className="secondary-text" >{addedAt}</td>
+                )
+            }
+            {
+                tableOptions.duration.isDisplayed && (
+                    <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
+                )
+            }
         </StyledTableRow >
     );
 }
@@ -115,5 +129,10 @@ const StyledTableRow = styled.tr<StyledTableRowProps>`
         display: flex;
         align-items: center;
         gap: 15px;
+    }
+
+    .searched {
+        color: var(--green);
+        font-weight: bold;
     }
 `;

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { getCurrentUserSavedTracks } from '../../spotify/requests';
 import axios from 'axios';
 import { formatDateAdded } from '../../utils';
+import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
 
 
 type TrackCardListProps = {
@@ -159,7 +160,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
         if (tableOptions.artist.isAscending !== undefined) {
             if (tableOptions.artist.isAscending === true) {
-                return sortedTracks.sort((a, b) => a.track.artists[0].name.localeCompare(b.track.artists[0].name));
+                return sortedTracks.sort((a, b) => getArtistsName(a.track.artists).localeCompare(getArtistsName(b.track.artists)));
             }
             else {
                 return sortedTracks.sort((a, b) => b.track.artists[0].name.localeCompare(a.track.artists[0].name));
@@ -283,6 +284,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
     }
 
 
+
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
@@ -313,6 +315,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                                 tableOptions={tableOptions}
                                 displayMode={displayMode}
                                 track={track}
+                                searchFilter={searchFilter}
                                 addedAt={formatDateAdded(added_at)}
                                 key={track.id + i}
                                 index={i}
