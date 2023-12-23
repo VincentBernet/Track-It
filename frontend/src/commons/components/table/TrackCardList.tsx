@@ -5,6 +5,7 @@ import TrackCard from './TrackCard';
 import { useEffect, useMemo, useState } from 'react';
 import { getCurrentUserSavedTracks } from '../../spotify/requests';
 import axios from 'axios';
+import { formatDateAdded } from '../../utils';
 
 
 type TrackCardListProps = {
@@ -134,10 +135,10 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
         if (tableOptions.date_added.isAscending !== undefined) {
             if (tableOptions.date_added.isAscending === true) {
-                return tracks;
+                return sortedTracks.sort((a, b) => b.added_at.localeCompare(a.added_at));
             }
             else {
-                return tracks.reverse();
+                return sortedTracks.sort((a, b) => a.added_at.localeCompare(b.added_at));
             }
         }
 
@@ -303,7 +304,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                             <TrackCard
                                 tableOptions={tableOptions}
                                 track={track}
-                                addedAt={added_at}
+                                addedAt={formatDateAdded(added_at)}
                                 key={track.id + i}
                                 index={i}
                                 clickable
