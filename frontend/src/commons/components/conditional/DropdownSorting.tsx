@@ -1,17 +1,22 @@
-import { StyledDropdown } from "../../styles";
 import { SortArrowSvg } from "../icons";
 import { tableOptionsType } from "../table/TrackCardList";
+import Dropdown from "./Dropdown";
 
 type DropdownSortingType = {
     isOpen: boolean;
     tableOptions: tableOptionsType;
     handleSorting: (columnName: string) => void;
+    handleClosing: () => void;
+    dropdownButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
 };
 
-const DropdownSorting = ({ isOpen, tableOptions, handleSorting }: DropdownSortingType) => {
-    if (!isOpen) return null;
+const DropdownSorting = ({ isOpen, dropdownButtonRef, tableOptions, handleSorting, handleClosing, }: DropdownSortingType) => {
     return (
-        <StyledDropdown>
+        <Dropdown
+            isOpen={isOpen}
+            handleClosing={handleClosing}
+            dropdownButtonRef={dropdownButtonRef}
+        >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 {Object.entries(tableOptions).map((option) => {
                     return (
@@ -27,7 +32,7 @@ const DropdownSorting = ({ isOpen, tableOptions, handleSorting }: DropdownSortin
                     );
                 })}
             </div>
-        </StyledDropdown>
+        </Dropdown>
     );
 }
 

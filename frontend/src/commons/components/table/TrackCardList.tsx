@@ -276,8 +276,6 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         setTableOptions(temporaryTableOptions)
     }
 
-    console.log('rendering TrackCardList', tableOptions)
-
 
     return (
         <>

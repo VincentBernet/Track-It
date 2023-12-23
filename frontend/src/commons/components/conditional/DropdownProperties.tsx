@@ -1,16 +1,22 @@
-import { StyledDropdown } from "../../styles";
 import { tableOptionsType } from "../table/TrackCardList";
+import Dropdown from "./Dropdown";
 
 type DropdownPropertiesType = {
     isOpen: boolean;
     tableOptions: tableOptionsType;
     handleDisplay: (columnName: string) => void;
+    handleClosing: () => void;
+    dropdownButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
 };
 
-const DropdownProperties = ({ isOpen, tableOptions, handleDisplay }: DropdownPropertiesType) => {
-    if (!isOpen) return null;
+const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDisplay, handleClosing }: DropdownPropertiesType) => {
     return (
-        <StyledDropdown $isProperties>
+        <Dropdown
+            isOpen={isOpen}
+            handleClosing={handleClosing}
+            dropdownButtonRef={dropdownButtonRef}
+            isPropertiesDropdown
+        >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 {Object.entries(tableOptions).map((option) => {
                     return (
@@ -28,7 +34,7 @@ const DropdownProperties = ({ isOpen, tableOptions, handleDisplay }: DropdownPro
                     );
                 })}
             </div>
-        </StyledDropdown>
+        </Dropdown>
     );
 }
 
