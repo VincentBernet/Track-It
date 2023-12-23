@@ -3,10 +3,11 @@ import ColumnHeader from "./ColumnHeader";
 
 type TableHeaderProps = {
     tableOptions: tableOptionsType;
+    displayMode: 'list' | 'compact';
     handleSort: (columnName: string) => void;
 };
 
-const TableHeader = ({ tableOptions, handleSort }: TableHeaderProps) => {
+const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps) => {
     return (
         <thead>
             <tr>
@@ -15,12 +16,30 @@ const TableHeader = ({ tableOptions, handleSort }: TableHeaderProps) => {
                         #
                     </div>
                 </th>
-                <ColumnHeader
-                    isDisplayed={(tableOptions['name'].isDisplayed || tableOptions['artist'].isDisplayed)}
-                    isAscending={tableOptions['name'].isAscending}
-                    onClick={() => handleSort('name')}
-                    title="Track"
-                />
+                {displayMode === 'list' && (
+                    <ColumnHeader
+                        isDisplayed={(tableOptions['name'].isDisplayed || tableOptions['artist'].isDisplayed)}
+                        isAscending={tableOptions['name'].isAscending}
+                        onClick={() => handleSort('name')}
+                        title="Track"
+                    />
+                )}
+                {displayMode === 'compact' && (
+                    <ColumnHeader
+                        isDisplayed={tableOptions['name'].isDisplayed}
+                        isAscending={tableOptions['name'].isAscending}
+                        onClick={() => handleSort('name')}
+                        title="Name"
+                    />
+                )}
+                {displayMode === 'compact' && (
+                    <ColumnHeader
+                        isDisplayed={tableOptions['artist'].isDisplayed}
+                        isAscending={tableOptions['artist'].isAscending}
+                        onClick={() => handleSort('artist')}
+                        title="Artist"
+                    />
+                )}
                 <ColumnHeader
                     isDisplayed={tableOptions['album'].isDisplayed}
                     isAscending={tableOptions['album'].isAscending}

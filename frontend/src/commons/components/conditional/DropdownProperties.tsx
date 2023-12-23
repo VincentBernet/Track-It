@@ -1,16 +1,19 @@
 import styled from "styled-components";
 import { tableOptionsType } from "../table/TrackCardList";
 import Dropdown from "./Dropdown";
+import { ListCompactSvg, ListSvg } from "../icons";
 
 type DropdownPropertiesType = {
     isOpen: boolean;
     tableOptions: tableOptionsType;
-    handleDisplay: (columnName: string) => void;
-    handleClosing: () => void;
+    displayMode: 'list' | 'compact';
     dropdownButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
+    handleDisplay: (columnName: string) => void;
+    handleDisplayMode: (mode: 'list' | 'compact') => void;
+    handleClosing: () => void;
 };
 
-const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDisplay, handleClosing }: DropdownPropertiesType) => {
+const DropdownProperties = ({ isOpen, tableOptions, displayMode, dropdownButtonRef, handleDisplay, handleDisplayMode, handleClosing }: DropdownPropertiesType) => {
     return (
         <Dropdown
             isOpen={isOpen}
@@ -19,6 +22,9 @@ const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDis
             isPropertiesDropdown
         >
             <StyledProperties>
+                <div className='secondary-text'>
+                    Display Columns
+                </div>
                 {Object.entries(tableOptions).map((option) => {
                     return (
                         <button className={"propertyButton"} key={option[1].label} onClick={() => handleDisplay(option[0])}>
@@ -36,6 +42,17 @@ const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDis
                         </button>
                     );
                 })}
+                <div className='secondary-text marginTop'>
+                    View as
+                </div>
+                <button className={`propertyButton ${displayMode === 'list' && 'green'}`} onClick={() => handleDisplayMode('list')}>
+                    <ListSvg />
+                    List
+                </button>
+                <button className={`propertyButton ${displayMode === 'compact' && 'green'}`} onClick={() => handleDisplayMode('compact')}>
+                    <ListCompactSvg />
+                    Compact
+                </button>
             </StyledProperties>
         </Dropdown >
     );
@@ -49,7 +66,15 @@ const StyledProperties = styled.div`
 
     .propertyButton {
         display: flex;
-        align-items: middle;
+        align-items: center;
         gap: 10px;
+    }
+
+    .marginTop {
+        margin-top: 10px;
+    }
+
+    .green {
+        color: var(--green);
     }
 `;

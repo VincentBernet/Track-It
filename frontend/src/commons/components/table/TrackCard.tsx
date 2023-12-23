@@ -11,13 +11,14 @@ interface TrackCardProps {
     addedAt: string;
     index: number;
     tableOptions: tableOptionsType;
+    displayMode: 'list' | 'compact';
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
     clickable?: boolean;
     consultationMode?: boolean;
 }
 
-const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
@@ -26,7 +27,7 @@ const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks =
         >
             <td className="centered first">{index + 1}</td>
 
-            {(tableOptions.name.isDisplayed || tableOptions.artist.isDisplayed) && (
+            {(displayMode === 'list' && (tableOptions.name.isDisplayed || tableOptions.artist.isDisplayed)) && (
                 <td>
                     <div className={'flex'}>
                         <Artwork
@@ -47,7 +48,22 @@ const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks =
                             )}
                         </div>
                     </div>
-                </td>)}
+                </td>
+            )}
+            {(displayMode === 'compact') && (
+                <>
+                    {tableOptions.name.isDisplayed && (
+                        <td>
+                            {track.name}
+                        </td>
+                    )}
+                    {tableOptions.artist.isDisplayed && (
+                        <td className="secondary-text">
+                            {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
+                        </td>
+                    )}
+                </>
+            )}
             {tableOptions.album.isDisplayed && (
                 <td className="secondary-text">{track.album.name}</td>
             )}
@@ -57,7 +73,7 @@ const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks =
             {tableOptions.duration.isDisplayed && (
                 <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
             )}
-        </StyledTableRow>
+        </StyledTableRow >
     );
 }
 

@@ -115,8 +115,13 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         },
     };
 
-    // Sorting state
+    // TableOptions for sorting tracks and display / hiding columns state
     const [tableOptions, setTableOptions] = useState<tableOptionsType>(initialSortByOptionValue);
+    const [displayMode, setDisplayMode] = useState<'list' | 'compact'>('list');
+
+    const handleDisplayMode = (mode: 'list' | 'compact') => {
+        setDisplayMode(mode);
+    }
 
     // Filtering state
     const [searchFilter, setSearchFilter] = useState<string>('');
@@ -290,6 +295,8 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                 />
                 <PropertiesDropdown
                     tableOptions={tableOptions}
+                    displayMode={displayMode}
+                    handleDisplayMode={handleDisplayMode}
                     handleDisplay={handleDisplay}
                 />
             </div>
@@ -297,12 +304,14 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                 <StyledTable>
                     <TableHeader
                         tableOptions={tableOptions}
+                        displayMode={displayMode}
                         handleSort={handleSort}
                     />
                     <tbody>
                         {filteredAndSortedTracks.map(({ track, added_at }, i) => (
                             <TrackCard
                                 tableOptions={tableOptions}
+                                displayMode={displayMode}
                                 track={track}
                                 addedAt={formatDateAdded(added_at)}
                                 key={track.id + i}

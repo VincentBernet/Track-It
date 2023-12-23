@@ -96,6 +96,7 @@ const EasyModification = () => {
             <Layout
                 extraHeader={<EasyModificationHeader profile={profile} />}
                 bodyColor={"#000000"}
+                fixedMainPadding='32px 32px 32px 32px'
             >
                 {!consultationMode ? (
                     <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>

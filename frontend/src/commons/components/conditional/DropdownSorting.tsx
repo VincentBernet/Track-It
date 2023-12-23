@@ -19,6 +19,9 @@ const DropdownSorting = ({ isOpen, dropdownButtonRef, tableOptions, handleSortin
             dropdownButtonRef={dropdownButtonRef}
         >
             <StyledSort>
+                <div className='secondary-text'>
+                    Sort by
+                </div>
                 {Object.entries(tableOptions).map((option) => {
                     return (
                         <button className={"sortButton"} onClick={() => handleSorting(option[0])} key={option[1].label}>

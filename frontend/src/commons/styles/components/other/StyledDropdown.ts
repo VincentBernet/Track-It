@@ -6,7 +6,7 @@ interface StyledDropdownProps {
 
 const StyledDropdown = styled.div<StyledDropdownProps>`
   position: absolute; 
-  margin-top: ${props => props.$isProperties ? '255px' : '270px'};
+  margin-top: ${props => props.$isProperties ? '365px' : '288px'};
   margin-right: ${props => props.$isProperties ? '0' : '100px'};
   padding: 15px; 
   border-radius: 8px;

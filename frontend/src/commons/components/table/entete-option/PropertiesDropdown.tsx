@@ -4,12 +4,14 @@ import { tableOptionsType } from "../TrackCardList";
 import DropdownProperties from "../../conditional/DropdownProperties";
 
 type PropertiesDropdownProps = {
-    handleDisplay: (columnName: string) => void;
     tableOptions: tableOptionsType;
+    displayMode: 'list' | 'compact';
+    handleDisplay: (columnName: string) => void;
+    handleDisplayMode: (mode: 'list' | 'compact') => void;
 }
 
 
-const PropertiesDropdown = ({ tableOptions, handleDisplay }: PropertiesDropdownProps) => {
+const PropertiesDropdown = ({ tableOptions, displayMode, handleDisplay, handleDisplayMode }: PropertiesDropdownProps) => {
     const dropdownButtonRef = useRef<HTMLButtonElement | null>(null);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -29,10 +31,13 @@ const PropertiesDropdown = ({ tableOptions, handleDisplay }: PropertiesDropdownP
             </button>
             <DropdownProperties
                 isOpen={isOpen}
+                tableOptions={tableOptions}
+                displayMode={displayMode}
                 dropdownButtonRef={dropdownButtonRef}
                 handleClosing={handleClosing}
                 handleDisplay={handleDisplay}
-                tableOptions={tableOptions} />
+                handleDisplayMode={handleDisplayMode}
+            />
         </>
     );
 }

@@ -7,10 +7,10 @@ type LayoutProps = {
     children: React.ReactNode;
     extraHeader?: React.ReactNode;
     bodyColor?: string;
-    fixedMainMargin?: string;
+    fixedMainPadding?: string;
 };
 
-const Layout = ({ children, extraHeader, bodyColor, fixedMainMargin = "64px 64px 64px 64px" }: LayoutProps) => {
+const Layout = ({ children, extraHeader, bodyColor, fixedMainPadding = "64px 64px 64px 64px" }: LayoutProps) => {
     return (
         <>
             <StyledHeader>
@@ -18,7 +18,7 @@ const Layout = ({ children, extraHeader, bodyColor, fixedMainMargin = "64px 64px
                 <HelpButton />
                 <LogoutButton logout={logout} bodyColor={bodyColor} />
             </StyledHeader>
-            <main style={{ padding: fixedMainMargin }}>
+            <main style={{ padding: fixedMainPadding }}>
                 {children}
             </main>
         </>
