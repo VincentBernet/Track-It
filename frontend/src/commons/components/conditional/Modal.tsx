@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { fadeIn } from "../../styles/global/animation";
-import { CrossSvg } from "../icon";
+import { CrossSvg } from "../icons";
 
 type ModalProps = {
     onValidate: ({ playlistName, playlistDescription }:

@@ -1,4 +1,4 @@
-import { SortArrowSvg } from "../../icon";
+import { SortArrowSvg } from "../../icons";
 
 type ColumnProps = {
     isDisplayed: boolean;
