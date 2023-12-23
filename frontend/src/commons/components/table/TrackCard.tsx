@@ -36,12 +36,12 @@ const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks =
                         />
                         <div>
                             {tableOptions.name.isDisplayed && (
-                                <div>
+                                <div className="big-primary-text">
                                     {track.name}
                                 </div>
                             )}
                             {tableOptions.artist.isDisplayed && (
-                                <div>
+                                <div className="secondary-text">
                                     {track.artists.map((artist, i) => artist.name + (i !== track.artists.length - 1 ? ', ' : ''))}
                                 </div>
                             )}
@@ -49,13 +49,13 @@ const TrackCard = ({ track, addedAt, index, tableOptions, handleSelectedTracks =
                     </div>
                 </td>)}
             {tableOptions.album.isDisplayed && (
-                <td>{track.album.name}</td>
+                <td className="secondary-text">{track.album.name}</td>
             )}
             {tableOptions.date_added.isDisplayed && (
-                <td>{addedAt}</td>
+                <td className="secondary-text" >{addedAt}</td>
             )}
             {tableOptions.duration.isDisplayed && (
-                <td className="last">{formatDuration(track.duration_ms)}</td>
+                <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
             )}
         </StyledTableRow>
     );

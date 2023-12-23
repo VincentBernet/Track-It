@@ -13,7 +13,7 @@ const ColumnHeader = ({ isDisplayed, isAscending, title, onClick }: ColumnProps)
     }
     return (
         <th onClick={onClick} title='Sort by music title'>
-            <div className='flex'>
+            <div className='button-text flex'>
                 {title}
                 <SortArrowSvg
                     orientation={isAscending ? 'descending' : 'ascending'}

@@ -11,7 +11,7 @@ const TableHeader = ({ tableOptions, handleSort }: TableHeaderProps) => {
         <thead>
             <tr>
                 <th title='Index'>
-                    <div className='center'>
+                    <div className='button-text center'>
                         #
                     </div>
                 </th>

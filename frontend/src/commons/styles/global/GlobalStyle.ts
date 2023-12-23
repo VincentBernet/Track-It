@@ -124,6 +124,25 @@ const GlobalStyle = createGlobalStyle`
     text-align: center;
     padding: var(--spacing-xxl);
   }
+
+  .button-text {
+    color: var(--white);
+    font-size: var(--fz-sm);
+    font-weight: 700;
+  }
+
+
+  .primary-text {
+    color: var(--white);
+    font-size: var(--fz-md);
+    font-weight: 400;
+  }
+
+  .secondary-text {
+    color: rgb(167, 167, 167);
+    font-size: var(--fz-sm);
+    font-weight: 400;
+  }
 `;
 
 export default GlobalStyle;

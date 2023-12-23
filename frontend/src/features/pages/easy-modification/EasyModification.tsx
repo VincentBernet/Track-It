@@ -111,7 +111,7 @@ const EasyModification = () => {
                     <aside>
                         <div style={{ marginBottom: '10px', display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <h3>Your Playlists</h3>
-                            {consultationMode && <Link to="/playlists">See all</Link>}
+                            {consultationMode && <Link className="secondary-text" to="/playlists">See all</Link>}
                         </div>
                         <PlaylistList
                             profile={profile}

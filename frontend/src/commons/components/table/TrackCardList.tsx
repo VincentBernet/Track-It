@@ -95,7 +95,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         },
         name: {
             isAscending: undefined,
-            label: 'Track',
+            label: 'Name',
             isDisplayed: true,
         },
         artist: {
@@ -110,7 +110,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         },
         duration: {
             isAscending: undefined,
-            label: 'Dur.',
+            label: 'Duration',
             isDisplayed: true,
         },
     };

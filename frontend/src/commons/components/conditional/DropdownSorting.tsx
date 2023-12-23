@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { SortArrowSvg } from "../icons";
 import { tableOptionsType } from "../table/TrackCardList";
 import Dropdown from "./Dropdown";
@@ -17,10 +18,10 @@ const DropdownSorting = ({ isOpen, dropdownButtonRef, tableOptions, handleSortin
             handleClosing={handleClosing}
             dropdownButtonRef={dropdownButtonRef}
         >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <StyledSort>
                 {Object.entries(tableOptions).map((option) => {
                     return (
-                        <button onClick={() => handleSorting(option[0])} key={option[1].label}>
+                        <button className={"sortButton"} onClick={() => handleSorting(option[0])} key={option[1].label}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '5px' }} >
                                 <div>{option[1].label}</div>
                                 <SortArrowSvg
@@ -31,9 +32,20 @@ const DropdownSorting = ({ isOpen, dropdownButtonRef, tableOptions, handleSortin
                         </button>
                     );
                 })}
-            </div>
+            </StyledSort>
         </Dropdown>
     );
 }
 
 export default DropdownSorting;
+
+const StyledSort = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    .sortButton {
+        display: flex;
+        align-items: center; 
+        gap: 5px;
+    }
+`;

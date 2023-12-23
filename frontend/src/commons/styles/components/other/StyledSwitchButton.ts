@@ -5,7 +5,7 @@ const StyledSwitchButton = styled.div`
     /*switch styles*/
     label {
         font-size: 13px;
-        color: white;
+        color: var(--white);
         font-weight: 500;
         box-sizing: unset;
     }

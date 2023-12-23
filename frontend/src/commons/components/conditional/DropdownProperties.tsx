@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { tableOptionsType } from "../table/TrackCardList";
 import Dropdown from "./Dropdown";
 
@@ -17,10 +18,10 @@ const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDis
             dropdownButtonRef={dropdownButtonRef}
             isPropertiesDropdown
         >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <StyledProperties>
                 {Object.entries(tableOptions).map((option) => {
                     return (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }} key={option[1].label}>
+                        <button className={"propertyButton"} key={option[1].label} onClick={() => handleDisplay(option[0])}>
                             <input
                                 type="checkbox"
                                 id={option[1].label}
@@ -29,13 +30,26 @@ const DropdownProperties = ({ isOpen, tableOptions, dropdownButtonRef, handleDis
                                 onChange={() => handleDisplay(option[0])}
                                 value={option[1].label}
                             />
-                            <label htmlFor={option[1].label}>{option[1].label}</label>
-                        </div>
+                            <div className="button-text">
+                                {option[1].label}
+                            </div>
+                        </button>
                     );
                 })}
-            </div>
-        </Dropdown>
+            </StyledProperties>
+        </Dropdown >
     );
 }
 
 export default DropdownProperties;
+
+const StyledProperties = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    .propertyButton {
+        display: flex;
+        align-items: center; 
+        gap: 5px;
+    }
+`;
