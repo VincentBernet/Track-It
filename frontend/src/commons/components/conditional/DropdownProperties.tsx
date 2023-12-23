@@ -49,7 +49,7 @@ const StyledProperties = styled.div`
 
     .propertyButton {
         display: flex;
-        align-items: center; 
-        gap: 5px;
+        align-items: middle;
+        gap: 10px;
     }
 `;

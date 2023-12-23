@@ -22,13 +22,11 @@ const DropdownSorting = ({ isOpen, dropdownButtonRef, tableOptions, handleSortin
                 {Object.entries(tableOptions).map((option) => {
                     return (
                         <button className={"sortButton"} onClick={() => handleSorting(option[0])} key={option[1].label}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '5px' }} >
-                                <div>{option[1].label}</div>
-                                <SortArrowSvg
-                                    orientation={option[1].isAscending ? 'descending' : 'ascending'}
-                                    strokeColor={option[1].isAscending !== undefined ? 'white' : 'none'}
-                                />
-                            </div>
+                            <div>{option[1].label}</div>
+                            <SortArrowSvg
+                                orientation={option[1].isAscending ? 'descending' : 'ascending'}
+                                strokeColor={option[1].isAscending !== undefined ? 'white' : 'none'}
+                            />
                         </button>
                     );
                 })}
@@ -45,6 +43,7 @@ const StyledSort = styled.div`
 
     .sortButton {
         display: flex;
+        justify-content: space-between;
         align-items: center; 
         gap: 5px;
     }
