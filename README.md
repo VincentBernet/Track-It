@@ -16,7 +16,6 @@ Require Node.js version > 20.0.0
 <br>
 Firt pull the project where you want: 
 ```
-git init
 git clone https://github.com/VincentBernet/Track-It
 ```
 
