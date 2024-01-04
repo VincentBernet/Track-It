@@ -17,13 +17,16 @@ const ModalTutorial = ({ onClose }: ModalTutorialProps) => {
                     </button>
                 </div>
 
-                <section>
-                    It's a music organizer to aggregate all of your collection and manage it as you wish.
-                    Currently, Track-It works as a plugin of Spotify, where you can organize your tracks by playlist in a simpler way.
+                <section className={"justified_text"}>
+                    <div>
+                        It's a music organizer to aggregate all of your collection and manage it as you wish.
+                        Currently, Track-It works as a plugin of Spotify, where you can organize your tracks by playlist in a simpler way.
+                    </div>
                     <div style={{ marginTop: "20px" }}>
                         There you can :
                         <ul>
                             <li>Consult all of your library (tracks and playlists) in a global view.</li>
+                            <li>Filter, sort, and search your tracks.</li>
                             <li>Add your tracks to your playlists in one click (one or many tracks to one or many playlists).</li>
                             <li>Get recommendations on your tracks.</li>
                             <li>Bonus: get your top tracks, top artists, and other funny data.</li>
@@ -33,7 +36,6 @@ const ModalTutorial = ({ onClose }: ModalTutorialProps) => {
                     <div style={{ marginTop: "20px" }}>
                         Roadmap :
                         <ul>
-                            <li>Filter, sort, and search your tracks.</li>
                             <li>Complete personalization with parameterization of your library and the possibility to add custom tags to your tracks.</li>
                             <li>Generate and modify playlists with rules related to current tracks data and/or your custom tags.</li>
                         </ul>
@@ -81,6 +83,10 @@ const StyledModal = styled.div`
         margin-top: 20px;
         margin-left: 380px;
         background-color: var(--green);
+    }
+
+    .justified_text {
+        text-align: justify;
     }
 
     li {
