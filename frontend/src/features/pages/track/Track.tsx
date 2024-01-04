@@ -176,7 +176,7 @@ const Track = () => {
 
 
                         <div className="track_section justify_end">
-                            {tracksReco === null ? <ErrorOrLoader error={errorFechingRecommendedTracks} /> :
+                            {tracksReco === null ? <ErrorOrLoader error={errorFechingRecommendedTracks} minHeight="0vh" /> :
                                 <>
                                     <div>
                                         <Artwork
