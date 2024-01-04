@@ -5,8 +5,16 @@ type StyledBarProps = {
   $delay: string;
 };
 
-const Loader = () => (
-  <StyledLoader>
+type StyledLoaderProps = {
+  $minHeight: string;
+};
+
+type LoaderProps = {
+  minHeight: string;
+};
+
+const Loader = ({ minHeight }: LoaderProps) => (
+  <StyledLoader $minHeight={minHeight}>
     <div className="bars">
       <StyledBar $delay="250ms" />
       <StyledBar $delay="715ms" />
@@ -28,12 +36,12 @@ const dance = keyframes`
   }
 `;
 
-const StyledLoader = styled.div`
+const StyledLoader = styled.div<StyledLoaderProps>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 50vh;
+  min-height: ${props => props.$minHeight};
 
   .bars {
     display: flex;

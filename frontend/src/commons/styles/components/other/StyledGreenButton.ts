@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { horizontalShaking } from "../../global/animation";
 
 const StyledGreenButton = styled.button`
   display: inline-block;
@@ -14,6 +15,11 @@ const StyledGreenButton = styled.button`
     text-decoration: none;
     filter: brightness(1.1);
   }
+
+  &[disabled] {
+    animation: 
+        ${horizontalShaking} 8000ms 2500ms infinite normal
+    ;  }
 `;
 
 export default StyledGreenButton;
