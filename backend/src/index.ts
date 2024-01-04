@@ -4,6 +4,7 @@ import querystring from 'querystring';
 import { RequestParams, ResponseBody, RequestBody, RequestQuery } from './type';
 
 require('dotenv').config();
+
 const app: Express = express();
 const port = 8888;
 
