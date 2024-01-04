@@ -1,15 +1,16 @@
+import express, { Express, Request, Response } from "express";
+
 require('dotenv').config();
-const express = require('express');
 const axios = require('axios');
 const querystring = require('querystring');
-const app = express();
+const app: Express = express();
 const port = 8888;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const FRONTEND_URI = process.env.FRONTEND_URI;
-const PORT = process.env.PORT || 8888;
+const PORT = process.env.PORT || port;
 const stateKey = 'spotify_auth_state';
 
 // app.METHOD(PATH, HANDLER);
@@ -20,7 +21,7 @@ console.log('ClientID: ', process.env.CLIENT_ID);
  * @param {number} length The length of the string
  * @returns {string} The generated string
  */
-const generateRandomString = (length) => {
+const generateRandomString = (length: number): string => {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -32,7 +33,7 @@ const generateRandomString = (length) => {
 }
 
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     const data = {
         name: 'John',
         age: 30,
@@ -41,7 +42,7 @@ app.get('/', (req, res) => {
     res.json(data);
 });
 
-app.get('/login', (req, res) => {
+app.get('/login', (req: Request, res: Response) => {
     const state = generateRandomString(16);
     res.cookie(stateKey, state);
 
@@ -65,7 +66,7 @@ app.get('/login', (req, res) => {
     res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 });
 
-app.get('/callback', (req, res) => {
+app.get('/callback', (req: Request, res: Response) => {
     const code = req.query.code || null;
 
     axios({
@@ -78,10 +79,10 @@ app.get('/callback', (req, res) => {
         }),
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
     })
-        .then(response => {
+        .then((response: { status: number; data: { access_token: any; refresh_token: any; expires_in: any; }; }) => {
             if (response.status === 200) {
 
                 const { access_token, refresh_token, expires_in } = response.data;
@@ -99,12 +100,12 @@ app.get('/callback', (req, res) => {
             }
 
         })
-        .catch(error => {
+        .catch((error: any) => {
             res.send(error);
         });
 });
 
-app.get('/refresh_token', (req, res) => {
+app.get('/refresh_token', (req: Request, res: Response) => {
     const { refresh_token } = req.query;
 
     axios({
@@ -116,13 +117,13 @@ app.get('/refresh_token', (req, res) => {
         }),
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
     })
-        .then(response => {
+        .then((response: { data: any; }) => {
             res.send(response.data);
         })
-        .catch(error => {
+        .catch((error: any) => {
             res.send(error);
         });
 });
