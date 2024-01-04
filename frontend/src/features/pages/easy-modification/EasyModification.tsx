@@ -98,21 +98,28 @@ const EasyModification = () => {
                 bodyColor={"#000000"}
                 fixedMainPadding='32px 32px 32px 32px'
             >
-                {!consultationMode ? (
-                    <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>
-                        {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
-                    </StyledGreenButton>
-                ) :
-                    <>
-                        <StyledGreenButton onClick={() => { navigate('/top-tracks'); }}> Check your top Tracks</StyledGreenButton>
-                        <StyledGreenButton style={{ marginLeft: "15px" }} onClick={() => { navigate('/top-artists'); }}> Check your top Artists </StyledGreenButton>
-                    </>
-                }
+                <div style={{
+                    marginBottom: '10px', display: "flex", gap: "30px", alignItems: "center", padding: "15px 15px 15px 15px",
+                    background: "var(--new-light-grey)",
+                    borderRadius: "15px",
+                }}>
+                    <SwitchButton checked={consultationMode} onChange={handleSwitchMode} />
+                    {!consultationMode ? (
+                        <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>
+                            {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
+                        </StyledGreenButton>
+                    ) :
+                        <>
+                            <StyledGreenButton onClick={() => { navigate('/top-tracks'); }}> Check your top Tracks</StyledGreenButton>
+                            <StyledGreenButton style={{ marginLeft: "15px" }} onClick={() => { navigate('/top-artists'); }}> Check your top Artists </StyledGreenButton>
+                        </>
+                    }
+                </div>
                 <StyledNewGrid>
                     <aside>
                         <div style={{ marginBottom: '10px', display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <h3>Your Playlists</h3>
-                            {consultationMode && <Link className="secondary-text" to="/playlists">See all</Link>}
+                            <Link className="secondary-text" to="/playlists">See all</Link>
                         </div>
                         <PlaylistList
                             profile={profile}
@@ -122,13 +129,8 @@ const EasyModification = () => {
                             handleOnDelete={() => setPlaylistAdditionSuccess([])}
                             handleSelected={handleSelectedPlaylist}
                         />
-
                     </aside>
                     <section>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
-                            <h3>Your liked Tracks</h3>
-                            <SwitchButton checked={consultationMode} onChange={handleSwitchMode} />
-                        </div>
                         <TrackCardList
                             consultationMode={consultationMode}
                             selectedTracksUris={selectedTracksUris}
@@ -139,11 +141,13 @@ const EasyModification = () => {
             </Layout >
 
 
-            {playlistAdditionFailure.length > 0 && (
-                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
-                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
-                </TemporaryComponent>
-            )}
+            {
+                playlistAdditionFailure.length > 0 && (
+                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                    </TemporaryComponent>
+                )
+            }
 
         </>
     );

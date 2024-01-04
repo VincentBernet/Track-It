@@ -287,21 +287,24 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
-                <SortDropdown
-                    tableOptions={tableOptions}
-                    handleSort={handleSort}
-                />
-                <SearchFilter
-                    onChange={(inputValue) => setSearchFilter(inputValue)}
-                />
-                <PropertiesDropdown
-                    tableOptions={tableOptions}
-                    displayMode={displayMode}
-                    handleDisplayMode={handleDisplayMode}
-                    handleDisplay={handleDisplay}
-                />
-            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
+                <h3>Your liked Tracks</h3>
+                <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
+                    <SortDropdown
+                        tableOptions={tableOptions}
+                        handleSort={handleSort}
+                    />
+                    <SearchFilter
+                        onChange={(inputValue) => setSearchFilter(inputValue)}
+                    />
+                    <PropertiesDropdown
+                        tableOptions={tableOptions}
+                        displayMode={displayMode}
+                        handleDisplayMode={handleDisplayMode}
+                        handleDisplay={handleDisplay}
+                    />
+                </div>
+            </div >
             {filteredAndSortedTracks && filteredAndSortedTracks.length ? (
                 <StyledTable>
                     <TableHeader
@@ -329,7 +332,8 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                 </StyledTable>
             ) : (
                 <p className="empty-notice">No tracks available</p>
-            )}
+            )
+            }
         </>
     );
 }
