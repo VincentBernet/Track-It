@@ -1,8 +1,9 @@
+import axios from 'axios';
 import express, { Express, Request, Response } from "express";
+import querystring from 'querystring';
+import { RequestParams, ResponseBody, RequestBody, RequestQuery } from './type';
 
 require('dotenv').config();
-const axios = require('axios');
-const querystring = require('querystring');
 const app: Express = express();
 const port = 8888;
 
@@ -66,7 +67,7 @@ app.get('/login', (req: Request, res: Response) => {
     res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 });
 
-app.get('/callback', (req: Request, res: Response) => {
+app.get('/callback', (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
     const code = req.query.code || null;
 
     axios({
@@ -105,7 +106,7 @@ app.get('/callback', (req: Request, res: Response) => {
         });
 });
 
-app.get('/refresh_token', (req: Request, res: Response) => {
+app.get('/refresh_token', (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
     const { refresh_token } = req.query;
 
     axios({
