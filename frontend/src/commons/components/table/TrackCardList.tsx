@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { tracksData, tracksDataItem } from '../../spotify/responsesTypes';
+import { tracksData, tracksDataItem, tracksEnrichedData, tracksEnrichedDataItem } from '../../spotify/responsesTypes';
 import { ErrorOrLoader, SearchFilter, SortDropdown, PropertiesDropdown, TableHeader } from '../index';
 import TrackCard from './TrackCard';
 import { useEffect, useMemo, useState } from 'react';
-import { getCurrentUserSavedTracks } from '../../spotify/requests';
+import { addToLikedTracks, checkIfTrackIsSaved, getCurrentUserSavedTracks, removeFromLikedTracks } from '../../spotify/requests';
 import axios from 'axios';
 import { formatDateAdded } from '../../utils';
 import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
@@ -33,16 +33,45 @@ export type tableOptionsType = {
 
 const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationMode }: TrackCardListProps) => {
     /* Get Tracks : For Fetching tracks */
-    const [tracksData, setTracksData] = useState<tracksData | null>(null);
-    const [tracks, setTracks] = useState<tracksDataItem[] | null>(null);
+    const [tracksData, setTracksData] = useState<tracksEnrichedData | null>(null);
+    const [tracks, setTracks] = useState<tracksEnrichedDataItem[] | null>(null);
     const [successFetchingTracks, setSuccessFetchingTracks] = useState<boolean | null>(null);
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean | null>(null);
 
     useEffect(() => {
+        const fetchDataIsSaved = async (firstData: tracksData) => {
+            try {
+                const likedTracksIds = firstData.items.map((track: tracksDataItem) => track.track.id);
+                const { data } = await checkIfTrackIsSaved(likedTracksIds);
+                const dataItemsWithLiked: tracksEnrichedDataItem[] = firstData.items.map((currTrack: tracksDataItem, i) => {
+                    return {
+                        added_at: currTrack.added_at,
+                        track:
+                        {
+                            ...currTrack.track,
+                            isSaved: data[i] ? true : false,
+                        }
+                    }
+                });
+                const dataWithLiked = {
+                    items: dataItemsWithLiked,
+                    href: firstData.href,
+                    limit: firstData.limit,
+                    next: firstData.next,
+                    offset: firstData.offset,
+                    previous: firstData.previous,
+                    total: firstData.total,
+                }
+                setTracksData(dataWithLiked);
+            }
+            catch {
+                setErrorFetchingTracks(true);
+            }
+        };
         const fetchData = async () => {
             try {
                 const { data } = await getCurrentUserSavedTracks();
-                setTracksData(data);
+                fetchDataIsSaved(data);
             }
             catch {
                 setErrorFetchingTracks(true);
@@ -58,13 +87,43 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
             return;
         }
 
+        const fetchDataIsSaved = async (firstData: tracksData) => {
+            try {
+                const likedTracksIds = firstData.items.map((track: tracksDataItem) => track.track.id);
+                const { data } = await checkIfTrackIsSaved(likedTracksIds);
+                const dataItemsWithLiked: tracksEnrichedDataItem[] = firstData.items.map((currTrack: tracksDataItem, i) => {
+                    return {
+                        added_at: currTrack.added_at,
+                        track:
+                        {
+                            ...currTrack.track,
+                            isSaved: data[i] ? true : false,
+                        }
+                    }
+                });
+                const dataWithLiked = {
+                    items: dataItemsWithLiked,
+                    href: firstData.href,
+                    limit: firstData.limit,
+                    next: firstData.next,
+                    offset: firstData.offset,
+                    previous: firstData.previous,
+                    total: firstData.total,
+                }
+                setTracksData(dataWithLiked);
+            }
+            catch {
+                setErrorFetchingTracks(true);
+            }
+        };
+
         // Tracks endpoint only returns 50 playlists at a time, so we need to
         // make sure we get ALL tracks by fetching the next set of tracks
         const fetchMoreData = async () => {
             if (tracksData.next) {
                 try {
                     const { data } = await axios.get(tracksData.next);
-                    setTracksData(data);
+                    fetchDataIsSaved(data);
                 }
                 catch {
                     setErrorFetchingTracks(true);
@@ -124,8 +183,38 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
         setDisplayMode(mode);
     }
 
+    const handleLikedButton = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, trackId: string) => {
+        if (tracks === null) return null;
+        removeFromLikedTracks([trackId]);
+        const newTracks = [...tracks];
+        const trackIndex = newTracks.findIndex((track) => track.track.id === trackId);
+        const isLiked = newTracks[trackIndex].track.isSaved;
+        newTracks[trackIndex].track.isSaved = !isLiked;
+        e.stopPropagation();
+        if (isLiked) {
+            try {
+                await removeFromLikedTracks([trackId]);
+                setTracks(newTracks);
+            }
+            catch {
+                alert("Error while removing track from liked tracks");
+            }
+        }
+        else {
+            try {
+                await addToLikedTracks([trackId]);
+                setTracks(newTracks);
+            }
+            catch {
+                alert("Error while add track from liked tracks");
+            }
+        }
+
+    }
+
     // Filtering state
     const [searchFilter, setSearchFilter] = useState<string>('');
+
 
     // Sort tracks by audio feature to be used in template
     const sortedTracks = useMemo(() => {
@@ -326,6 +415,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                                 consultationMode={consultationMode}
                                 isSelected={selectedTracksUris.includes(track.uri)}
                                 handleSelectedTracks={handleSelectedTracks}
+                                handleLikedButton={handleLikedButton}
                             />
                         ))}
                     </tbody>

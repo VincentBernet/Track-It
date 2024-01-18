@@ -180,6 +180,25 @@ export type tracksData = {
     items: tracksDataItem[];
 }
 
+export type tracksEnrichedData = {
+    href: string;
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
+    items: tracksEnrichedDataItem[];
+}
+
+export type tracksEnrichedDataItem = {
+    added_at: string;
+    track: trackWithLiked;
+}
+
+export type trackWithLiked = track & {
+    isSaved: boolean;
+}
+
 export type recommendations = {
     seeds: {
         afterFilteringSize: number;
