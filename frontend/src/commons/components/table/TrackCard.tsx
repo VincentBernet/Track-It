@@ -1,14 +1,15 @@
 import { formatDuration } from '../../utils';
-import { track } from '../../spotify/responsesTypes';
+import { trackWithLiked } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
 import { Artwork, SearchedElement } from '../index';
 import styled from 'styled-components';
 import { tableOptionsType } from './TrackCardList';
 import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
+import { HeartSvg } from '../icons';
 
 
 interface TrackCardProps {
-    track: track;
+    track: trackWithLiked;
     addedAt: string;
     index: number;
     tableOptions: tableOptionsType;
@@ -18,10 +19,11 @@ interface TrackCardProps {
     isSelected?: boolean;
     clickable?: boolean;
     consultationMode?: boolean;
+    handleLikedButton?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, trackId: string) => void;
 }
 
 const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFilter,
-    handleSelectedTracks = () => { }, clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+    handleSelectedTracks = () => { }, handleLikedButton = () => alert("valeur par défaut"), clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
@@ -79,9 +81,15 @@ const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFil
             }
             {
                 tableOptions.date_added.isDisplayed && (
-                    <td className="secondary-text" >{addedAt}</td>
+                    <td className="secondary-text">
+                        {addedAt}
+                        <button className="button-ahead" onClick={(e) => handleLikedButton(e, track.id)}>
+                            <HeartSvg isLiked={track.isSaved} />
+                        </button>
+                    </td>
                 )
             }
+
             {
                 tableOptions.duration.isDisplayed && (
                     <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
@@ -122,6 +130,11 @@ const StyledTableRow = styled.tr<StyledTableRowProps>`
 
         &.centered {
             text-align: center;
+        }
+
+        .button-ahead {
+            z-index: 1;
+            background-color: transparent;
         }
     }
 
