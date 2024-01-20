@@ -18,6 +18,9 @@ const StyledPlaylistCard = styled.li<StyledPlaylistCardProps>`
     &:hover,
     &:focus {
         background-color: var(--dark-grey);
+        .visibleOnHover {
+                visibility: visible;
+        }
     }
 
     .playlistName {

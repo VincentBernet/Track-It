@@ -85,6 +85,18 @@ const GlobalStyle = createGlobalStyle`
         background-color: var(--dark-grey);
       }
     }
+
+    &.button-ahead {
+            background-color: transparent;
+        }
+
+    &.visibleOnHover {
+        visibility: hidden;
+    }
+
+    &.noPadding {
+        padding: 0;
+    }
   }
 
   img {

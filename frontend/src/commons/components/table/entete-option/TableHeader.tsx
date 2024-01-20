@@ -46,6 +46,9 @@ const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps
                     onClick={() => handleSort('album')}
                     title="Album"
                 />
+                <th>
+
+                </th>
                 <ColumnHeader
                     isDisplayed={tableOptions['date_added'].isDisplayed}
                     isAscending={tableOptions['date_added'].isAscending}

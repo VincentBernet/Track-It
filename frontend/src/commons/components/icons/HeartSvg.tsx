@@ -10,7 +10,7 @@ const HeartSvg = ({ isLiked }: HeartSvgProps) => {
                 fill={isLiked ? 'var(--green)' : "none"}
                 fillRule="evenodd"
                 clipRule="evenodd"
-                stroke="white"
+                stroke="var(--white)"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
