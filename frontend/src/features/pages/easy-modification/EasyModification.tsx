@@ -128,6 +128,13 @@ const EasyModification = () => {
                     </TemporaryComponent>
                 )
             }
+            {
+                playlistAdditionFailure.length > 0 && (
+                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                    </TemporaryComponent>
+                )
+            }
 
         </>
     );

@@ -98,6 +98,7 @@ const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFil
                     </td>
                 )
             }
+
             {
                 tableOptions.duration.isDisplayed && (
                     <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
@@ -144,6 +145,11 @@ const StyledTableRow = styled.tr<StyledTableRowProps>`
 
         &.centered {
             text-align: center;
+        }
+
+        .button-ahead {
+            z-index: 1;
+            background-color: transparent;
         }
     }
 
