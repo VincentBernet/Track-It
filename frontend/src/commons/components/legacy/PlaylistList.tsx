@@ -13,10 +13,9 @@ interface PlaylistListProps {
     playlistAdditionSuccess: string[];
     handleSelected: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
     handleOnDelete: () => void;
-    consultationMode?: boolean;
 }
 
-const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, consultationMode, handleSelected, handleOnDelete }: PlaylistListProps) => {
+const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, handleSelected, handleOnDelete }: PlaylistListProps) => {
     /* Get Playlist : For Fetching playlists */
     const [playlistsData, setPlaylistsData] = useState<playlistsData | null>(null);
     const [playlists, setPlaylists] = useState<playlist[] | null>(null);
@@ -106,7 +105,6 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, con
                             key={playlist.id}
                             playlist={playlist}
                             clickable
-                            consultationMode={consultationMode}
                             isSelected={selectedPlaylists.some(playlistSelected => playlistSelected.id === playlist.id)}
                             displayNotification={playlistAdditionSuccess.includes(playlist.id)}
                             handleOnDelete={handleOnDelete}

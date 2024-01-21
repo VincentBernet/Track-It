@@ -1,4 +1,5 @@
 export { default as HeartSvg } from './HeartSvg';
+export { default as EyeSvg } from './EyeSvg';
 export { default as DoubleArrowSvg } from './DoubleArrowSvg';
 export { default as WarningSvg } from './WarningSvg';
 

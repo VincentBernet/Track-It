@@ -12,7 +12,6 @@ import { getArtistsName } from '../../../features/pages/easy-modification/EasyMo
 type TrackCardListProps = {
     selectedTracksUris: string[];
     handleSelectedTracks: (id: string) => void;
-    consultationMode?: boolean;
 }
 
 type columnOption = {
@@ -31,7 +30,7 @@ export type tableOptionsType = {
 };
 
 
-const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationMode }: TrackCardListProps) => {
+const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardListProps) => {
     /* Get Tracks : For Fetching tracks */
     const [tracksData, setTracksData] = useState<tracksEnrichedData | null>(null);
     const [tracks, setTracks] = useState<tracksEnrichedDataItem[] | null>(null);
@@ -412,7 +411,6 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks, consultationM
                                 key={track.id + i}
                                 index={i}
                                 clickable
-                                consultationMode={consultationMode}
                                 isSelected={selectedTracksUris.includes(track.uri)}
                                 handleSelectedTracks={handleSelectedTracks}
                                 handleLikedButton={handleLikedButton}

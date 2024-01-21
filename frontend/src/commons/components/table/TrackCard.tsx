@@ -5,7 +5,7 @@ import { Artwork, SearchedElement } from '../index';
 import styled from 'styled-components';
 import { tableOptionsType } from './TrackCardList';
 import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
-import { HeartSvg } from '../icons';
+import { EyeSvg, HeartSvg } from '../icons';
 
 
 interface TrackCardProps {
@@ -18,17 +18,16 @@ interface TrackCardProps {
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;
     clickable?: boolean;
-    consultationMode?: boolean;
     handleLikedButton?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, trackId: string) => void;
 }
 
 const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFilter,
-    handleSelectedTracks = () => { }, handleLikedButton = () => alert("valeur par défaut"), clickable = true, isSelected = false, consultationMode = true }: TrackCardProps) => {
+    handleSelectedTracks = () => { }, handleLikedButton = () => alert("valeur par défaut"), clickable = true, isSelected = false }: TrackCardProps) => {
     const navigate = useNavigate();
     return (
         <StyledTableRow
             $selected={isSelected}
-            onClick={() => clickable && (!consultationMode ? handleSelectedTracks(track.uri) : navigate(`/track/${track.id}`))}
+            onClick={() => clickable && handleSelectedTracks(track.uri)}
         >
             <td className="centered first">{index + 1}</td>
 
@@ -79,13 +78,23 @@ const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFil
                     </td>
                 )
             }
+            <td>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <button className="button-ahead noPadding" onClick={(e) => handleLikedButton(e, track.id)}>
+                        <HeartSvg isLiked={track.isSaved} />
+                    </button>
+                    <button className="button-ahead visibleOnHover noPadding" onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/track/${track.id}`)
+                    }}>
+                        <EyeSvg />
+                    </button>
+                </div>
+            </td>
             {
                 tableOptions.date_added.isDisplayed && (
                     <td className="secondary-text">
                         {addedAt}
-                        <button className="button-ahead" onClick={(e) => handleLikedButton(e, track.id)}>
-                            <HeartSvg isLiked={track.isSaved} />
-                        </button>
                     </td>
                 )
             }
@@ -95,6 +104,7 @@ const TrackCard = ({ track, addedAt, index, tableOptions, displayMode, searchFil
                     <td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
                 )
             }
+
         </StyledTableRow >
     );
 }
@@ -109,6 +119,11 @@ const StyledTableRow = styled.tr<StyledTableRowProps>`
     cursor: pointer;
     &:hover {
         background-color: #282828;
+        td {
+            .visibleOnHover {
+                visibility: visible;
+            }
+        }
     }
 
     td {

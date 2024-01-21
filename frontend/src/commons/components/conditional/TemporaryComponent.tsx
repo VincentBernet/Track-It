@@ -11,7 +11,7 @@ const TemporaryComponent = ({ children, timeBeforeDeletion = 8000, handleOnDelet
     useEffect(() => {
         const timeoutId = setTimeout(() => handleOnDelete(), timeBeforeDeletion);
         timeoutId;
-    }, [handleOnDelete]);
+    }, [handleOnDelete, timeBeforeDeletion]);
 
     return (
         <>

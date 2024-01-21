@@ -1,10 +1,10 @@
-import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification, SwitchButton } from '../../../commons/components';
+import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryComponent, Notification } from '../../../commons/components';
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
 import { profileData } from '../../../commons/spotify/responsesTypes';
 import { getWordingButtonTracksToPlaylists } from './EasyModificationUtils';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const EasyModification = () => {
@@ -21,8 +21,6 @@ const EasyModification = () => {
     const [playlistAdditionSuccess, setPlaylistAdditionSuccess] = useState<string[]>([]);
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
 
-    /* Consultation mode state : For switching between consultation and edition */
-    const [consultationMode, setConsultationMode] = useState<boolean>(localStorage.getItem("consultationMode") === "true");
 
     /* Fetch profile on first render */
     useEffect(() => {
@@ -72,12 +70,6 @@ const EasyModification = () => {
         setPlaylistAdditionFailure(playlistAdditionFailureTemp);
     }
 
-    const handleSwitchMode = () => {
-        resetSelectedItems();
-        localStorage.setItem("consultationMode", (!consultationMode).toString());
-        setConsultationMode(!consultationMode);
-    }
-
     const resetSelectedItems = () => {
         setSelectedPlaylists([]);
         setSelectedTracksUris([]);
@@ -88,8 +80,6 @@ const EasyModification = () => {
         setPlaylistAdditionSuccess([]);
         setPlaylistAdditionFailure([]);
     }
-
-    const navigate = useNavigate();
 
     return (
         <>
@@ -103,17 +93,9 @@ const EasyModification = () => {
                     background: "var(--new-light-grey)",
                     borderRadius: "15px",
                 }}>
-                    <SwitchButton checked={consultationMode} onChange={handleSwitchMode} />
-                    {!consultationMode ? (
-                        <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>
-                            {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
-                        </StyledGreenButton>
-                    ) :
-                        <>
-                            <StyledGreenButton onClick={() => { navigate('/top-tracks'); }}> Check your top Tracks</StyledGreenButton>
-                            <StyledGreenButton style={{ marginLeft: "15px" }} onClick={() => { navigate('/top-artists'); }}> Check your top Artists </StyledGreenButton>
-                        </>
-                    }
+                    <StyledGreenButton onClick={handleAddTracksToPlaylists} disabled={(selectedTracksUris.length < 1 || selectedPlaylists.length < 1)}>
+                        {getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
+                    </StyledGreenButton>
                 </div>
                 <StyledNewGrid>
                     <aside>
@@ -123,7 +105,6 @@ const EasyModification = () => {
                         </div>
                         <PlaylistList
                             profile={profile}
-                            consultationMode={consultationMode}
                             playlistAdditionSuccess={playlistAdditionSuccess}
                             selectedPlaylists={selectedPlaylists}
                             handleOnDelete={() => setPlaylistAdditionSuccess([])}
@@ -132,7 +113,6 @@ const EasyModification = () => {
                     </aside>
                     <section>
                         <TrackCardList
-                            consultationMode={consultationMode}
                             selectedTracksUris={selectedTracksUris}
                             handleSelectedTracks={handleSelectedTracks}
                         />
@@ -141,6 +121,13 @@ const EasyModification = () => {
             </Layout >
 
 
+            {
+                playlistAdditionFailure.length > 0 && (
+                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                    </TemporaryComponent>
+                )
+            }
             {
                 playlistAdditionFailure.length > 0 && (
                     <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>

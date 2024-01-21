@@ -2,12 +2,12 @@ import { useNavigate } from "react-router";
 import { Artwork, TemporaryComponent } from "../index";
 import { playlist } from "../../spotify/responsesTypes";
 import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
+import { EyeSvg } from "../icons";
 
 
 interface PlaylistCardProps {
     playlist: playlist,
     handleOnDelete: () => void;
-    consultationMode?: boolean,
     clickable?: boolean,
     isSelected?: boolean,
     displayNotification?: boolean,
@@ -21,7 +21,6 @@ const PlaylistCard = (
         isSelected = false,
         clickable = false,
         displayNotification = false,
-        consultationMode = true,
         handleSelected = () => { }
     }: PlaylistCardProps) => {
 
@@ -31,10 +30,7 @@ const PlaylistCard = (
         <StyledPlaylistCard
             $selected={isSelected}
             $clickable={clickable}
-            onClick={() => clickable && (
-                !consultationMode ? handleSelected({ playlistId: playlist.id, playlistName: playlist.name })
-                    : navigate(`/playlists/${playlist.id}`)
-            )}
+            onClick={() => clickable && handleSelected({ playlistId: playlist.id, playlistName: playlist.name })}
         >
             <div>
                 <Artwork
@@ -45,13 +41,20 @@ const PlaylistCard = (
                 <span className={'playlistName'}>
                     {playlist.name}
                 </span>
+
             </div>
-            <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
                 {displayNotification &&
                     <TemporaryComponent handleOnDelete={handleOnDelete}>
                         <StyledAnimatedIcone src={"./images/check.png"} alt={"check"} />
                     </TemporaryComponent>
                 }
+                <button className="button-ahead visibleOnHover noPadding" onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/playlists/${playlist.id}`)
+                }}>
+                    <EyeSvg />
+                </button>
             </div>
         </StyledPlaylistCard>
     )
