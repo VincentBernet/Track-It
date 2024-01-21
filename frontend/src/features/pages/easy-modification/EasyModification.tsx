@@ -2,14 +2,14 @@ import { Layout, PlaylistList, TrackCardList, EasyModificationHeader, TemporaryC
 import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
-import { profileData } from '../../../commons/spotify/responsesTypes';
+import { profileDataType } from '../../../commons/spotify/responsesTypes';
 import { getWordingButtonTracksToPlaylists } from './EasyModificationUtils';
 import { Link } from 'react-router-dom';
 
 
 const EasyModification = () => {
     /* Get Profile : For Fetching profile */
-    const [profile, setProfile] = useState<profileData | null>(null);
+    const [profile, setProfile] = useState<profileDataType | null>(null);
 
     /* Selected Playlist(s) state : For sending list IDs of selected playlists */
     const [selectedPlaylists, setSelectedPlaylists] = useState<{ id: string, name: string }[]>([]);
@@ -20,6 +20,9 @@ const EasyModification = () => {
     /* Post status : For displaying success/error messages after adding tracks to playlists or creating new playlist */
     const [playlistAdditionSuccess, setPlaylistAdditionSuccess] = useState<string[]>([]);
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
+
+    /* Selected Playlist(s) state : For sending list IDs of selected playlists */
+    const [visiblePlaylist, setVisiblePlaylist] = useState<{ id: string, name: string } | null>(null);
 
 
     /* Fetch profile on first render */
@@ -44,6 +47,13 @@ const EasyModification = () => {
             setSelectedPlaylists([...selectedPlaylists, { id: playlistId, name: playlistName }]);
         }
     }
+
+    const handleVisiblePlaylist = (playlistId: string, playlistName: string) => {
+        setVisiblePlaylist({ id: playlistId, name: playlistName });
+    }
+
+    const handleOnDelete = () =>
+        setPlaylistAdditionSuccess([]);
 
     const handleSelectedTracks = (uri: string) => {
         if (selectedTracksUris.includes(uri)) {
@@ -107,13 +117,15 @@ const EasyModification = () => {
                             profile={profile}
                             playlistAdditionSuccess={playlistAdditionSuccess}
                             selectedPlaylists={selectedPlaylists}
-                            handleOnDelete={() => setPlaylistAdditionSuccess([])}
+                            handleVisiblePlaylist={handleVisiblePlaylist}
+                            handleOnDelete={handleOnDelete}
                             handleSelected={handleSelectedPlaylist}
                         />
                     </aside>
                     <section>
                         <TrackCardList
                             selectedTracksUris={selectedTracksUris}
+                            visiblePlaylist={visiblePlaylist}
                             handleSelectedTracks={handleSelectedTracks}
                         />
                     </section>

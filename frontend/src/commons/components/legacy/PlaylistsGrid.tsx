@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { StyledGrid } from '../../styles';
-import { playlist } from '../../spotify/responsesTypes';
+import { playlistType } from '../../spotify/responsesTypes';
 
 
 interface PlaylistsGridProps {
-    playlists: playlist[];
+    playlists: playlistType[];
 }
 
 const PlaylistsGrid = ({ playlists }: PlaylistsGridProps) => (

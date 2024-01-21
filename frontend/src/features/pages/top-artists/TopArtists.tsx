@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { ArtistsGrid, ErrorOrLoader, Layout, SectionWrapper, TimeRangeButtons } from "../../../commons/components";
-import { topArtistsData } from "../../../commons/spotify/responsesTypes";
+import { topArtistsDataType } from "../../../commons/spotify/responsesTypes";
 import { getCurrentUserTopArtists } from "../../../commons/spotify/requests";
 
 
 const TopArtists = () => {
-    const [topArtists, setTopArtists] = useState<topArtistsData | null>(null);
+    const [topArtists, setTopArtists] = useState<topArtistsDataType | null>(null);
     const [timeRange, setTimeRange] = useState<string>('short_term');
 
-    const [errorFetchingArtists, setErrorFetchingArtists] = useState<boolean>(false);
+    const [errorFetchingArtists, setErrorFetchingArtists] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,8 +17,7 @@ const TopArtists = () => {
                 setTopArtists(userTopArtists.data);
             }
             catch (e) {
-                console.log("Getting error : " + e);
-                setErrorFetchingArtists(true);
+                setErrorFetchingArtists("Error fetching top artists");
             }
         };
         fetchData();

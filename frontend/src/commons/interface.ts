@@ -1,4 +1,4 @@
-export interface localStorageKeys {
+export interface localStorageKeysType {
     [key: string]: string,
     accessToken: string,
     refreshToken: string,
@@ -6,7 +6,7 @@ export interface localStorageKeys {
     timestamp: string,
 }
 
-export interface localStorageValues {
+export interface localStorageValuesType {
     [key: string]: string | undefined,
     accessToken?: string,
     refreshToken?: string,

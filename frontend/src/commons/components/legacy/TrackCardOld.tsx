@@ -1,11 +1,11 @@
 import { formatDuration } from '../../utils';
-import { track } from '../../spotify/responsesTypes';
+import { trackType } from '../../spotify/responsesTypes';
 import { StyledTrackCard } from '../../styles';
 import { useNavigate } from 'react-router-dom';
 
 
 interface TrackCardOldProps {
-    track: track;
+    track: trackType;
     index: number;
     handleSelectedTracks?: (id: string) => void;
     isSelected?: boolean;

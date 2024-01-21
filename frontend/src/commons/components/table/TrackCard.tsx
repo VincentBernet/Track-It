@@ -1,5 +1,5 @@
 import { formatDuration } from '../../utils';
-import { trackWithLiked } from '../../spotify/responsesTypes';
+import { trackWithLikedType } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
 import { Artwork, SearchedElement } from '../index';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import { EyeSvg, HeartSvg } from '../icons';
 
 
 interface TrackCardProps {
-    track: trackWithLiked;
+    track: trackWithLikedType;
     addedAt: string;
     index: number;
     tableOptions: tableOptionsType;

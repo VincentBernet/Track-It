@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, getCurrentUserPlaylists, getCurrentUserTopArtists, getCurrentUserTopTracks } from '../../../commons/spotify/requests';
-import { profileData, playlistsData, topArtistsData, topTracksData } from '../../../commons/spotify/responsesTypes';
+import { profileDataType, playlistsDataType, topArtistsDataType, topTracksDataType } from '../../../commons/spotify/responsesTypes';
 import { ArtistsGrid, SectionWrapper, TrackList, PlaylistsGrid, ErrorOrLoader, Layout } from '../../../commons/components';
 import { StyledHeader } from '../../../commons/styles';
 
 const Profile = () => {
-    const [profile, setProfile] = useState<profileData | null>(null);
-    const [playlists, setPlaylists] = useState<playlistsData | null>(null);
-    const [topArtists, setTopArtists] = useState<topArtistsData | null>(null);
-    const [topTracks, setTopTracks] = useState<topTracksData | null>(null);
+    const [profile, setProfile] = useState<profileDataType | null>(null);
+    const [playlists, setPlaylists] = useState<playlistsDataType | null>(null);
+    const [topArtists, setTopArtists] = useState<topArtistsDataType | null>(null);
+    const [topTracks, setTopTracks] = useState<topTracksDataType | null>(null);
 
-    const [errorFetchingProfile, setErrorFetchingProfile] = useState<boolean>(false);
-    const [errorFetchingOther, setErrorFetchingOther] = useState<boolean>(false);
+    const [errorFetchingProfile, setErrorFetchingProfile] = useState<string | null>(null);
+    const [errorFetchingOther, setErrorFetchingOther] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,7 +20,7 @@ const Profile = () => {
                 setProfile(userProfile.data);
             }
             catch (e) {
-                setErrorFetchingProfile(true);
+                setErrorFetchingProfile("Error fetching profile");
             }
 
 
@@ -35,7 +35,7 @@ const Profile = () => {
                 setTopTracks(userTopTracks.data);
             }
             catch (e) {
-                setErrorFetchingOther(true);
+                setErrorFetchingOther("Error fetching playlists, top artists, or top tracks");
             }
         };
 

@@ -1,9 +1,9 @@
-import { profileData } from "../../spotify/responsesTypes";
+import { profileDataType } from "../../spotify/responsesTypes";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 type EasyModificationHeaderProps = {
-    profile: profileData | null;
+    profile: profileDataType | null;
 };
 
 

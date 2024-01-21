@@ -1,10 +1,10 @@
 import { StyledListReset } from '../../styles';
-import { track } from '../../spotify/responsesTypes';
+import { trackType } from '../../spotify/responsesTypes';
 import TrackCardOld from './TrackCardOld';
 
 
 interface TrackListProps {
-    tracks: track[];
+    tracks: trackType[];
     clickable?: boolean;
 }
 

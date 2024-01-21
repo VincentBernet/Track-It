@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { tracksData, tracksDataItem, tracksEnrichedData, tracksEnrichedDataItem } from '../../spotify/responsesTypes';
+import { tracksDataType, tracksDataItemType, tracksEnrichedDataType, tracksEnrichedDataItemType } from '../../spotify/responsesTypes';
 import { ErrorOrLoader, SearchFilter, SortDropdown, PropertiesDropdown, TableHeader } from '../index';
 import TrackCard from './TrackCard';
 import { useEffect, useMemo, useState } from 'react';
-import { addToLikedTracks, checkIfTrackIsSaved, getCurrentUserSavedTracks, removeFromLikedTracks } from '../../spotify/requests';
+import { addToLikedTracks, checkIfTrackIsSaved, getCurrentUserSavedTracks, getPlaylistById, removeFromLikedTracks } from '../../spotify/requests';
 import axios from 'axios';
 import { formatDateAdded } from '../../utils';
 import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
@@ -11,6 +11,7 @@ import { getArtistsName } from '../../../features/pages/easy-modification/EasyMo
 
 type TrackCardListProps = {
     selectedTracksUris: string[];
+    visiblePlaylist: { id: string, name: string } | null;
     handleSelectedTracks: (id: string) => void;
 }
 
@@ -30,19 +31,21 @@ export type tableOptionsType = {
 };
 
 
-const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardListProps) => {
+const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTracks }: TrackCardListProps) => {
     /* Get Tracks : For Fetching tracks */
-    const [tracksData, setTracksData] = useState<tracksEnrichedData | null>(null);
-    const [tracks, setTracks] = useState<tracksEnrichedDataItem[] | null>(null);
+    const [tracksData, setTracksData] = useState<tracksEnrichedDataType | null>(null);
+    const [tracks, setTracks] = useState<tracksEnrichedDataItemType[] | null>(null);
     const [successFetchingTracks, setSuccessFetchingTracks] = useState<boolean | null>(null);
-    const [errorFetchingTracks, setErrorFetchingTracks] = useState<boolean | null>(null);
+    const [errorFetchingTracks, setErrorFetchingTracks] = useState<string | null>(null);
 
+    // Fetch tracks on first render
     useEffect(() => {
-        const fetchDataIsSaved = async (firstData: tracksData) => {
+        const fetchDataIsSaved = async (firstData: tracksDataType) => {
             try {
-                const likedTracksIds = firstData.items.map((track: tracksDataItem) => track.track.id);
+                const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
+                console.log("Nombre de liked tracks ids : ", likedTracksIds.length)
                 const { data } = await checkIfTrackIsSaved(likedTracksIds);
-                const dataItemsWithLiked: tracksEnrichedDataItem[] = firstData.items.map((currTrack: tracksDataItem, i) => {
+                const dataItemsWithLiked: tracksEnrichedDataItemType[] = firstData.items.map((currTrack: tracksDataItemType, i) => {
                     return {
                         added_at: currTrack.added_at,
                         track:
@@ -64,33 +67,43 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardLi
                 setTracksData(dataWithLiked);
             }
             catch {
-                setErrorFetchingTracks(true);
+                setErrorFetchingTracks("Error while fetching first liked tracks batch");
             }
         };
+
+
         const fetchData = async () => {
             try {
-                const { data } = await getCurrentUserSavedTracks();
-                fetchDataIsSaved(data);
+                if (!visiblePlaylist) {
+                    const { data } = await getCurrentUserSavedTracks();
+                    fetchDataIsSaved(data);
+                }
+                else {
+                    setTracks(null);
+                    const { data } = await getPlaylistById(visiblePlaylist.id);
+                    console.log("Playlist tracks:", data.tracks)
+                    fetchDataIsSaved(data.tracks);
+                }
             }
             catch {
-                setErrorFetchingTracks(true);
+                setErrorFetchingTracks("Error while fetching first tracks batch");
             }
         };
+        console.log("First useEffect")
         fetchData();
-    }, []);
+    }, [visiblePlaylist]);
 
-    // When tracksData updates, check if there are more tracks to fetch
-    // then update the state variable
+    // X useEffect to fetch more data 
     useEffect(() => {
         if (!tracksData) {
             return;
         }
-
-        const fetchDataIsSaved = async (firstData: tracksData) => {
+        console.log("X useEffect to fetch more data ")
+        const fetchDataIsSaved = async (firstData: tracksDataType) => {
             try {
-                const likedTracksIds = firstData.items.map((track: tracksDataItem) => track.track.id);
+                const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
                 const { data } = await checkIfTrackIsSaved(likedTracksIds);
-                const dataItemsWithLiked: tracksEnrichedDataItem[] = firstData.items.map((currTrack: tracksDataItem, i) => {
+                const dataItemsWithLiked: tracksEnrichedDataItemType[] = firstData.items.map((currTrack: tracksDataItemType, i) => {
                     return {
                         added_at: currTrack.added_at,
                         track:
@@ -112,11 +125,11 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardLi
                 setTracksData(dataWithLiked);
             }
             catch {
-                setErrorFetchingTracks(true);
+                setErrorFetchingTracks("Error while fetching more liked tracks");
             }
         };
 
-        // Tracks endpoint only returns 50 playlists at a time, so we need to
+        // Tracks endpoint only returns 50 tracks at a time, so we need to
         // make sure we get ALL tracks by fetching the next set of tracks
         const fetchMoreData = async () => {
             if (tracksData.next) {
@@ -125,7 +138,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardLi
                     fetchDataIsSaved(data);
                 }
                 catch {
-                    setErrorFetchingTracks(true);
+                    setErrorFetchingTracks("Error while fetching more tracks");
                 }
             }
             else {
@@ -293,7 +306,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardLi
     }, [searchFilter, sortedTracks]);
 
 
-    if (filteredAndSortedTracks === null || errorFetchingTracks === true) {
+    if (filteredAndSortedTracks === null || errorFetchingTracks) {
         return (
             <ErrorOrLoader error={errorFetchingTracks} />
         );
@@ -376,7 +389,7 @@ const TrackCardList = ({ selectedTracksUris, handleSelectedTracks }: TrackCardLi
     return (
         <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
-                <h3>Your liked Tracks</h3>
+                <h3>{visiblePlaylist ? `Playlist: ${visiblePlaylist.name}` : 'Your liked Tracks'}</h3>
                 <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
                     <SortDropdown
                         tableOptions={tableOptions}

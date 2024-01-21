@@ -1,25 +1,25 @@
 import { ErrorOrLoader, Modal, PlaylistCard, TemporaryComponent, Notification } from "../index";
-import { playlist, playlistsData, profileData } from "../../spotify/responsesTypes";
+import { playlistType, playlistsDataType, profileDataType } from "../../spotify/responsesTypes";
 import { StyledListReset } from "../../styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCurrentUserPlaylists, postNewPlaylist } from "../../spotify/requests";
-import { catchErrors } from "../../utils";
 
 
 interface PlaylistListProps {
-    profile: profileData | null;
+    profile: profileDataType | null;
     selectedPlaylists: { id: string, name: string }[];
     playlistAdditionSuccess: string[];
     handleSelected: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
+    handleVisiblePlaylist: (playlistId: string, playlistName: string) => void;
     handleOnDelete: () => void;
 }
 
-const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, handleSelected, handleOnDelete }: PlaylistListProps) => {
+const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, handleSelected, handleVisiblePlaylist, handleOnDelete }: PlaylistListProps) => {
     /* Get Playlist : For Fetching playlists */
-    const [playlistsData, setPlaylistsData] = useState<playlistsData | null>(null);
-    const [playlists, setPlaylists] = useState<playlist[] | null>(null);
-    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<boolean>(false);
+    const [playlistsData, setPlaylistsData] = useState<playlistsDataType | null>(null);
+    const [playlists, setPlaylists] = useState<playlistType[] | null>(null);
+    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<string | null>(null);
 
     /* Open modal creation new playlist */
     const [isModalNewPlaylistOpened, setIsModalNewPlaylistOpened] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, han
                 setPlaylistsData(data);
             }
             catch (e) {
-                setErrorFetchingPlaylists(true);
+                setErrorFetchingPlaylists("Error fetching first playlists batch");
             }
         };
         fetchData();
@@ -50,11 +50,16 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, han
         // Playlist endpoint only returns 20 playlists at a time, so we need to
         // make sure we get ALL playlists by fetching the next set of playlists
         const fetchMoreData = async () => {
-            if (playlistsData.next) {
-                const { data } = await axios.get(playlistsData.next);
-                setPlaylistsData(data);
+            try {
+                if (playlistsData.next) {
+                    const { data } = await axios.get(playlistsData.next);
+                    setPlaylistsData(data);
+                }
             }
-        };
+            catch (e) {
+                setErrorFetchingPlaylists("Error fetching next playlists batch");
+            }
+        }
 
         // Use functional update to update playlists state variable
         // to avoid including playlists as a dependency for this hook
@@ -65,7 +70,7 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, han
         ]));
 
         // Fetch next set of playlists as needed
-        catchErrors(fetchMoreData());
+        fetchMoreData();
 
     }, [playlistsData]);
 
@@ -109,6 +114,7 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, han
                             displayNotification={playlistAdditionSuccess.includes(playlist.id)}
                             handleOnDelete={handleOnDelete}
                             handleSelected={handleSelected}
+                            handleVisiblePlaylist={handleVisiblePlaylist}
                         />
                     ))}
                 </StyledListReset>

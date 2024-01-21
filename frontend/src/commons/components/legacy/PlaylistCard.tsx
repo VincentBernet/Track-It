@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router";
 import { Artwork, TemporaryComponent } from "../index";
-import { playlist } from "../../spotify/responsesTypes";
+import { playlistType } from "../../spotify/responsesTypes";
 import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
 import { EyeSvg } from "../icons";
 
 
 interface PlaylistCardProps {
-    playlist: playlist,
+    playlist: playlistType,
     handleOnDelete: () => void;
     clickable?: boolean,
     isSelected?: boolean,
     displayNotification?: boolean,
     handleSelected?: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
+    handleVisiblePlaylist?: (playlistId: string, playlistName: string) => void;
 }
 
 const PlaylistCard = (
@@ -21,10 +21,9 @@ const PlaylistCard = (
         isSelected = false,
         clickable = false,
         displayNotification = false,
-        handleSelected = () => { }
+        handleSelected = () => { },
+        handleVisiblePlaylist = () => { }
     }: PlaylistCardProps) => {
-
-    const navigate = useNavigate();
 
     return (
         <StyledPlaylistCard
@@ -51,7 +50,7 @@ const PlaylistCard = (
                 }
                 <button className="button-ahead visibleOnHover noPadding" onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/playlists/${playlist.id}`)
+                    handleVisiblePlaylist(playlist.id, playlist.name);
                 }}>
                     <EyeSvg />
                 </button>

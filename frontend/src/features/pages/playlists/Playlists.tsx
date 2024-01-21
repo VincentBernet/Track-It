@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import { getCurrentUserPlaylists } from '../../../commons/spotify/requests';
 import { catchErrors } from '../../../commons/utils';
 import { SectionWrapper, PlaylistsGrid, ErrorOrLoader, Layout } from '../../../commons/components';
-import { playlist, playlistsData } from "../../../commons/spotify/responsesTypes";
+import { playlistType, playlistsDataType } from "../../../commons/spotify/responsesTypes";
 import axios from 'axios';
 
 
 const Playlists = () => {
-    const [playlistsData, setPlaylistsData] = useState<playlistsData | null>(null);
-    const [playlists, setPlaylists] = useState<playlist[] | null>(null);
+    const [playlistsData, setPlaylistsData] = useState<playlistsDataType | null>(null);
+    const [playlists, setPlaylists] = useState<playlistType[] | null>(null);
 
-    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<boolean>(false);
+    const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +19,7 @@ const Playlists = () => {
                 setPlaylistsData(data);
             }
             catch {
-                setErrorFetchingPlaylists(true);
+                setErrorFetchingPlaylists("Error fetching playlists");
             }
 
         };

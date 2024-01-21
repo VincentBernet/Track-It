@@ -3,20 +3,20 @@ import { useParams } from 'react-router-dom';
 import { catchErrors } from '../../../commons/utils'
 import { getPlaylistById, getAudioFeaturesForTracks } from '../../../commons/spotify/requests';
 import { StyledDropdownOld, StyledHeader } from '../../../commons/styles';
-import { playlist, playlistTrack, playlistTracksData, audioFeatures } from '../../../commons/spotify/responsesTypes';
+import { playlistType, playlistTrackType, playlistTracksDataType, audioFeaturesType } from '../../../commons/spotify/responsesTypes';
 import axios from 'axios';
 import { ErrorOrLoader, Layout, SectionWrapper, TrackList } from '../../../commons/components';
 
 
 const Playlist = () => {
     const { id } = useParams();
-    const [playlist, setPlaylist] = useState<playlist | null>(null);
-    const [tracksData, setTracksData] = useState<playlistTracksData | null>(null);
-    const [tracks, setTracks] = useState<playlistTrack[] | null>(null);
-    const [audioFeatures, setAudioFeatures] = useState<audioFeatures[] | null>(null);
+    const [playlist, setPlaylist] = useState<playlistType | null>(null);
+    const [tracksData, setTracksData] = useState<playlistTracksDataType | null>(null);
+    const [tracks, setTracks] = useState<playlistTrackType[] | null>(null);
+    const [audioFeatures, setAudioFeatures] = useState<audioFeaturesType[] | null>(null);
     const [sortValue, setSortValue] = useState<string>('');
 
-    const [errorFetchingPlaylist, setErrorFetchingPlaylist] = useState<boolean>(false);
+    const [errorFetchingPlaylist, setErrorFetchingPlaylist] = useState<string | null>(null);
 
     type sortOptionsType = 'danceability' | 'tempo' | 'energy' | 'valence' | 'acousticness' | 'instrumentalness' | 'liveness' | 'speechiness' | 'duration_ms' | 'popularity';
     const sortOptions: sortOptionsType[] = ['danceability', 'tempo', 'energy', 'valence', 'acousticness', 'instrumentalness', 'liveness', 'speechiness', 'duration_ms', 'popularity'];
@@ -72,7 +72,7 @@ const Playlist = () => {
                 setTracksData(data.tracks);
             }
             catch {
-                setErrorFetchingPlaylist(true);
+                setErrorFetchingPlaylist("Error fetching playlist. Please try again.");
             }
         };
         fetchData();

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getRecommendations, getTrackById, checkIfTrackIsSaved, addToLikedTracks, removeFromLikedTracks } from "../../../commons/spotify/requests";
 import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
-import { track } from './../../../commons/spotify/responsesTypes';
+import { trackType } from './../../../commons/spotify/responsesTypes';
 import styled from "styled-components";
 import { StyledGreenButton } from "../../../commons/styles";
 import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/icons";
@@ -11,12 +11,12 @@ import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/icons";
 const Track = () => {
     const { id } = useParams();
 
-    const [track, setTrack] = useState<track | null>(null);
-    const [errorFetchingTrack, setErrorFetchingTrack] = useState<boolean>(false);
+    const [track, setTrack] = useState<trackType | null>(null);
+    const [errorFetchingTrack, setErrorFetchingTrack] = useState<string | null>(null);
     const [isLiked, setIsLiked] = useState<boolean | null>(null);
 
-    const [tracksReco, setTracksReco] = useState<track[] | null>(null);
-    const [errorFechingRecommendedTracks, setErrorFetchingRecommendedTracks] = useState<boolean>(false);
+    const [tracksReco, setTracksReco] = useState<trackType[] | null>(null);
+    const [errorFechingRecommendedTracks, setErrorFetchingRecommendedTracks] = useState<string | null>(null);
 
     const [indexReco, setIndexReco] = useState<number>(0);
     const [recoIsLiked, setRecoIsLiked] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const Track = () => {
                 checkIfTrackIsSavedInLikedTracks(data.id);
             }
             catch {
-                setErrorFetchingTrack(true);
+                setErrorFetchingTrack("Error fetching track");
             }
         };
         fetchData();
@@ -49,7 +49,7 @@ const Track = () => {
                 setTracksReco(data.tracks);
             }
             catch {
-                setErrorFetchingRecommendedTracks(true);
+                setErrorFetchingRecommendedTracks("Error fetching recommended track");
             }
         };
         fetchData();
@@ -61,7 +61,7 @@ const Track = () => {
             setIsLiked(data[0]);
         }
         catch {
-            console.log("error during checking if track is saved")
+            setErrorFetchingTrack("Error fetching track is liked or not");
         }
     }
 

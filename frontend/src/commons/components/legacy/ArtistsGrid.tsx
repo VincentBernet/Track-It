@@ -1,9 +1,9 @@
 import { StyledGrid } from '../../styles';
-import { artist } from '../../spotify/responsesTypes';
+import { artistType } from '../../spotify/responsesTypes';
 
 
 interface ArtistsGridProps {
-    artists: artist[];
+    artists: artistType[];
 }
 
 const ArtistsGrid = ({ artists }: ArtistsGridProps) => (
