@@ -1,4 +1,4 @@
-import { ErrorOrLoader, Modal, PlaylistCard, TemporaryComponent, Notification } from "../index";
+import { ErrorOrLoader, Modal, PlaylistCard, TemporaryComponent, Notification, LikeSongCard } from "../index";
 import { playlistType, playlistsDataType, profileDataType } from "../../spotify/responsesTypes";
 import { StyledListReset } from "../../styles";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ interface PlaylistListProps {
     selectedPlaylists: { id: string, name: string }[];
     playlistAdditionSuccess: string[];
     handleSelected: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
-    handleVisiblePlaylist: (playlistId: string, playlistName: string) => void;
+    handleVisiblePlaylist: (playlistId?: string, playlistName?: string) => void;
     handleOnDelete: () => void;
 }
 
@@ -105,6 +105,7 @@ const PlaylistList = ({ profile, selectedPlaylists, playlistAdditionSuccess, han
         <>
             {playlists && playlists.length ? (
                 <StyledListReset>
+                    <LikeSongCard handleVisiblePlaylist={handleVisiblePlaylist} />
                     {playlists.map((playlist) => (
                         <PlaylistCard
                             key={playlist.id}

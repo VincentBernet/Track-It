@@ -22,7 +22,7 @@ const EasyModification = () => {
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
 
     /* Selected Playlist(s) state : For sending list IDs of selected playlists */
-    const [visiblePlaylist, setVisiblePlaylist] = useState<{ id: string, name: string } | null>(null);
+    const [visiblePlaylist, setVisiblePlaylist] = useState<{ id: string, name: string } | 'likedTrack'>('likedTrack');
 
 
     /* Fetch profile on first render */
@@ -48,7 +48,16 @@ const EasyModification = () => {
         }
     }
 
-    const handleVisiblePlaylist = (playlistId: string, playlistName: string) => {
+    const handleVisiblePlaylist = (playlistId?: string, playlistName?: string) => {
+        if (!playlistId || !playlistName) {
+            if (visiblePlaylist === 'likedTrack') return;
+            setVisiblePlaylist('likedTrack');
+            return;
+        }
+        if (visiblePlaylist !== 'likedTrack') {
+            if (visiblePlaylist.id === playlistId) return;
+        }
+
         setVisiblePlaylist({ id: playlistId, name: playlistName });
     }
 

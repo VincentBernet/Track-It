@@ -25,6 +25,7 @@ export { default as PlaylistList } from './legacy/PlaylistList';
 
 export { default as TrackList } from './legacy/TrackList';
 export { default as TrackCardOld } from './legacy/TrackCardOld';
+export { default as LikeSongCard } from './LikeSongCard';
 
 // table options
 export { default as SwitchButton } from './table/entete-option/SwitchButton';

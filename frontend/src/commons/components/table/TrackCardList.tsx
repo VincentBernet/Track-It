@@ -11,7 +11,7 @@ import { getArtistsName } from '../../../features/pages/easy-modification/EasyMo
 
 type TrackCardListProps = {
     selectedTracksUris: string[];
-    visiblePlaylist: { id: string, name: string } | null;
+    visiblePlaylist: { id: string, name: string } | 'likedTrack';
     handleSelectedTracks: (id: string) => void;
 }
 
@@ -74,14 +74,16 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
 
         const fetchData = async () => {
             try {
-                if (!visiblePlaylist) {
+                if (visiblePlaylist === 'likedTrack') {
                     const { data } = await getCurrentUserSavedTracks();
+                    setSearchFilter('');
                     fetchDataIsSaved(data);
                 }
                 else {
                     setTracks(null);
                     const { data } = await getPlaylistById(visiblePlaylist.id);
                     console.log("Playlist tracks:", data.tracks)
+                    setSearchFilter('');
                     fetchDataIsSaved(data.tracks);
                 }
             }
@@ -142,6 +144,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
                 }
             }
             else {
+                setErrorFetchingTracks(null);
                 setSuccessFetchingTracks(true);
             }
         };
@@ -389,7 +392,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     return (
         <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
-                <h3>{visiblePlaylist ? `Playlist: ${visiblePlaylist.name}` : 'Your liked Tracks'}</h3>
+                <h3>{visiblePlaylist === 'likedTrack' ? 'Your liked Tracks' : `Playlist: ${visiblePlaylist.name}`}</h3>
                 <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
                     <SortDropdown
                         tableOptions={tableOptions}
