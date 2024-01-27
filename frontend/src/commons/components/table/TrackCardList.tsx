@@ -38,40 +38,45 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     const [successFetchingTracks, setSuccessFetchingTracks] = useState<boolean | null>(null);
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<string | null>(null);
 
+    const fetchDataIsSaved = async (firstData: tracksDataType) => {
+        try {
+            const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
+
+            let fullResponse: string[] = [];
+            // Spotify API only allows to check 50 tracks at a time
+            for (let i = 0; i < likedTracksIds.length; i += 50) {
+                const { data } = await checkIfTrackIsSaved(likedTracksIds.slice(i, i + 50));
+                fullResponse = [...fullResponse, ...data];
+            }
+
+            const dataItemsWithLiked: tracksEnrichedDataItemType[] = firstData.items.map((currTrack: tracksDataItemType, i) => {
+                return {
+                    added_at: currTrack.added_at,
+                    track:
+                    {
+                        ...currTrack.track,
+                        isSaved: fullResponse[i] ? true : false,
+                    }
+                }
+            });
+            const dataWithLiked = {
+                items: dataItemsWithLiked,
+                href: firstData.href,
+                limit: firstData.limit,
+                next: firstData.next,
+                offset: firstData.offset,
+                previous: firstData.previous,
+                total: firstData.total,
+            }
+            setTracksData(dataWithLiked);
+        }
+        catch {
+            setErrorFetchingTracks("Error while fetching liked tracks");
+        }
+    };
+
     // Fetch tracks on first render
     useEffect(() => {
-        const fetchDataIsSaved = async (firstData: tracksDataType) => {
-            try {
-                const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
-                console.log("Nombre de liked tracks ids : ", likedTracksIds.length)
-                const { data } = await checkIfTrackIsSaved(likedTracksIds);
-                const dataItemsWithLiked: tracksEnrichedDataItemType[] = firstData.items.map((currTrack: tracksDataItemType, i) => {
-                    return {
-                        added_at: currTrack.added_at,
-                        track:
-                        {
-                            ...currTrack.track,
-                            isSaved: data[i] ? true : false,
-                        }
-                    }
-                });
-                const dataWithLiked = {
-                    items: dataItemsWithLiked,
-                    href: firstData.href,
-                    limit: firstData.limit,
-                    next: firstData.next,
-                    offset: firstData.offset,
-                    previous: firstData.previous,
-                    total: firstData.total,
-                }
-                setTracksData(dataWithLiked);
-            }
-            catch {
-                setErrorFetchingTracks("Error while fetching first liked tracks batch");
-            }
-        };
-
-
         const fetchData = async () => {
             try {
                 if (visiblePlaylist === 'likedTrack') {
@@ -101,35 +106,6 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
             return;
         }
         console.log("X useEffect to fetch more data ")
-        const fetchDataIsSaved = async (firstData: tracksDataType) => {
-            try {
-                const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
-                const { data } = await checkIfTrackIsSaved(likedTracksIds);
-                const dataItemsWithLiked: tracksEnrichedDataItemType[] = firstData.items.map((currTrack: tracksDataItemType, i) => {
-                    return {
-                        added_at: currTrack.added_at,
-                        track:
-                        {
-                            ...currTrack.track,
-                            isSaved: data[i] ? true : false,
-                        }
-                    }
-                });
-                const dataWithLiked = {
-                    items: dataItemsWithLiked,
-                    href: firstData.href,
-                    limit: firstData.limit,
-                    next: firstData.next,
-                    offset: firstData.offset,
-                    previous: firstData.previous,
-                    total: firstData.total,
-                }
-                setTracksData(dataWithLiked);
-            }
-            catch {
-                setErrorFetchingTracks("Error while fetching more liked tracks");
-            }
-        };
 
         // Tracks endpoint only returns 50 tracks at a time, so we need to
         // make sure we get ALL tracks by fetching the next set of tracks
@@ -192,9 +168,10 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
 
     // TableOptions for sorting tracks and display / hiding columns state
     const [tableOptions, setTableOptions] = useState<tableOptionsType>(initialSortByOptionValue);
-    const [displayMode, setDisplayMode] = useState<'list' | 'compact'>('list');
+    const [displayMode, setDisplayMode] = useState<'list' | 'compact'>(localStorage.getItem('displayMode') as ('list' | 'compact') || 'list');
 
     const handleDisplayMode = (mode: 'list' | 'compact') => {
+        localStorage.setItem('displayMode', mode);
         setDisplayMode(mode);
     }
 
