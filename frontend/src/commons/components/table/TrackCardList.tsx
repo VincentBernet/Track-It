@@ -81,13 +81,14 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
             try {
                 if (visiblePlaylist === 'likedTrack') {
                     const { data } = await getCurrentUserSavedTracks();
+                    setTracks(null);
                     setSearchFilter('');
                     fetchDataIsSaved(data);
                 }
                 else {
-                    setTracks(null);
                     const { data } = await getPlaylistById(visiblePlaylist.id);
-                    console.log("Playlist tracks:", data.tracks)
+                    console.log("Playlist tracks:", data.tracks);
+                    setTracks(null);
                     setSearchFilter('');
                     fetchDataIsSaved(data.tracks);
                 }
