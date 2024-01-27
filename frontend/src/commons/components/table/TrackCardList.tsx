@@ -372,8 +372,8 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
                 <h3>
                     {visiblePlaylist === 'likedTrack' ?
-                        `Your liked Tracks : ${filteredAndSortedTracks.length}` :
-                        `${visiblePlaylist.name} : ${filteredAndSortedTracks.length}`}
+                        `Your liked Songs : ${filteredAndSortedTracks.length} tracks` :
+                        `${visiblePlaylist.name} : ${filteredAndSortedTracks.length} tracks`}
                 </h3>
                 <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
                     <SortDropdown
