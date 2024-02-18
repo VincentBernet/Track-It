@@ -1,5 +1,7 @@
 import { artistType } from "../../../commons/spotify/responsesTypes";
 
+export type playlistType = { id: string, name: string };
+
 const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selectedPlaylistsLength: number) => {
     return (
         selectedTracksLength === 0 && selectedPlaylistsLength === 0 ?

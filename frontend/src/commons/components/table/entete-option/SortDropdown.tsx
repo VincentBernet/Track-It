@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { DoubleSortSvg } from "../../icons";
-import { tableOptionsType } from "../TrackCardList";
+import { tableOptionsType } from "../Utils";
 import DropdownSorting from "../../conditional/DropdownSorting";
+import { columnNames } from "../Utils";
 
 type SortDropdownProps = {
-    handleSort: (sort: string) => void;
+    handleSort: (sort: columnNames) => void;
     tableOptions: tableOptionsType;
 }
 

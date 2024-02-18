@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { tableOptionsType } from "../table/TrackCardList";
 import Dropdown from "./Dropdown";
 import { ListCompactSvg, ListSvg } from "../icons";
+import { tableOptionsType, columnNames } from "../table/Utils";
 
 type DropdownPropertiesType = {
     isOpen: boolean;
     tableOptions: tableOptionsType;
     displayMode: 'list' | 'compact';
     dropdownButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
-    handleDisplay: (columnName: string) => void;
+    handleDisplay: (columnName: columnNames) => void;
     handleDisplayMode: (mode: 'list' | 'compact') => void;
     handleClosing: () => void;
 };
@@ -27,13 +27,13 @@ const DropdownProperties = ({ isOpen, tableOptions, displayMode, dropdownButtonR
                 </div>
                 {Object.entries(tableOptions).map((option) => {
                     return (
-                        <button className={"propertyButton"} key={option[1].label} onClick={() => handleDisplay(option[0])}>
+                        <button className={"propertyButton"} key={option[1].label} onClick={() => handleDisplay(option[0] as columnNames)}>
                             <input
                                 type="checkbox"
                                 id={option[1].label}
                                 name={option[1].label}
                                 checked={option[1].isDisplayed}
-                                onChange={() => handleDisplay(option[0])}
+                                onChange={() => handleDisplay(option[0] as columnNames)}
                                 value={option[1].label}
                             />
                             <div className="button-text">

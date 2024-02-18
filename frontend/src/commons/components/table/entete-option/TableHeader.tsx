@@ -1,10 +1,10 @@
-import { tableOptionsType } from "../TrackCardList";
+import { tableOptionsType, columnNames } from "../Utils";
 import ColumnHeader from "./ColumnHeader";
 
 type TableHeaderProps = {
     tableOptions: tableOptionsType;
     displayMode: 'list' | 'compact';
-    handleSort: (columnName: string) => void;
+    handleSort: (columnName: columnNames) => void;
 };
 
 const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps) => {
@@ -18,47 +18,47 @@ const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps
                 </th>
                 {displayMode === 'list' && (
                     <ColumnHeader
-                        isDisplayed={(tableOptions['name'].isDisplayed || tableOptions['artist'].isDisplayed)}
-                        isAscending={tableOptions['name'].isAscending}
-                        onClick={() => handleSort('name')}
+                        isDisplayed={(tableOptions[columnNames.name].isDisplayed || tableOptions[columnNames.artist].isDisplayed)}
+                        isAscending={tableOptions[columnNames.name].isAscending}
+                        onClick={() => handleSort(columnNames.name)}
                         title="Track"
                     />
                 )}
                 {displayMode === 'compact' && (
                     <ColumnHeader
-                        isDisplayed={tableOptions['name'].isDisplayed}
-                        isAscending={tableOptions['name'].isAscending}
-                        onClick={() => handleSort('name')}
+                        isDisplayed={tableOptions[columnNames.name].isDisplayed}
+                        isAscending={tableOptions[columnNames.name].isAscending}
+                        onClick={() => handleSort(columnNames.name)}
                         title="Name"
                     />
                 )}
                 {displayMode === 'compact' && (
                     <ColumnHeader
-                        isDisplayed={tableOptions['artist'].isDisplayed}
-                        isAscending={tableOptions['artist'].isAscending}
-                        onClick={() => handleSort('artist')}
+                        isDisplayed={tableOptions[columnNames.artist].isDisplayed}
+                        isAscending={tableOptions[columnNames.artist].isAscending}
+                        onClick={() => handleSort(columnNames.artist)}
                         title="Artist"
                     />
                 )}
                 <ColumnHeader
-                    isDisplayed={tableOptions['album'].isDisplayed}
-                    isAscending={tableOptions['album'].isAscending}
-                    onClick={() => handleSort('album')}
+                    isDisplayed={tableOptions[columnNames.album].isDisplayed}
+                    isAscending={tableOptions[columnNames.album].isAscending}
+                    onClick={() => handleSort(columnNames.album)}
                     title="Album"
                 />
                 <th>
 
                 </th>
                 <ColumnHeader
-                    isDisplayed={tableOptions['date_added'].isDisplayed}
-                    isAscending={tableOptions['date_added'].isAscending}
-                    onClick={() => handleSort('date_added')}
+                    isDisplayed={tableOptions[columnNames.date_added].isDisplayed}
+                    isAscending={tableOptions[columnNames.date_added].isAscending}
+                    onClick={() => handleSort(columnNames.date_added)}
                     title="Date added"
                 />
                 <ColumnHeader
-                    isDisplayed={tableOptions['duration'].isDisplayed}
-                    isAscending={tableOptions['duration'].isAscending}
-                    onClick={() => handleSort('duration')}
+                    isDisplayed={tableOptions[columnNames.duration].isDisplayed}
+                    isAscending={tableOptions[columnNames.duration].isAscending}
+                    onClick={() => handleSort(columnNames.duration)}
                     title="Dur."
                 />
             </tr>

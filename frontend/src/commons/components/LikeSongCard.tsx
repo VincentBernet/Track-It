@@ -1,16 +1,17 @@
 import { Artwork } from "./index";
 import { EyeSvg } from "./icons";
 import { StyledPlaylistCard } from "../styles";
+import { playlistType } from "../../features/pages/easy-modification/EasyModificationUtils";
 
 
 type LikeSongCardProps = {
-    handleVisiblePlaylist: (playlistId?: string, playlistName?: string) => void;
+    handleVisiblePlaylist: ({ id, name }: playlistType) => void;
 };
 
 const LikeSongCard = ({ handleVisiblePlaylist }: LikeSongCardProps) => {
 
     return (
-        <StyledPlaylistCard $selected={false} $clickable={true} onClick={() => handleVisiblePlaylist()}>
+        <StyledPlaylistCard $selected={false} $clickable={true} onClick={() => handleVisiblePlaylist({ id: '0', name: 'likedTracks' })}>
             <div>
                 <Artwork
                     images={[{

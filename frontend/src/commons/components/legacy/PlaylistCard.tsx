@@ -2,6 +2,7 @@ import { Artwork, TemporaryComponent } from "../index";
 import { playlistType } from "../../spotify/responsesTypes";
 import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
 import { EyeSvg } from "../icons";
+import { playlistType as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
 
 
 interface PlaylistCardProps {
@@ -10,8 +11,8 @@ interface PlaylistCardProps {
     clickable?: boolean,
     isSelected?: boolean,
     displayNotification?: boolean,
-    handleSelected?: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
-    handleVisiblePlaylist?: (playlistId: string, playlistName: string) => void;
+    handleSelected?: ({ id, name }: handlePlaylistType) => void;
+    handleVisiblePlaylist?: ({ id, name }: handlePlaylistType) => void;
 }
 
 const PlaylistCard = (
@@ -29,7 +30,7 @@ const PlaylistCard = (
         <StyledPlaylistCard
             $selected={isSelected}
             $clickable={clickable}
-            onClick={() => clickable && handleSelected({ playlistId: playlist.id, playlistName: playlist.name })}
+            onClick={() => clickable && handleSelected({ id: playlist.id, name: playlist.name })}
         >
             <div>
                 <Artwork
@@ -50,7 +51,7 @@ const PlaylistCard = (
                 }
                 <button className="button-ahead visibleOnHover noPadding" onClick={(e) => {
                     e.stopPropagation();
-                    handleVisiblePlaylist(playlist.id, playlist.name);
+                    handleVisiblePlaylist({ id: playlist.id, name: playlist.name });
                 }}>
                     <EyeSvg />
                 </button>

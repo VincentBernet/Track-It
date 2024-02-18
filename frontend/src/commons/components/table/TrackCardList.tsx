@@ -6,30 +6,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { addToLikedTracks, checkIfTrackIsSaved, getCurrentUserSavedTracks, getPlaylistById, removeFromLikedTracks } from '../../spotify/requests';
 import axios from 'axios';
 import { formatDateAdded } from '../../utils';
-import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
+import { getArtistsName, playlistType } from '../../../features/pages/easy-modification/EasyModificationUtils';
+import { columnNames, initialSortByOptionValue, tableOptionsType } from './Utils';
 
 
 type TrackCardListProps = {
     selectedTracksUris: string[];
-    visiblePlaylist: { id: string, name: string } | 'likedTrack';
+    visiblePlaylist: playlistType;
     handleSelectedTracks: (id: string) => void;
 }
-
-type columnOption = {
-    isAscending: boolean | undefined,
-    label: string,
-    isDisplayed: boolean,
-};
-
-export type tableOptionsType = {
-    [key: string]: columnOption,
-    date_added: columnOption,
-    name: columnOption,
-    artist: columnOption,
-    album: columnOption,
-    duration: columnOption,
-};
-
 
 const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTracks }: TrackCardListProps) => {
     /* Get Tracks : For Fetching tracks */
@@ -79,7 +64,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (visiblePlaylist === 'likedTrack') {
+                if (visiblePlaylist.name === 'likedTrack') {
                     const { data } = await getCurrentUserSavedTracks();
                     setTracks(null);
                     setSearchFilter('');
@@ -89,6 +74,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
                     const { data } = await getPlaylistById(visiblePlaylist.id);
                     console.log("Playlist tracks:", data.tracks);
                     setTracks(null);
+                    setSuccessFetchingTracks(false)
                     setSearchFilter('');
                     fetchDataIsSaved(data.tracks);
                 }
@@ -139,34 +125,6 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
 
     }, [tracksData]);
 
-    const initialSortByOptionValue: tableOptionsType = {
-        date_added: {
-            isAscending: true,
-            label: 'Date added',
-            isDisplayed: true,
-        },
-        name: {
-            isAscending: undefined,
-            label: 'Name',
-            isDisplayed: true,
-        },
-        artist: {
-            isAscending: undefined,
-            label: 'Artist',
-            isDisplayed: true,
-        },
-        album: {
-            isAscending: undefined,
-            label: 'Album',
-            isDisplayed: true,
-        },
-        duration: {
-            isAscending: undefined,
-            label: 'Duration',
-            isDisplayed: true,
-        },
-    };
-
     // TableOptions for sorting tracks and display / hiding columns state
     const [tableOptions, setTableOptions] = useState<tableOptionsType>(initialSortByOptionValue);
     const [displayMode, setDisplayMode] = useState<'list' | 'compact'>(localStorage.getItem('displayMode') as ('list' | 'compact') || 'list');
@@ -208,8 +166,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     // Filtering state
     const [searchFilter, setSearchFilter] = useState<string>('');
 
-
-    // Sort tracks by audio feature to be used in template
+    // Sort tracks by audio features
     const sortedTracks = useMemo(() => {
         if (!tracks) {
             return null;
@@ -293,7 +250,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         );
     }
 
-    const handleSort = (selectedColumnName: string) => {
+    const handleSort = (selectedColumnName: columnNames) => {
         const newTableOption: tableOptionsType = {
             date_added: {
                 isAscending: undefined,
@@ -333,34 +290,8 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         }
     }
 
-    const handleDisplay = (selectedColumnName: string) => {
-        const temporaryTableOptions: tableOptionsType = {
-            date_added: {
-                isAscending: tableOptions.date_added.isAscending,
-                label: 'Date added',
-                isDisplayed: tableOptions.date_added.isDisplayed,
-            },
-            name: {
-                isAscending: tableOptions.name.isAscending,
-                label: 'Name',
-                isDisplayed: tableOptions.name.isDisplayed,
-            },
-            artist: {
-                isAscending: tableOptions.artist.isAscending,
-                label: 'Artist',
-                isDisplayed: tableOptions.artist.isDisplayed,
-            },
-            album: {
-                isAscending: tableOptions.album.isAscending,
-                label: 'Album',
-                isDisplayed: tableOptions.album.isDisplayed,
-            },
-            duration: {
-                isAscending: tableOptions.duration.isAscending,
-                label: 'Duration',
-                isDisplayed: tableOptions.duration.isDisplayed,
-            },
-        };
+    const handleDisplay = (selectedColumnName: columnNames) => {
+        const temporaryTableOptions: tableOptionsType = { ...tableOptions };
         temporaryTableOptions[selectedColumnName].isDisplayed = !tableOptions[selectedColumnName].isDisplayed;
         setTableOptions(temporaryTableOptions)
     }
@@ -371,7 +302,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
                 <h3>
-                    {visiblePlaylist === 'likedTrack' ?
+                    {visiblePlaylist.name === 'likedTrack' ?
                         `Your liked Songs : ${filteredAndSortedTracks.length} tracks` :
                         `${visiblePlaylist.name} : ${filteredAndSortedTracks.length} tracks`}
                 </h3>

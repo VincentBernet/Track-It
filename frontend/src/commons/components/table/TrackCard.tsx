@@ -3,7 +3,7 @@ import { trackWithLikedType } from '../../spotify/responsesTypes';
 import { useNavigate } from 'react-router-dom';
 import { Artwork, SearchedElement } from '../index';
 import styled from 'styled-components';
-import { tableOptionsType } from './TrackCardList';
+import { tableOptionsType } from './Utils';
 import { getArtistsName } from '../../../features/pages/easy-modification/EasyModificationUtils';
 import { EyeSvg, HeartSvg } from '../icons';
 

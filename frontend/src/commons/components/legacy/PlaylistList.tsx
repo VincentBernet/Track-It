@@ -4,14 +4,15 @@ import { StyledListReset } from "../../styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCurrentUserPlaylists, postNewPlaylist } from "../../spotify/requests";
+import { playlistType as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
 
 
 interface PlaylistListProps {
     profile: profileDataType | null;
     selectedPlaylists: { id: string, name: string }[];
     playlistAdditionSuccess: string[];
-    handleSelected: ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => void;
-    handleVisiblePlaylist: (playlistId?: string, playlistName?: string) => void;
+    handleSelected: ({ id, name }: handlePlaylistType) => void;
+    handleVisiblePlaylist: ({ id, name }: handlePlaylistType) => void;
     handleOnDelete: () => void;
 }
 

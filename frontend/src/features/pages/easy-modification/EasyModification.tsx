@@ -3,7 +3,7 @@ import { StyledGreenButton, StyledNewGrid } from '../../../commons/styles';
 import { useState, useEffect } from 'react';
 import { getCurrentUserProfile, postAddTracksToPlaylist } from '../../../commons/spotify/requests';
 import { profileDataType } from '../../../commons/spotify/responsesTypes';
-import { getWordingButtonTracksToPlaylists } from './EasyModificationUtils';
+import { getWordingButtonTracksToPlaylists, playlistType } from './EasyModificationUtils';
 import { Link } from 'react-router-dom';
 
 
@@ -12,7 +12,7 @@ const EasyModification = () => {
     const [profile, setProfile] = useState<profileDataType | null>(null);
 
     /* Selected Playlist(s) state : For sending list IDs of selected playlists */
-    const [selectedPlaylists, setSelectedPlaylists] = useState<{ id: string, name: string }[]>([]);
+    const [selectedPlaylists, setSelectedPlaylists] = useState<playlistType[]>([]);
 
     /* Selected Track(s) state : For sending list Uri of selected tracks */
     const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
@@ -22,9 +22,9 @@ const EasyModification = () => {
     const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
 
     /* Selected Playlist(s) state : For sending list IDs of selected playlists */
-    const [visiblePlaylist, setVisiblePlaylist] = useState<{ id: string, name: string } | 'likedTrack'>('likedTrack');
+    const [visiblePlaylist, setVisiblePlaylist] = useState<playlistType>({ id: '', name: 'likedTrack' });
 
-
+    /* ------------------------------------------------------------------------------------------------------------- */
     /* Fetch profile on first render */
     useEffect(() => {
         const fetchData = async () => {
@@ -40,25 +40,25 @@ const EasyModification = () => {
     }, []);
 
 
-    const handleSelectedPlaylist = ({ playlistId, playlistName }: { playlistId: string, playlistName: string }) => {
-        if (selectedPlaylists.some(playlist => playlist.id === playlistId)) {
-            setSelectedPlaylists(selectedPlaylists.filter((playlist) => (playlist.id !== playlistId)));
+    const handleSelectedPlaylist = ({ id, name }: playlistType) => {
+        if (selectedPlaylists.some(playlist => playlist.id === id)) {
+            setSelectedPlaylists(selectedPlaylists.filter((playlist) => (playlist.id !== id)));
         } else {
-            setSelectedPlaylists([...selectedPlaylists, { id: playlistId, name: playlistName }]);
+            setSelectedPlaylists([...selectedPlaylists, { id: id, name: name }]);
         }
     }
 
-    const handleVisiblePlaylist = (playlistId?: string, playlistName?: string) => {
-        if (!playlistId || !playlistName) {
-            if (visiblePlaylist === 'likedTrack') return;
-            setVisiblePlaylist('likedTrack');
+    const handleVisiblePlaylist = ({ id, name }: playlistType) => {
+        if (!id || !name) {
+            if (visiblePlaylist.name === 'likedTrack') return;
+            setVisiblePlaylist({ id: id, name: name });
             return;
         }
-        if (visiblePlaylist !== 'likedTrack') {
-            if (visiblePlaylist.id === playlistId) return;
+        if (visiblePlaylist.name !== 'likedTrack') {
+            if (visiblePlaylist.id === id) return;
         }
 
-        setVisiblePlaylist({ id: playlistId, name: playlistName });
+        setVisiblePlaylist({ id: id, name: name });
     }
 
     const handleOnDelete = () =>
