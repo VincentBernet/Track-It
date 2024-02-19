@@ -11,7 +11,7 @@ type LikeSongCardProps = {
 const LikeSongCard = ({ handleVisiblePlaylist }: LikeSongCardProps) => {
 
     return (
-        <StyledPlaylistCard $selected={false} $clickable={true} onClick={() => handleVisiblePlaylist({ id: '0', name: 'likedTracks' })}>
+        <StyledPlaylistCard $selected={false} $clickable={true} onClick={() => handleVisiblePlaylist({ id: '0', name: 'likedTrack' })}>
             <div>
                 <Artwork
                     images={[{

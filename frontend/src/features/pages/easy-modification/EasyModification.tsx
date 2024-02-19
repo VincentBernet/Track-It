@@ -49,15 +49,6 @@ const EasyModification = () => {
     }
 
     const handleVisiblePlaylist = ({ id, name }: playlistType) => {
-        if (!id || !name) {
-            if (visiblePlaylist.name === 'likedTrack') return;
-            setVisiblePlaylist({ id: id, name: name });
-            return;
-        }
-        if (visiblePlaylist.name !== 'likedTrack') {
-            if (visiblePlaylist.id === id) return;
-        }
-
         setVisiblePlaylist({ id: id, name: name });
     }
 

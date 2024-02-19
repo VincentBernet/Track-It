@@ -22,6 +22,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     const [tracks, setTracks] = useState<tracksEnrichedDataItemType[] | null>(null);
     const [successFetchingTracks, setSuccessFetchingTracks] = useState<boolean | null>(null);
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<string | null>(null);
+    const [title, setTitle] = useState<string>("Liked Songs");
 
     const fetchDataIsSaved = async (firstData: tracksDataType) => {
         try {
@@ -67,6 +68,8 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
                 if (visiblePlaylist.name === 'likedTrack') {
                     const { data } = await getCurrentUserSavedTracks();
                     setTracks(null);
+                    setSuccessFetchingTracks(false)
+                    setTitle("Liked Songs");
                     setSearchFilter('');
                     fetchDataIsSaved(data);
                 }
@@ -75,6 +78,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
                     console.log("Playlist tracks:", data.tracks);
                     setTracks(null);
                     setSuccessFetchingTracks(false)
+                    setTitle(visiblePlaylist.name);
                     setSearchFilter('');
                     fetchDataIsSaved(data.tracks);
                 }
@@ -302,9 +306,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: '5px' }}>
                 <h3>
-                    {visiblePlaylist.name === 'likedTrack' ?
-                        `Your liked Songs : ${filteredAndSortedTracks.length} tracks` :
-                        `${visiblePlaylist.name} : ${filteredAndSortedTracks.length} tracks`}
+                    {`${title} : ${filteredAndSortedTracks.length} tracks`}
                 </h3>
                 <div style={{ display: 'flex', justifyContent: 'end', gap: "10px", alignItems: "center" }}>
                     <SortDropdown
