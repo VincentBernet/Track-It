@@ -49,6 +49,7 @@ const EasyModification = () => {
     }
 
     const handleVisiblePlaylist = ({ id, name }: playlistType) => {
+        setSelectedTracksUris([]);
         setVisiblePlaylist({ id: id, name: name });
     }
 
@@ -133,20 +134,16 @@ const EasyModification = () => {
             </Layout >
 
 
-            {
-                playlistAdditionFailure.length > 0 && (
-                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
-                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
-                    </TemporaryComponent>
-                )
-            }
-            {
-                playlistAdditionFailure.length > 0 && (
-                    <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
-                        <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
-                    </TemporaryComponent>
-                )
-            }
+            {playlistAdditionFailure.length > 0 && (
+                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                </TemporaryComponent>
+            )}
+            {playlistAdditionFailure.length > 0 && (
+                <TemporaryComponent handleOnDelete={() => setPlaylistAdditionFailure([])}>
+                    <Notification status={"error"} message={`These playlists could not be updated : ${playlistAdditionFailure.join(", ")} please try again.`} />
+                </TemporaryComponent>
+            )}
 
         </>
     );

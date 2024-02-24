@@ -24,6 +24,20 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
     const [errorFetchingTracks, setErrorFetchingTracks] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("Liked Songs");
 
+    // TableOptions for sorting tracks and display / hiding columns state
+    const [tableOptions, setTableOptions] = useState<tableOptionsType>(initialSortByOptionValue);
+    const [displayMode, setDisplayMode] = useState<'list' | 'compact'>(localStorage.getItem('displayMode') as ('list' | 'compact') || 'list');
+
+    // Filtering state
+    const [searchFilter, setSearchFilter] = useState<string>('');
+
+    const handleReInitializationState = ({title}: {title: string}) => {
+        setTracks(null);
+        setSuccessFetchingTracks(false)
+        setTitle(title);
+        setSearchFilter('');
+    }
+    
     const fetchDataIsSaved = async (firstData: tracksDataType) => {
         try {
             const likedTracksIds = firstData.items.map((track: tracksDataItemType) => track.track.id);
@@ -67,19 +81,13 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
             try {
                 if (visiblePlaylist.name === 'likedTrack') {
                     const { data } = await getCurrentUserSavedTracks();
-                    setTracks(null);
-                    setSuccessFetchingTracks(false)
-                    setTitle("Liked Songs");
-                    setSearchFilter('');
+                    handleReInitializationState({title: "Liked Songs"})
                     fetchDataIsSaved(data);
                 }
                 else {
                     const { data } = await getPlaylistById(visiblePlaylist.id);
                     console.log("Playlist tracks:", data.tracks);
-                    setTracks(null);
-                    setSuccessFetchingTracks(false)
-                    setTitle(visiblePlaylist.name);
-                    setSearchFilter('');
+                    handleReInitializationState({title: visiblePlaylist.name})
                     fetchDataIsSaved(data.tracks);
                 }
             }
@@ -129,9 +137,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
 
     }, [tracksData]);
 
-    // TableOptions for sorting tracks and display / hiding columns state
-    const [tableOptions, setTableOptions] = useState<tableOptionsType>(initialSortByOptionValue);
-    const [displayMode, setDisplayMode] = useState<'list' | 'compact'>(localStorage.getItem('displayMode') as ('list' | 'compact') || 'list');
+
 
     const handleDisplayMode = (mode: 'list' | 'compact') => {
         localStorage.setItem('displayMode', mode);
@@ -166,9 +172,6 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         }
 
     }
-
-    // Filtering state
-    const [searchFilter, setSearchFilter] = useState<string>('');
 
     // Sort tracks by audio features
     const sortedTracks = useMemo(() => {
@@ -299,7 +302,6 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         temporaryTableOptions[selectedColumnName].isDisplayed = !tableOptions[selectedColumnName].isDisplayed;
         setTableOptions(temporaryTableOptions)
     }
-
 
 
     return (
