@@ -23,6 +23,7 @@ const LOCALSTORAGE_VALUES: localStorageValuesType = {
  * @returns {void}
  */
 export const logout = () => {
+    console.log("logout");
     // Clear all localStorage items
     for (const property in LOCALSTORAGE_KEYS) {
         window.localStorage.removeItem(LOCALSTORAGE_KEYS[property] || '');
@@ -38,10 +39,14 @@ export const logout = () => {
  */
 const hasTokenExpired = () => {
     const { accessToken, timestamp, expireTime } = LOCALSTORAGE_VALUES;
+    console.log("hasTokenExpired : accessToken", accessToken, ", timestamp", timestamp, ", expireTime", expireTime);
+
     if (!accessToken || !timestamp) {
+        console.log("hasTokenExpired : return false")
         return false;
     }
     const millisecondsElapsed = Date.now() - Number(timestamp);
+    console.log("hasTokenExpired : millisecondsElapsed / 1000 > Number(expireTime) return", (millisecondsElapsed / 1000) > Number(expireTime))
     return (millisecondsElapsed / 1000) > Number(expireTime);
 };
 
@@ -51,6 +56,7 @@ const hasTokenExpired = () => {
  * @returns {void}
  */
 const refreshToken = async () => {
+    console.log("RefreshToken");
     try {
         // Logout if there's no refresh token stored or we've managed to get into a reload infinite loop
         if (!LOCALSTORAGE_VALUES.refreshToken ||
@@ -67,7 +73,9 @@ const refreshToken = async () => {
         // Update localStorage values
         window.localStorage.setItem(LOCALSTORAGE_KEYS.accessToken, data.access_token);
         window.localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now().toString());
-
+        console.log("refreshToken : parameter refresh_token=${LOCALSTORAGE_VALUES.refreshToken}", LOCALSTORAGE_VALUES.refreshToken, "data.access_token", data.access_token, ", Date.now()", Date.now().toString());
+        console.log("alert in refreshToken: to stop execution")
+        alert("alert in refreshToken: to stop execution, then reload")
         // Reload the page for localStorage updates to be reflected
         window.location.reload();
 
@@ -93,11 +101,13 @@ const getAccessToken = () => {
 
     // If there's an error OR the token in localStorage has expired, refresh the token
     if (hasError || hasTokenExpired() || LOCALSTORAGE_VALUES.accessToken === 'undefined') {
+        console.log("getAccessToken about to enter refreshToken: hasError", hasError, ", hasTokenExpired()", hasTokenExpired(), ", LOCALSTORAGE_VALUES.accessToken", LOCALSTORAGE_VALUES.accessToken);
         refreshToken();
     }
 
     // If there is a valid access token in localStorage, use that
     if (LOCALSTORAGE_VALUES.accessToken && LOCALSTORAGE_VALUES.accessToken !== 'undefined') {
+        console.log("getAccessToken has a valid access token in localStorage: hasError", hasError, ", hasTokenExpired()", hasTokenExpired(), ", LOCALSTORAGE_VALUES.accessToken", LOCALSTORAGE_VALUES.accessToken);
         return LOCALSTORAGE_VALUES.accessToken;
     }
 
