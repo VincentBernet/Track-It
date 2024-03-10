@@ -95,7 +95,8 @@ const refreshToken = async () => {
 		);
 		console.debug("alert in refreshToken: to stop execution");
 		// Reload the page for localStorage updates to be reflected
-		window.location.reload();
+		return;
+		//window.location.reload();
 	} catch (e) {
 		console.error(e);
 	}
