@@ -1,21 +1,17 @@
 import styled, { keyframes } from "styled-components";
 import { fadeIn, fadeOut } from "../../styles/global/animation";
 
-
 type NotificationProps = {
-    message: string;
-    status: string;
+	message: string;
+	status: string;
 };
 
 const Notification = ({ message, status }: NotificationProps) => {
-    return (
-        <StyledNotification $status={status}>
-            {message}
-        </StyledNotification>)
-}
+	return <StyledNotification $status={status}>{message}</StyledNotification>;
+};
 
 type StyledNotificationProps = {
-    $status: string;
+	$status: string;
 };
 
 export const slideIn = keyframes`
@@ -46,7 +42,7 @@ const StyledNotification = styled.div<StyledNotificationProps>`
     left: 0;
     width: 100%;
     padding: 1rem;
-    background: ${props => props.$status === 'error' ? 'var(--red)' : 'var(--green)'};
+    background: ${(props) => (props.$status === "error" ? "var(--red)" : "var(--green)")};
     /*border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;*/
     color: white;

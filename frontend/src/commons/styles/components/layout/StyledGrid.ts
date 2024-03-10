@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface StyledGridProps {
-  $type?: 'artist';
+	$type?: "artist";
 }
 
 const StyledGrid = styled.ul<StyledGridProps>`
@@ -64,7 +64,7 @@ const StyledGrid = styled.ul<StyledGridProps>`
       height: 100%;
       object-fit: cover;
       background-color: var(--dark-grey);
-      border-radius: ${props => props.$type === 'artist' ? '50%' : '2px'};
+      border-radius: ${(props) => (props.$type === "artist" ? "50%" : "2px")};
     }
   }
 

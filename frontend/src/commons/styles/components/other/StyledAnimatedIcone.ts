@@ -1,10 +1,7 @@
-import styled from 'styled-components';
-import { fadeOut, jumpShaking } from '../../global/animation';
+import styled from "styled-components";
+import { fadeOut, jumpShaking } from "../../global/animation";
 
-interface StyledAnimatedIconeProps {
-}
-
-const StyledAnimatedIcone = styled.img<StyledAnimatedIconeProps>`
+const StyledAnimatedIcone = styled.img`
     width: 30px;
     margin-left: 20px;
     object-fit: cover;

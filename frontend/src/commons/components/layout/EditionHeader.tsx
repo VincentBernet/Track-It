@@ -1,14 +1,13 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import styled from "styled-components";
 
 const EditionHeader = () => {
-    return (
-        <StyledProfileHeader>
-            <Link to="/">Edition</Link>
-        </StyledProfileHeader>
-    );
-}
+	return (
+		<StyledProfileHeader>
+			<Link to="/">Edition</Link>
+		</StyledProfileHeader>
+	);
+};
 
 const StyledProfileHeader = styled.div`
     display: flex;

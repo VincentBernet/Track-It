@@ -1,20 +1,14 @@
-
-import React from 'react';
-import styled from 'styled-components';
-
+import React from "react";
+import styled from "styled-components";
 
 interface LogoutButtonProps {
-  logout: () => void;
-  bodyColor?: string;
+	logout: () => void;
+	bodyColor?: string;
 }
 
 const LogoutButton = React.memo(({ logout, bodyColor = "#121212" }: LogoutButtonProps) => {
-  document.body.style.backgroundColor = bodyColor;
-  return (
-    <StyledAbsoluteLogoutButton onClick={logout}>
-      Log Out
-    </StyledAbsoluteLogoutButton>
-  );
+	document.body.style.backgroundColor = bodyColor;
+	return <StyledAbsoluteLogoutButton onClick={logout}>Log Out</StyledAbsoluteLogoutButton>;
 });
 
 const StyledAbsoluteLogoutButton = styled.button`

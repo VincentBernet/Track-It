@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 type StyledSectionProps = {
-  $forcedWidth?: string;
-}
+	$forcedWidth?: string;
+};
 
 const StyledSection = styled.section<StyledSectionProps>`
   &:first-of-type {
@@ -12,8 +12,8 @@ const StyledSection = styled.section<StyledSectionProps>`
   }
 
   .section__inner {
-    width: ${props => props.$forcedWidth ? props.$forcedWidth : '100%'};
-    max-width: ${props => props.$forcedWidth ? props.$forcedWidth : "var(--site-max-width)"};
+    width: ${(props) => (props.$forcedWidth ? props.$forcedWidth : "100%")};
+    max-width: ${(props) => (props.$forcedWidth ? props.$forcedWidth : "var(--site-max-width)")};
     margin: 0 auto;
     position: relative;
     padding: var(--spacing-lg) 0;

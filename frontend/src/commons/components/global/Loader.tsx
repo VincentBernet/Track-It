@@ -1,28 +1,27 @@
-import styled, { keyframes } from 'styled-components';
-
+import styled, { keyframes } from "styled-components";
 
 type StyledBarProps = {
-  $delay: string;
+	$delay: string;
 };
 
 type StyledLoaderProps = {
-  $minHeight: string;
+	$minHeight: string;
 };
 
 type LoaderProps = {
-  minHeight: string;
+	minHeight: string;
 };
 
 const Loader = ({ minHeight }: LoaderProps) => (
-  <StyledLoader $minHeight={minHeight}>
-    <div className="bars">
-      <StyledBar $delay="250ms" />
-      <StyledBar $delay="715ms" />
-      <StyledBar $delay="475ms" />
-      <StyledBar $delay="25ms" />
-      <StyledBar $delay="190ms" />
-    </div>
-  </StyledLoader>
+	<StyledLoader $minHeight={minHeight}>
+		<div className="bars">
+			<StyledBar $delay="250ms" />
+			<StyledBar $delay="715ms" />
+			<StyledBar $delay="475ms" />
+			<StyledBar $delay="25ms" />
+			<StyledBar $delay="190ms" />
+		</div>
+	</StyledLoader>
 );
 
 export default Loader;
@@ -41,7 +40,7 @@ const StyledLoader = styled.div<StyledLoaderProps>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: ${props => props.$minHeight};
+  min-height: ${(props) => props.$minHeight};
 
   .bars {
     display: flex;
@@ -70,5 +69,5 @@ const StyledBar = styled.div<StyledBarProps>`
   animation-direction: alternate;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-delay: ${props => props.$delay || '0ms'};
+  animation-delay: ${(props) => props.$delay || "0ms"};
 `;

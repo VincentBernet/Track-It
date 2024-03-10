@@ -1,29 +1,33 @@
-
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { ModalTutorial } from '../index';
-import { QuestionMarkCircleSvg } from '../icons';
-
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { QuestionMarkCircleSvg } from "../icons";
+import { ModalTutorial } from "../index";
 
 const HelpButton = React.memo(() => {
-  /* Modal state : For displaying tutorial modal on first render */
-  const [isModalTutorialOpen, setIsModalTutorialOpen] = useState<boolean>(false);
+	/* Modal state : For displaying tutorial modal on first render */
+	const [isModalTutorialOpen, setIsModalTutorialOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("tutorial") !== "true") {
-      setIsModalTutorialOpen(true);
-      localStorage.setItem("tutorial", "true");
-    }
-  }, []);
+	useEffect(() => {
+		if (localStorage.getItem("tutorial") !== "true") {
+			setIsModalTutorialOpen(true);
+			localStorage.setItem("tutorial", "true");
+		}
+	}, []);
 
-  return (
-    <>
-      <StyledAbsoluteHelpButton onClick={() => { setIsModalTutorialOpen(true) }} aria-label={'Need help ? Open tutorial'} title={'help'}>
-        <QuestionMarkCircleSvg />
-      </StyledAbsoluteHelpButton>
-      {isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
-    </>
-  );
+	return (
+		<>
+			<StyledAbsoluteHelpButton
+				onClick={() => {
+					setIsModalTutorialOpen(true);
+				}}
+				aria-label={"Need help ? Open tutorial"}
+				title={"help"}
+			>
+				<QuestionMarkCircleSvg />
+			</StyledAbsoluteHelpButton>
+			{isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
+		</>
+	);
 });
 
 const StyledAbsoluteHelpButton = styled.button`

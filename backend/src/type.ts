@@ -1,10 +1,13 @@
-export interface RequestParams { }
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+export type RequestParams = {};
 
-export interface ResponseBody { }
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+export type ResponseBody = {};
 
-export interface RequestBody { }
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+export type RequestBody = {};
 
 export interface RequestQuery {
-    code: string;
-    refresh_token: string;
+	code: string;
+	refresh_token: string;
 }
