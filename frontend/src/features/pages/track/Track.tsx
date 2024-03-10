@@ -177,7 +177,7 @@ const Track = () => {
 											images={tracksReco[indexReco].album.images}
 											alt={tracksReco[indexReco].name}
 											size={"300px"}
-											isRounded
+											//isRounded
 										/>
 									</div>
 									<div>
