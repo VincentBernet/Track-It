@@ -93,10 +93,13 @@ const refreshToken = async () => {
 			", Date.now()",
 			Date.now().toString(),
 		);
-		console.debug("alert in refreshToken: to stop execution");
+
+		if (data.access_token === undefined) {
+			console.error("No access token available");
+			return;
+		}
 		// Reload the page for localStorage updates to be reflected
-		return;
-		//window.location.reload();
+		window.location.reload();
 	} catch (e) {
 		console.error(e);
 	}
