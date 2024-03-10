@@ -8,6 +8,8 @@ Backend :  Using Express, deployed on Heroku:  https://dashboard.heroku.com/logi
 <br>
 Frontend : Using React with Vite, deployed on Netlify: https://app.netlify.com/sites/track-it-v1/overview 
 <br>
+Biome as unique formater and linter
+<br>
 All icons are from : www.svgrepo.com
 <br>
 Each push on production branch trigger a deployment on both front and backend
