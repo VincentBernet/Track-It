@@ -7,8 +7,7 @@
 export const catchErrors = (fn: any) => {
     return function (...args: any) {
         return fn(...args).catch((err: any) => {
-            console.log("On a une erreur chef");
-            console.error(err);
+            console.error("On a une erreur chef:", err);
         })
     }
 }

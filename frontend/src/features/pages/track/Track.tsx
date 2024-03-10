@@ -85,7 +85,7 @@ const Track = () => {
             }
             catch {
                 setIsLiked(false);
-                console.log("error during liking current track");
+                console.error("error during liking current track");
             }
         }
         else {
@@ -95,7 +95,7 @@ const Track = () => {
             }
             catch {
                 setIsLiked(true);
-                console.log("error during un-liking current track");
+                console.error("error during un-liking current track");
             }
         }
     }
@@ -108,7 +108,7 @@ const Track = () => {
             }
             catch {
                 setRecoIsLiked(false);
-                console.log("error during liking reco track");
+                console.error("error during liking reco track");
             }
         }
         else {
@@ -118,7 +118,7 @@ const Track = () => {
             }
             catch {
                 setRecoIsLiked(true);
-                console.log("error during un-liking reco track");
+                console.error("error during un-liking reco track");
             }
         }
     }

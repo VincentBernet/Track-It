@@ -1,4 +1,6 @@
+import { logoutThenLogin } from "../../spotify/auth";
 import { WarningSvg } from "../icons";
+
 
 const Error = ({ message }: { message: string }) => {
     return (
@@ -6,7 +8,7 @@ const Error = ({ message }: { message: string }) => {
             <WarningSvg />
             <div>
                 <p>Fetching data from spotify failed : {message}</p>
-                <button onClick={() => location.reload()}>TRY AGAIN</button>
+                <button onClick={logoutThenLogin}>TRY AGAIN</button>
             </div>
         </div>
     );

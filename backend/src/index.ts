@@ -16,7 +16,7 @@ const PORT = process.env.PORT || port;
 const stateKey = 'spotify_auth_state';
 
 // app.METHOD(PATH, HANDLER);
-console.log('ClientID: ', process.env.CLIENT_ID);
+console.debug('ClientID: ', process.env.CLIENT_ID);
 
 /**
  * Generate a random string containing numbers and letters
@@ -47,7 +47,7 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/login', (req: Request, res: Response) => {
     const state = generateRandomString(16);
     res.cookie(stateKey, state);
-    console.log('Entering login function with state:', state);
+    console.debug('Entering login function with state:', state);
     const scope = [
         'user-read-private',
         'user-read-email',
@@ -65,13 +65,13 @@ app.get('/login', (req: Request, res: Response) => {
         state: state,
         scope: scope
     });
-    console.log('Query Params: ', queryParams)
+    console.debug('Query Params: ', queryParams)
     res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 });
 
 app.get('/callback', (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
     const code = req.query.code || null;
-    console.log('Entering callback function with code:', code);
+    console.debug('Entering callback function with code:', code);
     axios({
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
@@ -93,12 +93,12 @@ app.get('/callback', (req: Request<RequestParams, ResponseBody, RequestBody, Req
                     refresh_token,
                     expires_in
                 });
-                console.log('callback success response 200 with queryParams: ', queryParams);
+                console.debug('callback success response 200 with queryParams: ', queryParams);
                 // redirect to react app
                 res.redirect(`${FRONTEND_URI}/?${queryParams}`);
                 // pass along tokens in query params
             } else {
-                console.log('refresh_token not 200 status response with error: ');
+                console.debug('refresh_token not 200 status response with error: ');
                 res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
             }
 
@@ -110,7 +110,7 @@ app.get('/callback', (req: Request<RequestParams, ResponseBody, RequestBody, Req
 
 app.get('/refresh_token', (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
     const { refresh_token } = req.query;
-    console.log('Entering refresh_token function with refresh_token:', refresh_token);
+    console.debug('Entering refresh_token function with refresh_token:', refresh_token);
     axios({
         method: 'post',
         url: 'https://accounts.spotify.com/api/token',
@@ -124,15 +124,15 @@ app.get('/refresh_token', (req: Request<RequestParams, ResponseBody, RequestBody
         },
     })
         .then((response: { data: any; }) => {
-            console.log('refresh_token success response with response.data: ', response.data);
+            console.debug('refresh_token success response with response.data: ', response.data);
             res.send(response.data);
         })
         .catch((error: any) => {
-            console.log('refresh_token failure response with error: ', error);
+            console.debug('refresh_token failure response with error: ', error);
             res.send(error);
         });
 });
 
 app.listen(PORT, () => {
-    console.log(`Express app listening at http://localhost:${PORT}`);
+    console.debug(`Express app listening at http://localhost:${PORT}`);
 });

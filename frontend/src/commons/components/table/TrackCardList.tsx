@@ -86,16 +86,17 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
                 }
                 else {
                     const { data } = await getPlaylistById(visiblePlaylist.id);
-                    console.log("Playlist tracks:", data.tracks);
+                    console.debug("Playlist tracks:", data.tracks);
                     handleReInitializationState({title: visiblePlaylist.name})
                     fetchDataIsSaved(data.tracks);
                 }
             }
             catch {
+                console.error("Error while fetching first tracks batch")
                 setErrorFetchingTracks("Error while fetching first tracks batch");
             }
         };
-        console.log("First useEffect")
+        console.debug("First useEffect")
         fetchData();
     }, [visiblePlaylist]);
 
@@ -104,7 +105,7 @@ const TrackCardList = ({ selectedTracksUris, visiblePlaylist, handleSelectedTrac
         if (!tracksData) {
             return;
         }
-        console.log("X useEffect to fetch more data ")
+        console.debug("X useEffect to fetch more data ")
 
         // Tracks endpoint only returns 50 tracks at a time, so we need to
         // make sure we get ALL tracks by fetching the next set of tracks
