@@ -134,7 +134,7 @@ const Track = () => {
 					<div className="tracks_flex_section">
 						<div className="track_section">
 							<div>
-								<Artwork images={track.album.images} alt={track.name} size={"300px"} isRounded />
+								<Artwork images={track.album.images} alt={track.name} size={"300px"} /*isRounded*/ />
 							</div>
 							<div>
 								<h1>{track.name}</h1>
