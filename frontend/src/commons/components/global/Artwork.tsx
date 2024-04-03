@@ -8,7 +8,7 @@ type ArtworkProps = {
 	size?: string;
 };
 
-// TODO : Add a url parameter to redirect to the spotify page (for artist, tracks and playlist)
+// TODO : Add a url parameter to redirect to the spotify page (for artist, tracks and playlist) test
 const Artwork = ({ images, alt, isRounded = false, size = "300px" }: ArtworkProps) => {
 	if (images.length === 0 || !images[0].url) {
 		return <StyledArtwork src={"/images/default_image.png"} $isRounded={isRounded} $size={size} alt={alt} />;
