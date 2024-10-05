@@ -79,9 +79,9 @@ export type playlistType = {
 	selected?: boolean;
 };
 
-export interface playlistWithSelectedType extends playlistType {
+export type playlistWithSelectedType = playlistType & {
 	selected: boolean;
-}
+};
 
 export type profileDataType = {
 	display_name: string;
@@ -160,9 +160,9 @@ export type audioFeaturesDataType = {
 	audio_features: audioFeaturesType[];
 };
 
-export interface trackWithAudioFeaturesType extends trackType {
+export type trackWithAudioFeaturesType = trackType & {
 	audioFeatures: audioFeaturesType;
-}
+};
 
 export type tracksDataItemType = {
 	added_at: string;

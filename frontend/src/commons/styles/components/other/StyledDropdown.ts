@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-interface StyledDropdownProps {
+type StyledDropdownProps = {
 	$isProperties?: boolean;
-}
+};
 
 const StyledDropdown = styled.div<StyledDropdownProps>`
   position: absolute; 

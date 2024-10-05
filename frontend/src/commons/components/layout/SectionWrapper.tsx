@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { StyledSection } from "../../styles";
 
-interface SectionWrapperProps {
+type SectionWrapperProps = {
 	children: React.ReactNode;
 	title: string;
 	forcedWidth?: string;
@@ -11,7 +11,7 @@ interface SectionWrapperProps {
 		title: string;
 		link: string;
 	}[];
-}
+};
 
 const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, forcedWidth }: SectionWrapperProps) => (
 	<StyledSection $forcedWidth={forcedWidth}>
@@ -19,7 +19,7 @@ const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, for
 			<div className="section__top">
 				<h2 className="section__heading">
 					{links?.map((link, i) => (
-						<span key={i} className="section__breadcrumb">
+						<span key={`${link.title} ${i}`} className="section__breadcrumb">
 							<Link to={`/${link.link}`}>{link.title}</Link>
 						</span>
 					))}

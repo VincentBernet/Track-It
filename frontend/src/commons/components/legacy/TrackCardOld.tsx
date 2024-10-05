@@ -3,14 +3,14 @@ import type { trackType } from "../../spotify/responsesTypes";
 import { StyledTrackCard } from "../../styles";
 import { formatDuration } from "../../utils";
 
-interface TrackCardOldProps {
+type TrackCardOldProps = {
 	track: trackType;
 	index: number;
 	handleSelectedTracks?: (id: string) => void;
 	isSelected?: boolean;
 	clickable?: boolean;
 	consultationMode?: boolean;
-}
+};
 
 const TrackCardOld = ({
 	track,
@@ -44,7 +44,7 @@ const TrackCardOld = ({
 					<div className="track__item__name overflow-ellipsis">{track.name}</div>
 					<div className="track__item__artist overflow-ellipsis">
 						{track.artists.map((artist, i) => (
-							<span key={i}>
+							<span key={`$${artist.id} ${i}`}>
 								{artist.name}
 								{i !== track.artists.length - 1 && ", "}
 							</span>

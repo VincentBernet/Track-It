@@ -1,9 +1,9 @@
 import { StyledRangeButtons } from "../../styles";
 
-interface TimeRangeButtonsProps {
+type TimeRangeButtonsProps = {
 	timeRange: string;
 	handleClick: (timeRange: string) => void;
-}
+};
 
 const TimeRangeButtons = ({ timeRange, handleClick }: TimeRangeButtonsProps) => {
 	return (

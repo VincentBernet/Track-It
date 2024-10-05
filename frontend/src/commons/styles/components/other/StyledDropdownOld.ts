@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-interface StyledDropdownOldProps {
+type StyledDropdownOldProps = {
 	$activeOption: boolean;
-}
+};
 
 const StyledDropdownOld = styled.div<StyledDropdownOldProps>`
   z-index: 1;

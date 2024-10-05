@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { localStorageKeysType, localStorageValuesType } from "../interface";
+import type { localStorageKeysType, localStorageValuesType } from "../type";
 
 // Map for localStorage keys
 const LOCALSTORAGE_KEYS: localStorageKeysType = {

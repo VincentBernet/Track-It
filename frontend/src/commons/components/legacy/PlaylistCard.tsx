@@ -4,7 +4,7 @@ import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
 import { EyeSvg } from "../icons";
 import { Artwork, TemporaryComponent } from "../index";
 
-interface PlaylistCardProps {
+type PlaylistCardProps = {
 	playlist: playlistType;
 	handleOnDelete: () => void;
 	clickable?: boolean;
@@ -12,7 +12,7 @@ interface PlaylistCardProps {
 	displayNotification?: boolean;
 	handleSelected?: ({ id, name }: handlePlaylistType) => void;
 	handleVisiblePlaylist?: ({ id, name }: handlePlaylistType) => void;
-}
+};
 
 const PlaylistCard = ({
 	playlist,

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-interface StyledPlaylistCardProps {
+type StyledPlaylistCardProps = {
 	$selected: boolean;
 	$clickable: boolean;
-}
+};
 
 const StyledPlaylistCard = styled.li<StyledPlaylistCardProps>`
     display: flex;

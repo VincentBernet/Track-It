@@ -31,24 +31,20 @@ export const slideOut = keyframes`
 `;
 
 const StyledNotification = styled.div<StyledNotificationProps>`
-    animation: 
-        ${slideIn} 300ms 0ms 1 linear,
-        ${fadeIn} 300ms 0ms 1 linear,
-        ${slideOut} 500ms 7600ms 1 linear,
-        ${fadeOut} 500ms 7600ms 1 linear
-    ;
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    background: ${(props) => (props.$status === "error" ? "var(--red)" : "var(--green)")};
-    /*border-top-left-radius: 0.5rem;
+  animation: ${slideIn} 300ms 0ms 1 linear, ${fadeIn} 300ms 0ms 1 linear,
+    ${slideOut} 500ms 7600ms 1 linear, ${fadeOut} 500ms 7600ms 1 linear;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background: ${(props) => (props.$status === "error" ? "var(--red)" : "var(--green)")};
+  /*border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;*/
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    z-index: 100;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  z-index: 100;
 `;
 
 export default Notification;

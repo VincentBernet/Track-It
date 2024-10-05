@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-interface StyledNewtGridProps {
+type StyledNewtGridProps = {
 	$hasMoreMargin?: boolean;
-}
+};
 
 const StyledNewGrid = styled.div<StyledNewtGridProps>`
   margin-top: ${(props) => (props.$hasMoreMargin ? "61px" : "15px")};

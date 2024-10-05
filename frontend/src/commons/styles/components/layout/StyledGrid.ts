@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-interface StyledGridProps {
+type StyledGridProps = {
 	$type?: "artist";
-}
+};
 
 const StyledGrid = styled.ul<StyledGridProps>`
   list-style: none;

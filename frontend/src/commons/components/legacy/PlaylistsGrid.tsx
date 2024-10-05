@@ -11,7 +11,7 @@ const PlaylistsGrid = ({ playlists }: PlaylistsGridProps) => (
 		{playlists?.length ? (
 			<StyledGrid>
 				{playlists.map((playlist, i) => (
-					<li className="grid__item" key={i}>
+					<li className="grid__item" key={`${playlist.name} ${playlist.id} ${i}`}>
 						<Link className="grid__item__inner" to={`/playlists/${playlist.id}`}>
 							<div className="grid__item__img">
 								{playlist.images.length && playlist.images[0] ? (

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-interface StyledTrackCardProps {
+type StyledTrackCardProps = {
 	$selected: boolean;
 	$clickable: boolean;
-}
+};
 
 const StyledTrackCard = styled.li<StyledTrackCardProps>`
   display: grid;

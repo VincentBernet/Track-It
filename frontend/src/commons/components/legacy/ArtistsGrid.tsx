@@ -1,16 +1,16 @@
 import type { artistType } from "../../spotify/responsesTypes";
 import { StyledGrid } from "../../styles";
 
-interface ArtistsGridProps {
+type ArtistsGridProps = {
 	artists: artistType[];
-}
+};
 
 const ArtistsGrid = ({ artists }: ArtistsGridProps) => (
 	<>
 		{artists?.length ? (
 			<StyledGrid $type="artist">
 				{artists.map((artist, i) => (
-					<li className="grid__item" key={i}>
+					<li className="grid__item" key={`${artist.name} ${artist.id} ${i}`}>
 						<div className="grid__item__inner">
 							{artist.images[0] && (
 								<div className="grid__item__img">

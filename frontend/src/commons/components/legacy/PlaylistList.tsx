@@ -6,14 +6,14 @@ import type { playlistType, playlistsDataType, profileDataType } from "../../spo
 import { StyledListReset } from "../../styles";
 import { ErrorOrLoader, LikeSongCard, Modal, Notification, PlaylistCard, TemporaryComponent } from "../index";
 
-interface PlaylistListProps {
+type PlaylistListProps = {
 	profile: profileDataType | null;
 	selectedPlaylists: { id: string; name: string }[];
 	playlistAdditionSuccess: string[];
 	handleSelected: ({ id, name }: handlePlaylistType) => void;
 	handleVisiblePlaylist: ({ id, name }: handlePlaylistType) => void;
 	handleOnDelete: () => void;
-}
+};
 
 const PlaylistList = ({
 	profile,
@@ -77,7 +77,10 @@ const PlaylistList = ({
 	const handleCreateNewPlaylist = ({
 		playlistName,
 		playlistDescription,
-	}: { playlistName: string; playlistDescription: string }) => {
+	}: {
+		playlistName: string;
+		playlistDescription: string;
+	}) => {
 		const fetchData = async () => {
 			try {
 				const { data } = await postNewPlaylist({

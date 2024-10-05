@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-interface StyledHeaderProps {
+type StyledHeaderProps = {
 	$type?: "user";
-}
+};
 
 const StyledHeader = styled.div<StyledHeaderProps>`
   display: flex;

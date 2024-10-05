@@ -7,7 +7,7 @@ import { EyeSvg, HeartSvg } from "../icons";
 import { Artwork, SearchedElement } from "../index";
 import type { tableOptionsType } from "./Utils";
 
-interface TrackCardProps {
+type TrackCardProps = {
 	track: trackWithLikedType;
 	addedAt: string;
 	index: number;
@@ -18,7 +18,7 @@ interface TrackCardProps {
 	isSelected?: boolean;
 	clickable?: boolean;
 	handleLikedButton?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, trackId: string) => void;
-}
+};
 
 const TrackCard = ({
 	track,
@@ -108,51 +108,51 @@ type StyledTableRowProps = {
 };
 
 const StyledTableRow = styled.tr<StyledTableRowProps>`
-    cursor: pointer;
-    &:hover {
-        background-color: #282828;
-        td {
-            .visibleOnHover {
-                visibility: visible;
-            }
-        }
-    }
-
+  cursor: pointer;
+  &:hover {
+    background-color: #282828;
     td {
-        padding: 5px;
-        border-top: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-        border-bottom: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
+      .visibleOnHover {
+        visibility: visible;
+      }
+    }
+  }
 
-        &.first {
-            border-left: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-        }
+  td {
+    padding: 5px;
+    border-top: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
+    border-bottom: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
 
-        &.last {
-            border-right: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-
-        &.centered {
-            text-align: center;
-        }
-
-        .button-ahead {
-            z-index: 1;
-            background-color: transparent;
-        }
+    &.first {
+      border-left: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
     }
 
-    .flex {
-        display: flex;
-        align-items: center;
-        gap: 15px;
+    &.last {
+      border-right: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
 
-    .searched {
-        color: var(--green);
-        font-weight: bold;
+    &.centered {
+      text-align: center;
     }
+
+    .button-ahead {
+      z-index: 1;
+      background-color: transparent;
+    }
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .searched {
+    color: var(--green);
+    font-weight: bold;
+  }
 `;
