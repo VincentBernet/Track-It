@@ -1,12 +1,11 @@
-import styled from "styled-components";
 import { SortArrowSvg } from "../icons";
-import type { columnNames, tableOptionsType } from "../table/Utils";
+import type { ColumnNames, TableOptions } from "../table/Utils";
 import Dropdown from "./Dropdown";
 
 type DropdownSortingType = {
 	isOpen: boolean;
-	tableOptions: tableOptionsType;
-	handleSorting: (columnName: columnNames) => void;
+	tableOptions: TableOptions;
+	handleSorting: (columnName: ColumnNames) => void;
 	handleClosing: () => void;
 	dropdownButtonRef: React.MutableRefObject<HTMLButtonElement | null>;
 };
@@ -20,14 +19,14 @@ const DropdownSorting = ({
 }: DropdownSortingType) => {
 	return (
 		<Dropdown isOpen={isOpen} handleClosing={handleClosing} dropdownButtonRef={dropdownButtonRef}>
-			<StyledSort>
+			<div>
 				<div className="secondary-text">Sort by</div>
 				{Object.entries(tableOptions).map((option) => {
 					return (
 						<button
 							type="button"
 							className={"sortButton"}
-							onClick={() => handleSorting(option[0] as columnNames)}
+							onClick={() => handleSorting(option[0] as ColumnNames)}
 							key={option[1].label}
 						>
 							<div>{option[1].label}</div>
@@ -38,21 +37,9 @@ const DropdownSorting = ({
 						</button>
 					);
 				})}
-			</StyledSort>
+			</div>
 		</Dropdown>
 	);
 };
 
 export default DropdownSorting;
-
-const StyledSort = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    .sortButton {
-        display: flex;
-        justify-content: space-between;
-        align-items: center; 
-        gap: 5px;
-    }
-`;

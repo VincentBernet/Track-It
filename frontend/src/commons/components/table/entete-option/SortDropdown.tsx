@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import DropdownSorting from "../../conditional/DropdownSorting";
 import { DoubleSortSvg } from "../../icons";
-import type { tableOptionsType } from "../Utils";
-import type { columnNames } from "../Utils";
+import type { TableOptions } from "../Utils";
+import type { ColumnNames } from "../Utils";
 
 type SortDropdownProps = {
-	handleSort: (sort: columnNames) => void;
-	tableOptions: tableOptionsType;
+	handleSort: (sort: ColumnNames) => void;
+	tableOptions: TableOptions;
 };
 
 const SortDropdown = ({ tableOptions, handleSort }: SortDropdownProps) => {

@@ -1,5 +1,3 @@
-import { StyledSwitchButton } from "../../../styles";
-
 type SwitchButton = {
 	checked: boolean;
 	onChange: () => void;
@@ -8,12 +6,13 @@ type SwitchButton = {
 // FIX le switch a une value donnée
 const SwitchButton = ({ onChange, checked }: SwitchButton) => {
 	return (
-		<StyledSwitchButton onClick={onChange}>
+		<button type="button" onClick={onChange}>
 			<label className="switch btn-color-mode-switch">
 				<input type="checkbox" name="color_mode" id="color_mode" value="1" defaultChecked={checked} />
-				<label data-on="Consultation" data-off="Edition" className="btn-color-mode-switch-inner" />
+				{/* biome-ignore lint/a11y/noLabelWithoutControl: TODO : accessibility issue*/}
+				<label data-on="Consultation" data-off="Edition" htmlFor="color_mode" className="btn-color-mode-switch-inner" />
 			</label>
-		</StyledSwitchButton>
+		</button>
 	);
 };
 

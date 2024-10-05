@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import DropdownProperties from "../../conditional/DropdownProperties";
 import { PropertiesSvg } from "../../icons";
-import type { columnNames, tableOptionsType } from "../Utils";
+import type { ColumnNames, TableOptions } from "../Utils";
 
 type PropertiesDropdownProps = {
-	tableOptions: tableOptionsType;
+	tableOptions: TableOptions;
 	displayMode: "list" | "compact";
-	handleDisplay: (columnName: columnNames) => void;
+	handleDisplay: (columnName: ColumnNames) => void;
 	handleDisplayMode: (mode: "list" | "compact") => void;
 };
 

@@ -1,6 +1,7 @@
-import querystring from "node:querystring";
-import axios from "axios";
-import express, { type Express, type Request, type Response } from "express";
+const querystring = require("node:querystring");
+const axios = require("axios");
+import type { Express, Request, Response } from "express";
+const express = require("express");
 import type { RequestBody, RequestParams, RequestQuery, ResponseBody } from "./type";
 
 require("dotenv").config();

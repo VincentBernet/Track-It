@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-import type { playlistType } from "../../spotify/responsesTypes";
-import { StyledGrid } from "../../styles";
+import type { Playlist } from "../../spotify/responsesTypes";
 
 type PlaylistsGridProps = {
-	playlists: playlistType[];
+	playlists: Playlist[];
 };
 
 const PlaylistsGrid = ({ playlists }: PlaylistsGridProps) => (
 	<>
 		{playlists?.length ? (
-			<StyledGrid>
+			<div>
 				{playlists.map((playlist, i) => (
 					<li className="grid__item" key={`${playlist.name} ${playlist.id} ${i}`}>
 						<Link className="grid__item__inner" to={`/playlists/${playlist.id}`}>
@@ -25,7 +24,7 @@ const PlaylistsGrid = ({ playlists }: PlaylistsGridProps) => (
 						</Link>
 					</li>
 				))}
-			</StyledGrid>
+			</div>
 		) : (
 			<p className="empty-notice">No playlists available</p>
 		)}

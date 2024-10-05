@@ -1,8 +1,8 @@
 import axios from "axios";
-import type { localStorageKeysType, localStorageValuesType } from "../type";
+import type { LocalStorageKeys, LocalStorageValues } from "../types";
 
 // Map for localStorage keys
-const LOCALSTORAGE_KEYS: localStorageKeysType = {
+const LOCALSTORAGE_KEYS: LocalStorageKeys = {
 	accessToken: "spotify_access_token",
 	refreshToken: "spotify_refresh_token",
 	expireTime: "spotify_token_expire_time",
@@ -10,7 +10,7 @@ const LOCALSTORAGE_KEYS: localStorageKeysType = {
 };
 
 // Map to retrieve localStorage values
-const LOCALSTORAGE_VALUES: localStorageValuesType = {
+const LOCALSTORAGE_VALUES: LocalStorageValues = {
 	accessToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.accessToken) || undefined,
 	refreshToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.refreshToken) || undefined,
 	expireTime: window.localStorage.getItem(LOCALSTORAGE_KEYS.expireTime) || undefined,

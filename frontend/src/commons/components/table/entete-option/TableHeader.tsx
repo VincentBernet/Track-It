@@ -1,10 +1,10 @@
-import { columnNames, type tableOptionsType } from "../Utils";
+import { ColumnNames, type TableOptions } from "../Utils";
 import ColumnHeader from "./ColumnHeader";
 
 type TableHeaderProps = {
-	tableOptions: tableOptionsType;
+	tableOptions: TableOptions;
 	displayMode: "list" | "compact";
-	handleSort: (columnName: columnNames) => void;
+	handleSort: (columnName: ColumnNames) => void;
 };
 
 const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps) => {
@@ -16,45 +16,45 @@ const TableHeader = ({ tableOptions, displayMode, handleSort }: TableHeaderProps
 				</th>
 				{displayMode === "list" && (
 					<ColumnHeader
-						isDisplayed={tableOptions[columnNames.name].isDisplayed || tableOptions[columnNames.artist].isDisplayed}
-						isAscending={tableOptions[columnNames.name].isAscending}
-						onClick={() => handleSort(columnNames.name)}
+						isDisplayed={tableOptions[ColumnNames.NAME].isDisplayed || tableOptions[ColumnNames.ARTIST].isDisplayed}
+						isAscending={tableOptions[ColumnNames.NAME].isAscending}
+						onClick={() => handleSort(ColumnNames.NAME)}
 						title="Track"
 					/>
 				)}
 				{displayMode === "compact" && (
 					<ColumnHeader
-						isDisplayed={tableOptions[columnNames.name].isDisplayed}
-						isAscending={tableOptions[columnNames.name].isAscending}
-						onClick={() => handleSort(columnNames.name)}
+						isDisplayed={tableOptions[ColumnNames.NAME].isDisplayed}
+						isAscending={tableOptions[ColumnNames.NAME].isAscending}
+						onClick={() => handleSort(ColumnNames.NAME)}
 						title="Name"
 					/>
 				)}
 				{displayMode === "compact" && (
 					<ColumnHeader
-						isDisplayed={tableOptions[columnNames.artist].isDisplayed}
-						isAscending={tableOptions[columnNames.artist].isAscending}
-						onClick={() => handleSort(columnNames.artist)}
+						isDisplayed={tableOptions[ColumnNames.ARTIST].isDisplayed}
+						isAscending={tableOptions[ColumnNames.ARTIST].isAscending}
+						onClick={() => handleSort(ColumnNames.ARTIST)}
 						title="Artist"
 					/>
 				)}
 				<ColumnHeader
-					isDisplayed={tableOptions[columnNames.album].isDisplayed}
-					isAscending={tableOptions[columnNames.album].isAscending}
-					onClick={() => handleSort(columnNames.album)}
+					isDisplayed={tableOptions[ColumnNames.ALBUM].isDisplayed}
+					isAscending={tableOptions[ColumnNames.ALBUM].isAscending}
+					onClick={() => handleSort(ColumnNames.ALBUM)}
 					title="Album"
 				/>
 				<th />
 				<ColumnHeader
-					isDisplayed={tableOptions[columnNames.date_added].isDisplayed}
-					isAscending={tableOptions[columnNames.date_added].isAscending}
-					onClick={() => handleSort(columnNames.date_added)}
+					isDisplayed={tableOptions[ColumnNames.DATE_ADDED].isDisplayed}
+					isAscending={tableOptions[ColumnNames.DATE_ADDED].isAscending}
+					onClick={() => handleSort(ColumnNames.DATE_ADDED)}
 					title="Date added"
 				/>
 				<ColumnHeader
-					isDisplayed={tableOptions[columnNames.duration].isDisplayed}
-					isAscending={tableOptions[columnNames.duration].isAscending}
-					onClick={() => handleSort(columnNames.duration)}
+					isDisplayed={tableOptions[ColumnNames.DURATION].isDisplayed}
+					isAscending={tableOptions[ColumnNames.DURATION].isAscending}
+					onClick={() => handleSort(ColumnNames.DURATION)}
 					title="Dur."
 				/>
 			</tr>

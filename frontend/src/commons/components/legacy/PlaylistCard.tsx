@@ -1,13 +1,12 @@
-import type { playlistType as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
-import type { playlistType } from "../../spotify/responsesTypes";
-import { StyledAnimatedIcone, StyledPlaylistCard } from "../../styles";
+import type { Playlist as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
+import type { Playlist } from "../../spotify/responsesTypes";
 import { EyeSvg } from "../icons";
 import { Artwork, TemporaryComponent } from "../index";
 
 type PlaylistCardProps = {
-	playlist: playlistType;
+	playlist: Playlist;
 	handleOnDelete: () => void;
-	clickable?: boolean;
+	isClickable?: boolean;
 	isSelected?: boolean;
 	displayNotification?: boolean;
 	handleSelected?: ({ id, name }: handlePlaylistType) => void;
@@ -18,16 +17,17 @@ const PlaylistCard = ({
 	playlist,
 	handleOnDelete,
 	isSelected = false,
-	clickable = false,
+	isClickable = false,
 	displayNotification = false,
 	handleSelected = () => {},
 	handleVisiblePlaylist = () => {},
 }: PlaylistCardProps) => {
 	return (
-		<StyledPlaylistCard
-			$selected={isSelected}
-			$clickable={clickable}
-			onClick={() => clickable && handleSelected({ id: playlist.id, name: playlist.name })}
+		<button
+			type="button"
+			/*selected={isSelected}
+			isClickable={isClickable}*/
+			onClick={() => isClickable && handleSelected({ id: playlist.id, name: playlist.name })}
 		>
 			<div>
 				<Artwork images={playlist.images} size={"40px"} alt={playlist.name} />
@@ -36,7 +36,7 @@ const PlaylistCard = ({
 			<div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
 				{displayNotification && (
 					<TemporaryComponent handleOnDelete={handleOnDelete}>
-						<StyledAnimatedIcone src={"./images/check.png"} alt={"check"} />
+						<img src={"./images/check.png"} alt={"check"} />
 					</TemporaryComponent>
 				)}
 				<button
@@ -50,7 +50,7 @@ const PlaylistCard = ({
 					<EyeSvg />
 				</button>
 			</div>
-		</StyledPlaylistCard>
+		</button>
 	);
 };
 

@@ -1,17 +1,17 @@
-import type { playlistType } from "../../features/pages/easy-modification/EasyModificationUtils";
-import { StyledPlaylistCard } from "../styles";
+import type { Playlist } from "../../features/pages/easy-modification/EasyModificationUtils";
 import { EyeSvg } from "./icons";
 import { Artwork } from "./index";
 
 type LikeSongCardProps = {
-	handleVisiblePlaylist: ({ id, name }: playlistType) => void;
+	handleVisiblePlaylist: ({ id, name }: Playlist) => void;
 };
 
 const LikeSongCard = ({ handleVisiblePlaylist }: LikeSongCardProps) => {
 	return (
-		<StyledPlaylistCard
-			$selected={false}
-			$clickable={true}
+		<button
+			type="button"
+			/*selected={false}
+			isClickable={true}*/
 			onClick={() => handleVisiblePlaylist({ id: "0", name: "likedTrack" })}
 		>
 			<div>
@@ -33,7 +33,7 @@ const LikeSongCard = ({ handleVisiblePlaylist }: LikeSongCardProps) => {
 					<EyeSvg />
 				</button>
 			</div>
-		</StyledPlaylistCard>
+		</button>
 	);
 };
 

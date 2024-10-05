@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ArtistsGrid, ErrorOrLoader, Layout, SectionWrapper, TimeRangeButtons } from "../../../commons/components";
 import { getCurrentUserTopArtists } from "../../../commons/spotify/requests";
-import type { topArtistsDataType } from "../../../commons/spotify/responsesTypes";
+import type { TopArtistsData } from "../../../commons/spotify/responsesTypes";
 
 const TopArtists = () => {
-	const [topArtists, setTopArtists] = useState<topArtistsDataType | null>(null);
+	const [topArtists, setTopArtists] = useState<TopArtistsData | null>(null);
 	const [timeRange, setTimeRange] = useState<string>("short_term");
 
 	const [errorFetchingArtists, setErrorFetchingArtists] = useState<string | null>(null);

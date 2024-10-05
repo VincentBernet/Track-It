@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import type { trackType } from "../../spotify/responsesTypes";
-import { StyledTrackCard } from "../../styles";
+import type { Track } from "../../spotify/responsesTypes";
 import { formatDuration } from "../../utils";
 
 type TrackCardOldProps = {
-	track: trackType;
+	track: Track;
 	index: number;
 	handleSelectedTracks?: (id: string) => void;
 	isSelected?: boolean;
-	clickable?: boolean;
+	isClickable?: boolean;
 	consultationMode?: boolean;
 };
 
@@ -16,17 +15,18 @@ const TrackCardOld = ({
 	track,
 	index,
 	handleSelectedTracks = () => {},
-	clickable = true,
+	isClickable = true,
 	isSelected = false,
 	consultationMode = true,
 }: TrackCardOldProps) => {
 	const navigate = useNavigate();
 	return (
-		<StyledTrackCard
-			$selected={isSelected}
-			$clickable={clickable}
+		<button
+			type="button"
+			/*selected={isSelected}
+			isClickable={isClickable}*/
 			onClick={() =>
-				clickable && (!consultationMode ? handleSelectedTracks(track.uri) : navigate(`/track/${track.id}`))
+				isClickable && (consultationMode ? navigate(`/track/${track.id}`) : handleSelectedTracks(track.uri))
 			}
 		>
 			<div className="track__item__num">{index + 1}</div>
@@ -54,7 +54,7 @@ const TrackCardOld = ({
 			</div>
 			<div className="track__item__album overflow-ellipsis">{track.album.name}</div>
 			<div className="track__item__duration">{formatDuration(track.duration_ms)}</div>
-		</StyledTrackCard>
+		</button>
 	);
 };
 

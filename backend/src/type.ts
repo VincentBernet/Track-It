@@ -10,4 +10,4 @@ export type RequestBody = {};
 export type RequestQuery = {
 	code: string;
 	refresh_token: string;
-}
+};

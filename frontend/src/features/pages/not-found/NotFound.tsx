@@ -1,5 +1,4 @@
 import { Layout } from "../../../commons/components";
-import { StyledLoginButton } from "../login/StyledLogin";
 import "./NotFound.css";
 
 const ErrorPage = () => {
@@ -371,8 +370,8 @@ const ErrorPage = () => {
 				</svg>
 				<p>Should we fire Vincent who made this error occurs?</p>
 				<div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-					<StyledLoginButton href={"/"}>Yes 😭</StyledLoginButton>
-					<StyledLoginButton href={"/"}>No 😅</StyledLoginButton>
+					<a href={"/"}>Yes 😭</a>
+					<a href={"/"}>No 😅</a>
 				</div>
 			</div>
 		</Layout>

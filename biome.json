@@ -1,12 +1,41 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.6.0/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
 	"organizeImports": {
 		"enabled": true
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"style": {
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": true,
+						"enumMemberCase": "CONSTANT_CASE",
+						"conventions": [
+							{
+								"selector": {
+									"kind": "objectLiteralMember"
+								},
+								"formats": [
+									"camelCase",
+									"snake_case"
+								]
+							},
+							{
+								"selector": {
+									"kind": "typeMember"
+								},
+								"formats": [
+									"camelCase",
+									"snake_case"
+								]
+							}
+						]
+					}
+				}
+			}
 		}
 	},
 	"formatter": {
@@ -16,5 +45,12 @@
 	},
 	"javascript": {
 		"formatter": {}
+	},
+	"files": {
+		"ignore": [
+			"build",
+			"dist",
+			"node_modules"
+		]
 	}
 }

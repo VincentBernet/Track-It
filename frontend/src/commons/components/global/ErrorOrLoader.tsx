@@ -1,17 +1,17 @@
-import Loader from "./Loader";
 import AlertError from "./AlertError";
+import Loader from "./Loader";
 
 const ErrorOrLoader = ({
-  error,
-  minHeight = "50vh",
+	error,
+	minHeight = "50vh",
 }: {
-  error: string | null;
-  minHeight?: string;
+	error: string | null;
+	minHeight?: string;
 }) => {
-  if (error) {
-    return <AlertError message={error} />;
-  }
-  return <Loader minHeight={minHeight} />;
+	if (error) {
+		return <AlertError message={error} />;
+	}
+	return <Loader minHeight={minHeight} />;
 };
 
 export default ErrorOrLoader;

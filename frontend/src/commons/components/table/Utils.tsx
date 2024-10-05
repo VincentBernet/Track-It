@@ -1,20 +1,20 @@
-export enum columnNames {
-	date_added = "date_added",
-	name = "name",
-	artist = "artist",
-	album = "album",
-	duration = "duration",
+export enum ColumnNames {
+	DATE_ADDED = "date_added",
+	NAME = "name",
+	ARTIST = "artist",
+	ALBUM = "album",
+	DURATION = "duration",
 }
 
-type columnOption = {
+type ColumnOption = {
 	isAscending: boolean | undefined;
 	label: string;
 	isDisplayed: boolean;
 };
 
-export type tableOptionsType = Record<columnNames, columnOption>;
+export type TableOptions = Record<ColumnNames, ColumnOption>;
 
-export const initialSortByOptionValue: tableOptionsType = {
+export const initialSortByOptionValue: TableOptions = {
 	date_added: {
 		isAscending: true,
 		label: "Date added",

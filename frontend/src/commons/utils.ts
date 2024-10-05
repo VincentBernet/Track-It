@@ -32,8 +32,8 @@ export const formatDuration = (ms: number) => {
  * @returns {string} inteleligible date
  * @example 2023-12-12T16:24:28Z -> '1 week ago'
  */
-export const formatDateAdded = (added_at: string) => {
-	const date = new Date(added_at);
+export const formatDateAdded = (addedAt: string) => {
+	const date = new Date(addedAt);
 	const now = new Date();
 	const diff = now.getTime() - date.getTime();
 	const days = Math.floor(diff / (1000 * 60 * 60 * 24));

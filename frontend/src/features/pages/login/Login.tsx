@@ -1,10 +1,9 @@
 import { LOGIN_URI } from "../../../commons/spotify/auth";
-import { StyledLoginButton, StyledLoginContainer } from "./StyledLogin";
 
 const Login = () => (
-	<StyledLoginContainer>
-		<StyledLoginButton href={LOGIN_URI}>Log in to Spotify</StyledLoginButton>
-	</StyledLoginContainer>
+	<div>
+		<a href={LOGIN_URI}>Log in to Spotify</a>
+	</div>
 );
 
 export default Login;

@@ -1,23 +1,23 @@
-export type imageType = {
+export type Image = {
 	url: string;
 	height: number;
 	width: number;
 };
 
-export type followersType = {
+export type Followers = {
 	href: string;
 	total: number;
 };
 
-export type external_urlsType = {
+export type ExternalUrls = {
 	spotify: string;
 };
 
-export type artistType = {
+export type Artist = {
 	name: string;
-	images: imageType[];
-	external_urls: external_urlsType;
-	followers: followersType;
+	images: Image[];
+	external_urls: ExternalUrls;
+	followers: Followers;
 	genres: string[];
 	href: string;
 	id: string;
@@ -26,15 +26,15 @@ export type artistType = {
 	uri: string;
 };
 
-export type trackType = {
+export type Track = {
 	album: {
 		album_type: string;
 		total_tracks: number;
 		available_markets: string[];
-		external_urls: external_urlsType;
+		external_urls: ExternalUrls;
 		href: string;
 		id: string;
-		images: imageType[];
+		images: Image[];
 		name: string;
 		release_date: string;
 		release_date_precision: string;
@@ -43,13 +43,13 @@ export type trackType = {
 		};
 		type: string;
 		uri: string;
-		artists: artistType[];
+		artists: Artist[];
 	};
-	artists: artistType[];
+	artists: Artist[];
 	disc_number: number;
 	duration_ms: number;
 	explicit: false;
-	external_urls: external_urlsType;
+	external_urls: ExternalUrls;
 	href: string;
 	id: string;
 	is_playable: false;
@@ -63,35 +63,31 @@ export type trackType = {
 	type: string;
 	uri: string;
 	is_local: false;
-	audio_features?: audioFeaturesType;
+	audio_features?: AudioFeatures;
 };
 
-export type playlistType = {
+export type Playlist = {
 	id: string;
-	images: imageType[];
+	images: Image[];
 	name: string;
-	artists: artistType[];
+	artists: Artist[];
 	duration_ms: number;
-	followers: followersType;
+	followers: Followers;
 	tracks: {
 		total: number;
 	};
 	selected?: boolean;
 };
 
-export type playlistWithSelectedType = playlistType & {
-	selected: boolean;
-};
-
-export type profileDataType = {
+export type ProfileData = {
 	display_name: string;
-	external_urls: external_urlsType;
+	external_urls: ExternalUrls;
 	href: string;
 	id: string;
-	images: imageType[];
+	images: Image[];
 	type: string;
 	uri: string;
-	followers: followersType;
+	followers: Followers;
 	country: string;
 	product: string;
 	explicit_content: {
@@ -101,16 +97,16 @@ export type profileDataType = {
 	email: string;
 };
 
-export type topArtistsDataType = {
-	items: artistType[];
+export type TopArtistsData = {
+	items: Artist[];
 };
 
-export type topTracksDataType = {
-	items: trackType[];
+export type TopTracksData = {
+	items: Track[];
 };
 
-export type playlistTrackType = {
-	track: trackType;
+export type PlaylistTrack = {
+	track: Track;
 	added_at: string;
 	is_local: boolean;
 	primary_color: string;
@@ -119,23 +115,23 @@ export type playlistTrackType = {
 	};
 };
 
-export type playlistTracksDataType = {
-	items: playlistTrackType[];
+export type PlaylistTracksData = {
+	items: PlaylistTrack[];
 	total: number;
 	offset: number;
 	next: string;
 	limit: number;
 };
 
-export type playlistsDataType = {
-	items: playlistType[];
+export type PlaylistsData = {
+	items: Playlist[];
 	total: number;
 	offset: number;
 	next: string;
 	limit: number;
 };
 
-export type audioFeaturesType = {
+export type AudioFeatures = {
 	[key: string]: string;
 	acousticness: string;
 	analysis_url: string;
@@ -156,56 +152,36 @@ export type audioFeaturesType = {
 	valence: string;
 };
 
-export type audioFeaturesDataType = {
-	audio_features: audioFeaturesType[];
-};
-
-export type trackWithAudioFeaturesType = trackType & {
-	audioFeatures: audioFeaturesType;
-};
-
-export type tracksDataItemType = {
+export type TracksDataItem = {
 	added_at: string;
-	track: trackType;
+	track: Track;
 };
 
-export type tracksDataType = {
+export type TracksData = {
 	href: string;
 	limit: number;
 	next: string;
 	offset: number;
 	previous: string;
 	total: number;
-	items: tracksDataItemType[];
+	items: TracksDataItem[];
 };
 
-export type tracksEnrichedDataType = {
+export type TracksEnrichedData = {
 	href: string;
 	limit: number;
 	next: string;
 	offset: number;
 	previous: string;
 	total: number;
-	items: tracksEnrichedDataItemType[];
+	items: TracksEnrichedDataItem[];
 };
 
-export type tracksEnrichedDataItemType = {
+export type TracksEnrichedDataItem = {
 	added_at: string;
-	track: trackWithLikedType;
+	track: TrackWithLiked;
 };
 
-export type trackWithLikedType = trackType & {
+export type TrackWithLiked = Track & {
 	isSaved: boolean;
-};
-
-export type recommendationsType = {
-	seeds: {
-		afterFilteringSize: number;
-		afterRelinkingSize: number;
-		href: string;
-		id: string;
-		initialPoolSize: number;
-		type: string;
-	}[];
-	tracks: trackType[];
 };

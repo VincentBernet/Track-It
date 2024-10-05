@@ -9,16 +9,15 @@ import {
 	TrackCardList,
 } from "../../../commons/components";
 import { getCurrentUserProfile, postAddTracksToPlaylist } from "../../../commons/spotify/requests";
-import type { profileDataType } from "../../../commons/spotify/responsesTypes";
-import { StyledGreenButton, StyledNewGrid } from "../../../commons/styles";
-import { getWordingButtonTracksToPlaylists, type playlistType } from "./EasyModificationUtils";
+import type { ProfileData } from "../../../commons/spotify/responsesTypes";
+import { type Playlist, getWordingButtonTracksToPlaylists } from "./EasyModificationUtils";
 
 const EasyModification = () => {
 	/* Get Profile : For Fetching profile */
-	const [profile, setProfile] = useState<profileDataType | null>(null);
+	const [profile, setProfile] = useState<ProfileData | null>(null);
 
 	/* Selected Playlist(s) state : For sending list IDs of selected playlists */
-	const [selectedPlaylists, setSelectedPlaylists] = useState<playlistType[]>([]);
+	const [selectedPlaylists, setSelectedPlaylists] = useState<Playlist[]>([]);
 
 	/* Selected Track(s) state : For sending list Uri of selected tracks */
 	const [selectedTracksUris, setSelectedTracksUris] = useState<string[]>([]);
@@ -28,7 +27,7 @@ const EasyModification = () => {
 	const [playlistAdditionFailure, setPlaylistAdditionFailure] = useState<string[]>([]);
 
 	/* Selected Playlist(s) state : For sending list IDs of selected playlists */
-	const [visiblePlaylist, setVisiblePlaylist] = useState<playlistType>({ id: "", name: "likedTrack" });
+	const [visiblePlaylist, setVisiblePlaylist] = useState<Playlist>({ id: "", name: "likedTrack" });
 
 	/* ------------------------------------------------------------------------------------------------------------- */
 	/* Fetch profile on first render */
@@ -44,7 +43,7 @@ const EasyModification = () => {
 		fetchData();
 	}, []);
 
-	const handleSelectedPlaylist = ({ id, name }: playlistType) => {
+	const handleSelectedPlaylist = ({ id, name }: Playlist) => {
 		if (selectedPlaylists.some((playlist) => playlist.id === id)) {
 			setSelectedPlaylists(selectedPlaylists.filter((playlist) => playlist.id !== id));
 		} else {
@@ -52,7 +51,7 @@ const EasyModification = () => {
 		}
 	};
 
-	const handleVisiblePlaylist = ({ id, name }: playlistType) => {
+	const handleVisiblePlaylist = ({ id, name }: Playlist) => {
 		setSelectedTracksUris([]);
 		setVisiblePlaylist({ id: id, name: name });
 	};
@@ -112,14 +111,15 @@ const EasyModification = () => {
 						borderRadius: "15px",
 					}}
 				>
-					<StyledGreenButton
+					<button
+						type="button"
 						onClick={handleAddTracksToPlaylists}
 						disabled={selectedTracksUris.length < 1 || selectedPlaylists.length < 1}
 					>
 						{getWordingButtonTracksToPlaylists(selectedTracksUris.length, selectedPlaylists.length)}
-					</StyledGreenButton>
+					</button>
 				</div>
-				<StyledNewGrid>
+				<div>
 					<aside>
 						<div
 							style={{ marginBottom: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}
@@ -145,7 +145,7 @@ const EasyModification = () => {
 							handleSelectedTracks={handleSelectedTracks}
 						/>
 					</section>
-				</StyledNewGrid>
+				</div>
 			</Layout>
 
 			{playlistAdditionFailure.length > 0 && (
