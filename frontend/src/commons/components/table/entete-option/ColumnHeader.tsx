@@ -12,7 +12,7 @@ const ColumnHeader = ({ isDisplayed, isAscending, title, onClick }: ColumnProps)
 		return null;
 	}
 	return (
-		<th onClick={onClick} title="Sort by music title">
+		<button type="button" onClick={onClick} title="Sort by music title">
 			<div className="button-text flex">
 				{title}
 				<SortArrowSvg
@@ -20,7 +20,7 @@ const ColumnHeader = ({ isDisplayed, isAscending, title, onClick }: ColumnProps)
 					strokeColor={isAscending !== undefined ? "white" : "none"}
 				/>
 			</div>
-		</th>
+		</button>
 	);
 };
 

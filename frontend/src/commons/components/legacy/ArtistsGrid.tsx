@@ -1,14 +1,13 @@
-import type { artistType } from "../../spotify/responsesTypes";
-import { StyledGrid } from "../../styles";
+import type { Artist } from "../../spotify/responsesTypes";
 
 type ArtistsGridProps = {
-	artists: artistType[];
+	artists: Artist[];
 };
 
 const ArtistsGrid = ({ artists }: ArtistsGridProps) => (
 	<>
 		{artists?.length ? (
-			<StyledGrid $type="artist">
+			<div /*type="artist"*/>
 				{artists.map((artist, i) => (
 					<li className="grid__item" key={`${artist.name} ${artist.id} ${i}`}>
 						<div className="grid__item__inner">
@@ -22,7 +21,7 @@ const ArtistsGrid = ({ artists }: ArtistsGridProps) => (
 						</div>
 					</li>
 				))}
-			</StyledGrid>
+			</div>
 		) : (
 			<p className="empty-notice">No artists available</p>
 		)}

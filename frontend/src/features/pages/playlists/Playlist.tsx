@@ -4,25 +4,24 @@ import { useParams } from "react-router-dom";
 import { ErrorOrLoader, Layout, SectionWrapper, TrackList } from "../../../commons/components";
 import { getAudioFeaturesForTracks, getPlaylistById } from "../../../commons/spotify/requests";
 import type {
-	audioFeaturesType,
-	playlistTrackType,
-	playlistTracksDataType,
-	playlistType,
+	AudioFeatures,
+	PlaylistTrack,
+	PlaylistTracksData,
+	Playlist as _Playlist,
 } from "../../../commons/spotify/responsesTypes";
-import { StyledDropdownOld, StyledHeader } from "../../../commons/styles";
 import { catchErrors } from "../../../commons/utils";
 
 const Playlist = () => {
 	const { id } = useParams();
-	const [playlist, setPlaylist] = useState<playlistType | null>(null);
-	const [tracksData, setTracksData] = useState<playlistTracksDataType | null>(null);
-	const [tracks, setTracks] = useState<playlistTrackType[] | null>(null);
-	const [audioFeatures, setAudioFeatures] = useState<audioFeaturesType[] | null>(null);
+	const [playlist, setPlaylist] = useState<_Playlist | null>(null);
+	const [tracksData, setTracksData] = useState<PlaylistTracksData | null>(null);
+	const [tracks, setTracks] = useState<PlaylistTrack[] | null>(null);
+	const [audioFeatures, setAudioFeatures] = useState<AudioFeatures[] | null>(null);
 	const [sortValue, setSortValue] = useState<string>("");
 
 	const [errorFetchingPlaylist, setErrorFetchingPlaylist] = useState<string | null>(null);
 
-	type sortOptionsType =
+	type SortOptionsType =
 		| "danceability"
 		| "tempo"
 		| "energy"
@@ -33,7 +32,7 @@ const Playlist = () => {
 		| "speechiness"
 		| "duration_ms"
 		| "popularity";
-	const sortOptions: sortOptionsType[] = [
+	const sortOptions: SortOptionsType[] = [
 		"danceability",
 		"tempo",
 		"energy",
@@ -145,7 +144,7 @@ const Playlist = () => {
 	return (
 		<Layout
 			extraHeader={
-				<StyledHeader>
+				<div>
 					<div className="header__inner">
 						{playlist.images?.length && playlist.images[0].url ? (
 							<img className="header__img" src={playlist.images[0].url} alt="Playlist Artwork" />
@@ -165,14 +164,14 @@ const Playlist = () => {
 							</p>
 						</div>
 					</div>
-				</StyledHeader>
+				</div>
 			}
 		>
 			<SectionWrapper
 				title="Playlist"
 				links={links}
 				extra={
-					<StyledDropdownOld $activeOption={!!sortValue}>
+					<div /*activeOption={!!sortValue}*/>
 						<label className="sr-only" htmlFor="order-select">
 							Sort tracks
 						</label>
@@ -184,7 +183,7 @@ const Playlist = () => {
 								</option>
 							))}
 						</select>
-					</StyledDropdownOld>
+					</div>
 				}
 			>
 				{sortedTracks && <TrackList tracks={sortedTracks} />}

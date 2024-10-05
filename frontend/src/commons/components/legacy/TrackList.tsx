@@ -1,20 +1,19 @@
-import type { trackType } from "../../spotify/responsesTypes";
-import { StyledListReset } from "../../styles";
+import type { Track } from "../../spotify/responsesTypes";
 import TrackCardOld from "./TrackCardOld";
 
 type TrackListProps = {
-	tracks: trackType[];
-	clickable?: boolean;
+	tracks: Track[];
+	isClickable?: boolean;
 };
 
-const TrackList = ({ tracks, clickable }: TrackListProps) => (
+const TrackList = ({ tracks, isClickable }: TrackListProps) => (
 	<>
 		{tracks?.length ? (
-			<StyledListReset>
+			<li>
 				{tracks.map((track, i) => (
-					<TrackCardOld key={`${track.name} ${track.id} ${i}`} track={track} index={i} clickable={clickable} />
+					<TrackCardOld key={`${track.name} ${track.id} ${i}`} track={track} index={i} isClickable={isClickable} />
 				))}
-			</StyledListReset>
+			</li>
 		) : (
 			<p className="empty-notice">No tracks available</p>
 		)}

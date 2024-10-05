@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import type { profileDataType } from "../../spotify/responsesTypes";
+import type { ProfileData } from "../../spotify/responsesTypes";
 
 type EasyModificationHeaderProps = {
-	profile: profileDataType | null;
+	profile: ProfileData | null;
 };
 
 const EasyModificationHeader = ({ profile }: EasyModificationHeaderProps) => {
@@ -12,27 +11,15 @@ const EasyModificationHeader = ({ profile }: EasyModificationHeaderProps) => {
 	}
 
 	return (
-		<StyledEasyModificationHeader>
+		<div>
 			{profile.images.length && profile.images[0].url && (
 				<Link to="/profile">
 					<img style={{ width: "50px" }} src={profile.images[0].url} alt="Avatar" />
 				</Link>
 			)}
 			<Link to="/profile">{profile.display_name}</Link>
-		</StyledEasyModificationHeader>
+		</div>
 	);
 };
-
-const StyledEasyModificationHeader = styled.div`
-    margin-left: var(--spacing-xl);
-    padding-top: 15px;
-    display: flex;
-    align-items: center;
-    
-    img {
-        border-radius: 50%;
-        margin-right: var(--spacing-sm);
-    }
-    `;
 
 export default EasyModificationHeader;

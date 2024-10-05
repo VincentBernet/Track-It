@@ -1,6 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { fadeIn } from "../../styles/global/animation";
 import { CrossSvg } from "../icons";
 
 type ModalProps = {
@@ -12,8 +10,8 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
 	const [playlistName, setPlaylistName] = useState<string>("");
 	const [playlistDescription, setPlaylistDescription] = useState<string>("");
 	return (
-		<StyledModalOverlay>
-			<StyledModal>
+		<div>
+			<div>
 				<div className={"flex"}>
 					<h3>Create a new playlist</h3>
 					<button type="button" onClick={() => onClose()} aria-label="Close modal and cancel new playlist creation">
@@ -29,9 +27,9 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
 					<label className="input">
 						<input
 							className="input__field"
-							required
+							required={true}
 							// biome-ignore lint/a11y/noAutofocus: Will try to find a better solution
-							autoFocus
+							autoFocus={true}
 							onChange={(e) => setPlaylistName(e.target.value)}
 							type="text"
 							placeholder="Ex: Death Metal"
@@ -69,83 +67,9 @@ const Modal = ({ onValidate, onClose }: ModalProps) => {
 						</button>
 					</div>
 				</form>
-			</StyledModal>
-		</StyledModalOverlay>
+			</div>
+		</div>
 	);
 };
-
-const StyledModalOverlay = styled.div`
-    position: fixed;
-    z-index: 1001;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    backdrop-filter: blur(6px);
-`;
-
-const StyledModal = styled.div`
-    position: fixed;
-    z-index: 1000;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 450px;
-    padding: 60px;
-    background-color: var(--true-black);
-    border: 5px solid var(--white);
-    border-radius: 40px;
-    animation: ${fadeIn} 200ms ease-in-out;
-
-    .flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    form {
-        margin-top: 30px;
-        .button_submit {
-            background-color: var(--green);
-        }
-
-        .input {
-            position: relative;
-  
-            &__label {
-                position: absolute;
-                left: 0;
-                top: 0;
-                padding: calc(.5rem * 0.75) calc(.5rem * .5);
-                margin: calc(.5rem * 0.75 + 3px) calc(.5rem * .5);
-                background-color: var(--true-black);
-                white-space: nowrap;
-                transform: translate(0, 0);
-                transform-origin: 0 0;
-                transition: transform 120ms ease-in;
-                font-weight: bold;  
-                line-height: 0.8;
-            }
-            &__field {
-                box-sizing: border-box;
-                display: block;
-                width: 100%;
-                border: 1px solid currentColor;
-                padding: calc(.5rem * 1.5) .5rem;
-                color: currentColor;
-                background: transparent;
-                border-radius: 4px;
-                
-                &:focus,
-                &:not(:placeholder-shown) {
-                    & + .input__label {
-                        transform: translate(.25rem, -75%) scale(.8);
-                        color: var(--green);
-                    }
-                }
-            }
-        }
-    }
-`;
 
 export default Modal;

@@ -1,6 +1,6 @@
-import type { playlistType, trackType } from "./responsesTypes";
+import type { Playlist, Track } from "./responsesTypes";
 
-const PlaylistsMock: playlistType[] = [
+const PlaylistsMock: Playlist[] = [
 	{
 		id: "1",
 		name: "Playlist 1",
@@ -93,7 +93,7 @@ const PlaylistsMock: playlistType[] = [
 	},
 ];
 
-const TracksMock: trackType[] = [
+const TracksMock: Track[] = [
 	{
 		album: {
 			album_type: "album",

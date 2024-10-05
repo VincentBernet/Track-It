@@ -1,6 +1,6 @@
-import type { artistType } from "../../../commons/spotify/responsesTypes";
+import type { Artist } from "../../../commons/spotify/responsesTypes";
 
-export type playlistType = { id: string; name: string };
+export type Playlist = { id: string; name: string };
 
 const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selectedPlaylistsLength: number) => {
 	return selectedTracksLength === 0 && selectedPlaylistsLength === 0
@@ -16,7 +16,7 @@ const getWordingButtonTracksToPlaylists = (selectedTracksLength: number, selecte
 						: `Add ${selectedTracksLength} tracks to ${selectedPlaylistsLength} playlists`;
 };
 
-const getArtistsName = (artists: artistType[]) => {
+const getArtistsName = (artists: Artist[]) => {
 	return artists.reduce((acc, artist, i) => acc + artist.name + (i !== artists.length - 1 ? ", " : ""), "");
 };
 

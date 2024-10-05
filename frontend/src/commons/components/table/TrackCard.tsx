@@ -1,22 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { getArtistsName } from "../../../features/pages/easy-modification/EasyModificationUtils";
-import type { trackWithLikedType } from "../../spotify/responsesTypes";
+import type { TrackWithLiked } from "../../spotify/responsesTypes";
 import { formatDuration } from "../../utils";
 import { EyeSvg, HeartSvg } from "../icons";
 import { Artwork, SearchedElement } from "../index";
-import type { tableOptionsType } from "./Utils";
+import type { TableOptions } from "./Utils";
 
 type TrackCardProps = {
-	track: trackWithLikedType;
+	track: TrackWithLiked;
 	addedAt: string;
 	index: number;
-	tableOptions: tableOptionsType;
+	tableOptions: TableOptions;
 	displayMode: "list" | "compact";
 	searchFilter: string;
 	handleSelectedTracks?: (id: string) => void;
 	isSelected?: boolean;
-	clickable?: boolean;
+	isClickable?: boolean;
 	handleLikedButton?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, trackId: string) => void;
 };
 
@@ -29,12 +28,12 @@ const TrackCard = ({
 	searchFilter,
 	handleSelectedTracks = () => {},
 	handleLikedButton = () => alert("valeur par défaut"),
-	clickable = true,
+	isClickable = true,
 	isSelected = false,
 }: TrackCardProps) => {
 	const navigate = useNavigate();
 	return (
-		<StyledTableRow $selected={isSelected} onClick={() => clickable && handleSelectedTracks(track.uri)}>
+		<button type="button" /*selected={isSelected}*/ onClick={() => isClickable && handleSelectedTracks(track.uri)}>
 			<td className="centered first">{index + 1}</td>
 
 			{displayMode === "list" && (tableOptions.name.isDisplayed || tableOptions.artist.isDisplayed) && (
@@ -97,62 +96,8 @@ const TrackCard = ({
 			{tableOptions.duration.isDisplayed && (
 				<td className="secondary-text last">{formatDuration(track.duration_ms)}</td>
 			)}
-		</StyledTableRow>
+		</button>
 	);
 };
 
 export default TrackCard;
-
-type StyledTableRowProps = {
-	$selected: boolean;
-};
-
-const StyledTableRow = styled.tr<StyledTableRowProps>`
-  cursor: pointer;
-  &:hover {
-    background-color: #282828;
-    td {
-      .visibleOnHover {
-        visibility: visible;
-      }
-    }
-  }
-
-  td {
-    padding: 5px;
-    border-top: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-    border-bottom: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-
-    &.first {
-      border-left: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-
-    &.last {
-      border-right: ${(props) => (props.$selected ? "1px solid var(--green)" : "1px solid transparent")};
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-
-    &.centered {
-      text-align: center;
-    }
-
-    .button-ahead {
-      z-index: 1;
-      background-color: transparent;
-    }
-  }
-
-  .flex {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .searched {
-    color: var(--green);
-    font-weight: bold;
-  }
-`;
