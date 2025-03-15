@@ -17,7 +17,9 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		// Enforced 'type-only' imports
+		"verbatimModuleSyntax": true
 	},
 	"include": ["src"],
 	"references": [

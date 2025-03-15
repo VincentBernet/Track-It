@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { Artwork, ErrorOrLoader, Layout, SectionWrapper } from "../../../commons/components";
 import { DoubleArrowSvg, HeartSvg } from "../../../commons/components/icons";
 import {
@@ -10,17 +9,16 @@ import {
 	getTrackById,
 	removeFromLikedTracks,
 } from "../../../commons/spotify/requests";
-import { StyledGreenButton } from "../../../commons/styles";
-import type { trackType } from "./../../../commons/spotify/responsesTypes";
+import type { Track as _Track } from "./../../../commons/spotify/responsesTypes";
 
 const Track = () => {
 	const { id } = useParams();
 
-	const [track, setTrack] = useState<trackType | null>(null);
+	const [track, setTrack] = useState<_Track | null>(null);
 	const [errorFetchingTrack, setErrorFetchingTrack] = useState<string | null>(null);
 	const [isLiked, setIsLiked] = useState<boolean | null>(null);
 
-	const [tracksReco, setTracksReco] = useState<trackType[] | null>(null);
+	const [tracksReco, setTracksReco] = useState<_Track[] | null>(null);
 	const [errorFechingRecommendedTracks, setErrorFetchingRecommendedTracks] = useState<string | null>(null);
 
 	const [indexReco, setIndexReco] = useState<number>(0);
@@ -77,42 +75,42 @@ const Track = () => {
 		setIndexReco(indexReco + 1);
 	};
 
-	const handleLikeTrack = (track_id: string) => {
-		if (!isLiked) {
+	const handleLikeTrack = (trackId: string) => {
+		if (isLiked) {
 			try {
-				addToLikedTracks([track_id]);
-				setIsLiked(!isLiked);
-			} catch {
-				setIsLiked(false);
-				console.error("error during liking current track");
-			}
-		} else {
-			try {
-				removeFromLikedTracks([track_id]);
+				removeFromLikedTracks([trackId]);
 				setIsLiked(!isLiked);
 			} catch {
 				setIsLiked(true);
 				console.error("error during un-liking current track");
 			}
+		} else {
+			try {
+				addToLikedTracks([trackId]);
+				setIsLiked(!isLiked);
+			} catch {
+				setIsLiked(false);
+				console.error("error during liking current track");
+			}
 		}
 	};
 
-	const handleLikeRecoTrack = (track_id: string) => {
-		if (!recoIsLiked) {
+	const handleLikeRecoTrack = (trackId: string) => {
+		if (recoIsLiked) {
 			try {
-				addToLikedTracks([track_id]);
-				setRecoIsLiked(!recoIsLiked);
-			} catch {
-				setRecoIsLiked(false);
-				console.error("error during liking reco track");
-			}
-		} else {
-			try {
-				removeFromLikedTracks([track_id]);
+				removeFromLikedTracks([trackId]);
 				setRecoIsLiked(!recoIsLiked);
 			} catch {
 				setRecoIsLiked(true);
 				console.error("error during un-liking reco track");
+			}
+		} else {
+			try {
+				addToLikedTracks([trackId]);
+				setRecoIsLiked(!recoIsLiked);
+			} catch {
+				setRecoIsLiked(false);
+				console.error("error during liking reco track");
 			}
 		}
 	};
@@ -129,7 +127,7 @@ const Track = () => {
 
 	return (
 		<Layout>
-			<StyledTrackCard>
+			<div>
 				<SectionWrapper title={"Track"} links={links}>
 					<div className="tracks_flex_section">
 						<div className="track_section">
@@ -142,17 +140,20 @@ const Track = () => {
 								<p>
 									{track.album.name} in {track.album.release_date}
 								</p>
-								<StyledGreenButton
+								<button
+									type="button"
 									onClick={() => {
 										window.open(track.external_urls.spotify);
 										return null;
 									}}
 								>
 									Play on Spotify
-								</StyledGreenButton>
+								</button>
 								<br />
 								<br />
-								<StyledGreenButton onClick={handleNextRecommendation}>New reco</StyledGreenButton>
+								<button type="button" onClick={handleNextRecommendation}>
+									New reco
+								</button>
 								<br />
 								<br />
 								{isLiked !== null && (
@@ -186,14 +187,15 @@ const Track = () => {
 										<p>
 											{tracksReco[indexReco].album.name} in {tracksReco[indexReco].album.release_date}
 										</p>
-										<StyledGreenButton
+										<button
+											type="button"
 											onClick={() => {
 												window.open(tracksReco[indexReco].external_urls.spotify);
 												return null;
 											}}
 										>
 											Play on Spotify
-										</StyledGreenButton>
+										</button>
 										<br />
 										<br />
 										<button
@@ -209,25 +211,9 @@ const Track = () => {
 						</div>
 					</div>
 				</SectionWrapper>
-			</StyledTrackCard>
+			</div>
 		</Layout>
 	);
 };
-
-const StyledTrackCard = styled.section`
-    .tracks_flex_section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .track_section { 
-        display: flex;
-        width: 550px;
-        gap: 20px;
-    }
-    .justify_end {
-        justify-content: flex-end;
-    }
-`;
 
 export default Track;

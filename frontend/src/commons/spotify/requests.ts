@@ -21,8 +21,8 @@ export const getCurrentUserProfile = () => axios.get("/me");
  * @param {string} time_range - 'short_term' (last 4 weeks) 'medium_term' (last 6 months) or 'long_term' (calculated from several years of data and including all new data as it becomes available). Defaults to 'short_term'
  * @returns {Promise}
  */
-export const getCurrentUserTopArtists = (time_range = "short_term") => {
-	return axios.get(`/me/top/artists?time_range=${time_range}`);
+export const getCurrentUserTopArtists = (timeRange = "short_term") => {
+	return axios.get(`/me/top/artists?time_range=${timeRange}`);
 };
 
 /**
@@ -31,8 +31,8 @@ export const getCurrentUserTopArtists = (time_range = "short_term") => {
  * @param {string} time_range - 'short_term' (last 4 weeks) 'medium_term' (last 6 months) or 'long_term' (calculated from several years of data and including all new data as it becomes available). Defaults to 'short_term'
  * @returns {Promise}
  */
-export const getCurrentUserTopTracks = (time_range = "short_term") => {
-	return axios.get(`/me/top/tracks?time_range=${time_range}`);
+export const getCurrentUserTopTracks = (timeRange = "short_term") => {
+	return axios.get(`/me/top/tracks?time_range=${timeRange}`);
 };
 
 /**
@@ -50,8 +50,8 @@ export const getCurrentUserPlaylists = (limit = 10) => {
  * @param {string} playlist_id - The Spotify ID for the playlist.
  * @returns {Promise}
  */
-export const getPlaylistById = (playlist_id: string) => {
-	return axios.get(`/playlists/${playlist_id}`);
+export const getPlaylistById = (playlistId: string) => {
+	return axios.get(`/playlists/${playlistId}`);
 };
 
 /**
@@ -80,8 +80,8 @@ export const getCurrentUserSavedTracks = (limit = 50) => {
  * @param uris
  * @returns
  */
-export const postAddTracksToPlaylist = (playlist_id: string, uris: string[]) => {
-	return axios.post(`/playlists/${playlist_id}/tracks?uris=${uris.join(",")}`);
+export const postAddTracksToPlaylist = (playlistId: string, uris: string[]) => {
+	return axios.post(`/playlists/${playlistId}/tracks?uris=${uris.join(",")}`);
 };
 
 /**
@@ -90,8 +90,8 @@ export const postAddTracksToPlaylist = (playlist_id: string, uris: string[]) => 
  * @param {string} track_id - The Spotify ID for the track.
  * @returns {Promise}
  */
-export const getTrackById = (track_id: string) => {
-	return axios.get(`/tracks/${track_id}`);
+export const getTrackById = (trackId: string) => {
+	return axios.get(`/tracks/${trackId}`);
 };
 
 /**
@@ -131,15 +131,15 @@ export const getRecommendations = ({
  * @param {string} description - The description for the new playlist.
  * @returns {Promise}
  */
-type postNewPlaylistParams = {
-	user_id: string;
-	playlist_name: string;
-	playlist_description: string;
+type PostNewPlaylistParams = {
+	userId: string;
+	playlistName: string;
+	playlistDescription: string;
 };
-export const postNewPlaylist = ({ user_id, playlist_name, playlist_description }: postNewPlaylistParams) => {
-	return axios.post(`/users/${user_id}/playlists`, {
-		name: playlist_name,
-		description: playlist_description,
+export const postNewPlaylist = ({ userId, playlistName, playlistDescription }: PostNewPlaylistParams) => {
+	return axios.post(`/users/${userId}/playlists`, {
+		name: playlistName,
+		description: playlistDescription,
 	});
 };
 
@@ -149,8 +149,8 @@ export const postNewPlaylist = ({ user_id, playlist_name, playlist_description }
  * @param {string[]} tracks_id - List of Spotify tracks IDs
  * @returns {Promise}
  */
-export const addToLikedTracks = (tracks_id: string[]) => {
-	return axios.put(`/me/tracks?ids=${tracks_id.join(",")}`);
+export const addToLikedTracks = (tracksId: string[]) => {
+	return axios.put(`/me/tracks?ids=${tracksId.join(",")}`);
 };
 
 /**
@@ -159,8 +159,8 @@ export const addToLikedTracks = (tracks_id: string[]) => {
  * @param {string[]} tracks_id - List of Spotify tracks IDs
  * @returns {Promise}
  */
-export const removeFromLikedTracks = (tracks_id: string[]) => {
-	return axios.delete(`/me/tracks?ids=${tracks_id.join(",")}`);
+export const removeFromLikedTracks = (tracksId: string[]) => {
+	return axios.delete(`/me/tracks?ids=${tracksId.join(",")}`);
 };
 
 /**
@@ -169,6 +169,6 @@ export const removeFromLikedTracks = (tracks_id: string[]) => {
  * @param {string[]} tracks_id - List of Spotify tracks IDs
  * @returns {Promise}
  */
-export const checkIfTrackIsSaved = (tracks_id: string[]) => {
-	return axios.get(`/me/tracks/contains?ids=${tracks_id.join(",")}`);
+export const checkIfTrackIsSaved = (tracksId: string[]) => {
+	return axios.get(`/me/tracks/contains?ids=${tracksId.join(",")}`);
 };

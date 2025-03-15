@@ -1,5 +1,3 @@
-import { StyledRangeButtons } from "../../styles";
-
 type TimeRangeButtonsProps = {
 	timeRange: string;
 	handleClick: (timeRange: string) => void;
@@ -7,7 +5,7 @@ type TimeRangeButtonsProps = {
 
 const TimeRangeButtons = ({ timeRange, handleClick }: TimeRangeButtonsProps) => {
 	return (
-		<StyledRangeButtons>
+		<div>
 			<li>
 				<button
 					type="button"
@@ -35,7 +33,7 @@ const TimeRangeButtons = ({ timeRange, handleClick }: TimeRangeButtonsProps) => 
 					All Time
 				</button>
 			</li>
-		</StyledRangeButtons>
+		</div>
 	);
 };
 

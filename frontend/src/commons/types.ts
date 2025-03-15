@@ -1,4 +1,4 @@
-export type localStorageKeysType = {
+export type LocalStorageKeys = {
 	[key: string]: string;
 	accessToken: string;
 	refreshToken: string;
@@ -6,7 +6,7 @@ export type localStorageKeysType = {
 	timestamp: string;
 };
 
-export type localStorageValuesType = {
+export type LocalStorageValues = {
 	[key: string]: string | undefined;
 	accessToken?: string;
 	refreshToken?: string;

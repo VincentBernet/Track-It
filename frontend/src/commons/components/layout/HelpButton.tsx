@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { QuestionMarkCircleSvg } from "../icons";
 import { ModalTutorial } from "../index";
 
@@ -16,7 +15,8 @@ const HelpButton = React.memo(() => {
 
 	return (
 		<>
-			<StyledAbsoluteHelpButton
+			<button
+				type="button"
 				onClick={() => {
 					setIsModalTutorialOpen(true);
 				}}
@@ -24,25 +24,10 @@ const HelpButton = React.memo(() => {
 				title={"help"}
 			>
 				<QuestionMarkCircleSvg />
-			</StyledAbsoluteHelpButton>
+			</button>
 			{isModalTutorialOpen && <ModalTutorial onClose={() => setIsModalTutorialOpen(false)} />}
 		</>
 	);
 });
-
-const StyledAbsoluteHelpButton = styled.button`
-  position: absolute;
-  top: 17px;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background-color: rgba(0,0,0,.7);
-  color: var(--white);
-  font-size: var(--fz-sm);
-  font-weight: 700;
-  border-radius: var(--border-radius-pill);
-  z-index: 10;
-  @media (min-width: 768px) {
-    right: 115px;
-  }
-`;
 
 export default HelpButton;

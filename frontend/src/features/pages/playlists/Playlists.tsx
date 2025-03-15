@@ -2,12 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ErrorOrLoader, Layout, PlaylistsGrid, SectionWrapper } from "../../../commons/components";
 import { getCurrentUserPlaylists } from "../../../commons/spotify/requests";
-import type { playlistType, playlistsDataType } from "../../../commons/spotify/responsesTypes";
+import type { Playlist, PlaylistsData } from "../../../commons/spotify/responsesTypes";
 import { catchErrors } from "../../../commons/utils";
 
 const Playlists = () => {
-	const [playlistsData, setPlaylistsData] = useState<playlistsDataType | null>(null);
-	const [playlists, setPlaylists] = useState<playlistType[] | null>(null);
+	const [playlistsData, setPlaylistsData] = useState<PlaylistsData | null>(null);
+	const [playlists, setPlaylists] = useState<Playlist[] | null>(null);
 
 	const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<string | null>(null);
 

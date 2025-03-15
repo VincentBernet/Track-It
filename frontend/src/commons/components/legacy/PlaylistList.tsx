@@ -1,13 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { playlistType as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
+import type { Playlist as handlePlaylistType } from "../../../features/pages/easy-modification/EasyModificationUtils";
 import { getCurrentUserPlaylists, postNewPlaylist } from "../../spotify/requests";
-import type { playlistType, playlistsDataType, profileDataType } from "../../spotify/responsesTypes";
-import { StyledListReset } from "../../styles";
+import type { Playlist, PlaylistsData, ProfileData } from "../../spotify/responsesTypes";
 import { ErrorOrLoader, LikeSongCard, Modal, Notification, PlaylistCard, TemporaryComponent } from "../index";
 
 type PlaylistListProps = {
-	profile: profileDataType | null;
+	profile: ProfileData | null;
 	selectedPlaylists: { id: string; name: string }[];
 	playlistAdditionSuccess: string[];
 	handleSelected: ({ id, name }: handlePlaylistType) => void;
@@ -24,8 +23,8 @@ const PlaylistList = ({
 	handleOnDelete,
 }: PlaylistListProps) => {
 	/* Get Playlist : For Fetching playlists */
-	const [playlistsData, setPlaylistsData] = useState<playlistsDataType | null>(null);
-	const [playlists, setPlaylists] = useState<playlistType[] | null>(null);
+	const [playlistsData, setPlaylistsData] = useState<PlaylistsData | null>(null);
+	const [playlists, setPlaylists] = useState<Playlist[] | null>(null);
 	const [errorFetchingPlaylists, setErrorFetchingPlaylists] = useState<string | null>(null);
 
 	/* Open modal creation new playlist */
@@ -84,9 +83,9 @@ const PlaylistList = ({
 		const fetchData = async () => {
 			try {
 				const { data } = await postNewPlaylist({
-					user_id: profile?.id || "",
-					playlist_name: playlistName,
-					playlist_description: playlistDescription,
+					userId: profile?.id || "",
+					playlistName: playlistName,
+					playlistDescription: playlistDescription,
 				});
 				setPlaylists([...(playlists ? playlists : []), data]);
 			} catch (e) {
@@ -110,13 +109,13 @@ const PlaylistList = ({
 	return (
 		<>
 			{playlists?.length ? (
-				<StyledListReset>
+				<li>
 					<LikeSongCard handleVisiblePlaylist={handleVisiblePlaylist} />
 					{playlists.map((playlist) => (
 						<PlaylistCard
 							key={playlist.id}
 							playlist={playlist}
-							clickable
+							isClickable={true}
 							isSelected={selectedPlaylists.some((playlistSelected) => playlistSelected.id === playlist.id)}
 							displayNotification={playlistAdditionSuccess.includes(playlist.id)}
 							handleOnDelete={handleOnDelete}
@@ -124,7 +123,7 @@ const PlaylistList = ({
 							handleVisiblePlaylist={handleVisiblePlaylist}
 						/>
 					))}
-				</StyledListReset>
+				</li>
 			) : (
 				<p className="empty-notice">No Playlist available</p>
 			)}

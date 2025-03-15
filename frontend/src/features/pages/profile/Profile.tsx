@@ -14,18 +14,17 @@ import {
 	getCurrentUserTopTracks,
 } from "../../../commons/spotify/requests";
 import type {
-	playlistsDataType,
-	profileDataType,
-	topArtistsDataType,
-	topTracksDataType,
+	PlaylistsData,
+	ProfileData,
+	TopArtistsData,
+	TopTracksData,
 } from "../../../commons/spotify/responsesTypes";
-import { StyledHeader } from "../../../commons/styles";
 
 const Profile = () => {
-	const [profile, setProfile] = useState<profileDataType | null>(null);
-	const [playlists, setPlaylists] = useState<playlistsDataType | null>(null);
-	const [topArtists, setTopArtists] = useState<topArtistsDataType | null>(null);
-	const [topTracks, setTopTracks] = useState<topTracksDataType | null>(null);
+	const [profile, setProfile] = useState<ProfileData | null>(null);
+	const [playlists, setPlaylists] = useState<PlaylistsData | null>(null);
+	const [topArtists, setTopArtists] = useState<TopArtistsData | null>(null);
+	const [topTracks, setTopTracks] = useState<TopTracksData | null>(null);
 
 	const [errorFetchingProfile, setErrorFetchingProfile] = useState<string | null>(null);
 	const [errorFetchingOther, setErrorFetchingOther] = useState<string | null>(null);
@@ -68,7 +67,7 @@ const Profile = () => {
 		<Layout
 			fixedMainPadding="64px 19% 64px 19%"
 			extraHeader={
-				<StyledHeader $type="user">
+				<div /*type="user"*/>
 					<div className="header__inner">
 						{profile.images.length && profile.images[0].url && (
 							<img className="header__img" src={profile.images[0].url} alt="Avatar" />
@@ -88,7 +87,7 @@ const Profile = () => {
 							</p>
 						</div>
 					</div>
-				</StyledHeader>
+				</div>
 			}
 		>
 			{topArtists && topTracks && playlists ? (

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { StyledDropdown } from "../../styles";
 
 type DropdownProps = {
 	isOpen: boolean;
@@ -32,11 +31,7 @@ const Dropdown = ({ children, isOpen, handleClosing, dropdownButtonRef, isProper
 
 	if (!isOpen) return null;
 
-	return (
-		<StyledDropdown ref={dropdownRef} $isProperties={isPropertiesDropdown}>
-			{children}
-		</StyledDropdown>
-	);
+	return <div ref={dropdownRef} /*isProperties={isPropertiesDropdown}*/>{children}</div>;
 };
 
 export default Dropdown;

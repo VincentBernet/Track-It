@@ -7,15 +7,21 @@
 		"start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
 		"client": "cd frontend && npm run dev",
 		"server": "cd backend && npm run dev",
-		"install": "npm run install-client && npm run install-server",
+		"install": "install-client && npm run install-server",
 		"install-client": "cd frontend && npm install",
-		"install-server": "cd backend && npm install"
+		"install-server": "cd backend && npm install",
+		"lint-back": "cd backend && npm run lint",
+		"lint-back:fix": "cd backend && npm run lint:fix",
+		"lint-front": "cd frontend && lint",
+		"lint-front:fix": "cd frontend && npm run lint:fix",
+		"lint": "npm run lint-back && npm run lint-front",
+		"lint:fix": "npm run lint-front:fix"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@biomejs/biome": "1.6.0",
+		"@biomejs/biome": "1.9.3",
 		"concurrently": "^8.2.2",
 		"sass": "^1.69.5"
 	}

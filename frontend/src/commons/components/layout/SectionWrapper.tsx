@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { StyledSection } from "../../styles";
 
 type SectionWrapperProps = {
 	children: React.ReactNode;
@@ -14,7 +13,7 @@ type SectionWrapperProps = {
 };
 
 const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, forcedWidth }: SectionWrapperProps) => (
-	<StyledSection $forcedWidth={forcedWidth}>
+	<div /*forcedWidth={forcedWidth}*/>
 		<div className="section__inner">
 			<div className="section__top">
 				<h2 className="section__heading">
@@ -35,7 +34,7 @@ const SectionWrapper = ({ children, title, extra = <></>, seeAllLink, links, for
 
 			{children}
 		</div>
-	</StyledSection>
+	</div>
 );
 
 export default SectionWrapper;
