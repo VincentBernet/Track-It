@@ -8,7 +8,7 @@
 
 Welcome to Track-It, a music organiser to agregate all of your collection and manage it as you wish.
 Currently Track-It works as a plugin of spotify, where you can organize your tracks by playlist in an simplier way.
-Here you can, test :
+Here you can :
 
 - Consult all of your librairy (tracks and playlist) in a global view
 - Add your tracks to your playlists in one click (one or many tracks to one or many playlist)
